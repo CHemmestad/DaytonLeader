@@ -26,8 +26,8 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads")); // Serve images statically
 
-const port = "8081";
-const host = "localhost";
+// const port = "8081";
+// const host = "localhost";
 
 // const { MongoClient } = require("mongodb");
 const multer = require("multer");
@@ -547,6 +547,14 @@ app.delete("/contact/:id", (req, res) => {
 //     res.send(robotUpdated);
 // });
 
-app.listen(process.env.PORT, () => {
-    console.log("App listening at http://%s:%s", host, port);
+const port = process.env.PORT || 8081;
+const host = "0.0.0.0";
+
+app.listen(port, host, () => {
+  console.log(`App listening at http://${host}:${port}`);
 });
+
+
+// app.listen(process.env.PORT, () => {
+//     console.log("App listening at http://%s:%s", host, port);
+// });
