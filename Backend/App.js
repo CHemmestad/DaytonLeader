@@ -53,17 +53,6 @@ const db = couchbase.connect(clusterConnStr, {
   password,
   configProfile: "wanDevelopment",
 });
-// const clusterConnStr = "couchbases://cb.j36s5qes6eid2geh.cloud.couchbase.com"; // Replace this with Connection String
-// const username = "DaytonLeader"; // Replace this with username from cluster access credentials
-// const password = "Password@123"; // Replace this with password from cluster access credentials
-// // Get a reference to the cluster
-// const db = couchbase.connect(clusterConnStr, {
-//     username: username,
-//     password: password,
-//     // Use the pre-configured profile below to avoid latency issues with your connection.
-//     configProfile: "wanDevelopment",
-// });
-	
 
 // Set up multer for image upload
 const storage = multer.diskStorage({
