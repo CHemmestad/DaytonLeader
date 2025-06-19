@@ -2,6 +2,7 @@
 // ISU Netid : cihem@iastate.edu | griffinu@iastate.edu
 // Date :  12 11, 2024
 
+require("dotenv").config();
 var express = require("express");
 var cors = require("cors");
 var fs = require("fs");
@@ -33,14 +34,36 @@ const path = require("path");
 
 // MySQL
 //jdbc:mysql://coms-3090-027.class.las.iastate.edu:3306/new_schema
-const mysql = require("mysql2");
-const db = mysql.createConnection({
-    host: "localhost",       // or 127.0.0.1
-    user: "root",            // or your MySQL username (e.g., "Caleb")
-    password: "",            // your MySQL password (empty string if none set yet)
-    database: "dayton_leader", // the name of your database
-    port: 3306               // default MySQL port
+const couchbase = require("couchbase");
+// const db = mysql.createConnection({
+//     host: "localhost",       // or 127.0.0.1
+//     user: "root",            // or your MySQL username (e.g., "Caleb")
+//     password: "",            // your MySQL password (empty string if none set yet)
+//     database: "dayton_leader", // the name of your database
+//     port: 3306               // default MySQL port
+// });
+
+// User inputs
+const clusterConnStr = process.env.COUCHBASE_CONN_STR;
+const username = process.env.COUCHBASE_USER;
+const password = process.env.COUCHBASE_PASS;
+
+const db = couchbase.connect(clusterConnStr, {
+  username,
+  password,
+  configProfile: "wanDevelopment",
 });
+// const clusterConnStr = "couchbases://cb.j36s5qes6eid2geh.cloud.couchbase.com"; // Replace this with Connection String
+// const username = "DaytonLeader"; // Replace this with username from cluster access credentials
+// const password = "Password@123"; // Replace this with password from cluster access credentials
+// // Get a reference to the cluster
+// const db = couchbase.connect(clusterConnStr, {
+//     username: username,
+//     password: password,
+//     // Use the pre-configured profile below to avoid latency issues with your connection.
+//     configProfile: "wanDevelopment",
+// });
+	
 
 // Set up multer for image upload
 const storage = multer.diskStorage({
@@ -58,31 +81,105 @@ if (!fs.existsSync("uploads")) {
     fs.mkdirSync("uploads");
 }
 
-app.post("/contact/login", (req, res) => {
-    try {
-        const { username, password } = req.body;
-        if (!username || !password) {
-            return res.status(400).send({ error: "Username and password are required." });
-        }
-        const query = "SELECT role FROM user WHERE user = ? AND password = ?";
-        db.query(query, [username, password], (err, results) => {
-            if (err) {
-                console.error("Database error during login:", err);
-                return res.status(500).send({ error: "An error occurred in Query. Please try again." });
-            }
-            if (results.length === 0) {
-                return res.status(401).send({ error: "Invalid username or password." });
-            }
-            // If there is not any error, respond with code and role
-            const { role } = results[0];
-            res.status(200).send({ role });
-        });
-    } catch (err) {
-        // Handle synchronous errors
-        console.error("Error in GET /contact/login", err);
-        res.status(500).send({ error: "An unexpected error occurred in Login: " + err.message });
+app.post("/contact/login", async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).send({ error: "Username and password are required." });
     }
+
+    const cluster = await db;
+    const query = `
+      SELECT META().id, users.*
+      FROM \`dayton_leader\`.\`tables\`.\`users\` AS users
+      WHERE users.user = $1
+      LIMIT 1
+    `;
+
+    const result = await cluster.query(query, { parameters: [username] });
+
+    if (result.rows.length === 0) {
+      return res.status(401).send({ error: "User not found." });
+    }
+
+    const user = result.rows[0];
+
+    if (user.password !== password) {
+      return res.status(401).send({ error: "Invalid username or password." });
+    }
+
+    res.status(200).send({ role: user.role });
+
+  } catch (err) {
+    console.error("Login error:", err);
+    res.status(500).send({ error: "Internal server error" });
+  }
 });
+
+
+// app.post("/contact/login", async (req, res) => {
+//     let num = 0;
+//   try {
+//     const { username, password } = req.body;
+//     num = 2;
+//     if (!username || !password) {
+//       return res.status(400).send({ error: "Username and password are required." });
+//     }
+
+//     num = 3;
+//     const cluster = await db; // `db` is your connected cluster promise
+//     num = 4;
+//     const bucket = cluster.bucket("dayton_leader");
+//     num = 5;
+//     const collection = bucket.scope("tables").collection("users");
+//     num = 6;
+
+//     const userId = username;
+//     num = 7;
+//     const result = await collection.get("user");
+//     num = 8;
+
+//     if (result.content.password !== password) {
+//       return res.status(401).send({ error: `Invalid username or password.${username} ${userId} ${password}` });
+//     }
+
+//     res.status(200).send({ role: result.content.role });
+
+//   } catch (err) {
+//     if (err instanceof couchbase.DocumentNotFoundError) {
+//       return res.status(401).send({ error: `DocumentNotFoundError ${num}` });
+//     }
+//     console.error("Login error:", err);
+//     res.status(500).send({ error: "DocumentNotFoundError2" });
+//   }
+// });
+
+// app.post("/contact/login", (req, res) => {
+//     try {
+//         const { username, password } = req.body;
+//         if (!username || !password) {
+//             return res.status(400).send({ error: "Username and password are required." });
+//         }
+//         const query = "SELECT role FROM user WHERE user = ? AND password = ?";
+//         db.query(query, [username, password], (err, results) => {
+//             if (err) {
+//                 console.error("Database error during login:", err);
+//                 return res.status(500).send({ error: "An error occurred in Query. Please try again." });
+//             }
+//             if (results.length === 0) {
+//                 return res.status(401).send({ error: "Invalid username or password." });
+//             }
+//             // If there is not any error, respond with code and role
+//             const { role } = results[0];
+//             res.status(200).send({ role });
+//         });
+//     } catch (err) {
+//         // Handle synchronous errors
+//         console.error("Error in GET /contact/login", err);
+//         res.status(500).send({ error: "An unexpected error occurred in Login: " + err.message });
+//     }
+// });
 
 app.post('/contact/messages', (req, res) => {
     const { contactId, message } = req.body;
