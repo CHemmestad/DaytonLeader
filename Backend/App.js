@@ -15,7 +15,7 @@ var bodyParser = require("body-parser");
 // Server
 var app = express();
 // app.use(cors());
-const allowedOrigins = ["http://localhost:3000", "https://your-username.github.io"];
+const allowedOrigins = ["http://localhost:3000", "https://chemmestad.github.io"];
 
 app.use(cors({
   origin: allowedOrigins,
@@ -95,7 +95,7 @@ app.post("/contact/login", async (req, res) => {
     const result = await cluster.query(query, { parameters: [username] });
 
     if (result.rows.length === 0) {
-      return res.status(401).send({ error: "User not found." });
+      return res.status(401).send({ error: "Invalid username or password." });
     }
 
     const user = result.rows[0];
