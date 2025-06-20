@@ -37,14 +37,20 @@
   }
 }
 
+html, body {
+  overscroll-behavior: none;
+}
+
+/*
 body {
   /* height: 100%; */
   /* background-image: url('../Images/Background.webp'); /* Specify the path to your image */
   /* background-attachment: fixed; 
   /* background-size: cover; Make the image cover the entire background */
   /* padding-top: 40rem; */
-  /* background-position: center; Center the image */
+  /* background-position: center; Center the image 
 }
+*/
 
 /* footer {
   background-color: bg-dark;
@@ -53,27 +59,27 @@ body {
 main {
   padding: 5%;
   padding-top: 8%;
-  color: white;
+  color: black;
 }
 
 h1 {
-  color: white;
+  color: black;
   font-family: inherit;
-  text-shadow:     
+  /* text-shadow:     
   -1px -1px 0 #000,
   1px -1px 0 #000,
   -1px 1px 0 #000,
-  1px 1px 0 #000; /* Ensures the border wraps tightly around the text */
+  1px 1px 0 #000; Ensures the border wraps tightly around the text */
 }
 
 h3 {
-  color: white;
+  color: black;
   font-family: inherit;
-  text-shadow:     
+  /* text-shadow:     
   -1px -1px 0 #000,
   1px -1px 0 #000,
   -1px 1px 0 #000,
-  1px 1px 0 #000; /* Ensures the border wraps tightly around the text */
+  1px 1px 0 #000; Ensures the border wraps tightly around the text */
 }
 
 .navbar-logo {

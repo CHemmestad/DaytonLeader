@@ -23,34 +23,35 @@ import Animated from "./Animated.js";
 
 function App() {
   const [contacts, setContacts] = useState([]);
-  const [userRole, setUserRole] = useState(null);
+  // const [userRole, setUserRole] = useState("admin");
+  const [userRole, setUserRole] = useState("null");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   return (
     <div className="App">
       {userRole ? (
-        <Router>
+        <Router basename="/DaytonLeader">
+        {/* // <Router> */}
           <div className="d-flex">
-            {userRole && <SideBar userRole={userRole} username={username} password={password} />}
-            <body>
+            {userRole && <SideBar userRole={userRole} username={username} />}
             <div className="flex-grow-1 p-3" 
-                        style={{
-                          width: '88vw',
-                          minHeight: '100vh',
-                          backgroundImage: `url(${background})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center',
-                          backgroundAttachment: 'fixed',
-                          backgroundColor: 'darkRed',
-                    }}>
-              <h1 className="text-center">Movie Reviews App</h1>
+              style={{
+                width: '88vw',
+                minHeight: '100vh',
+                // backgroundImage: `url(${background})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundAttachment: 'fixed',
+                backgroundColor: 'white',
+              }}>
+              <h1 className="text-center">Dayton Leader</h1>
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/contacts" element={<Contacts contacts={contacts} setContacts={setContacts} />} />
+                {/* <Route path="/contacts" element={<Contacts contacts={contacts} setContacts={setContacts} />} />
                 <Route path="/contacts/action" element={<Action contacts={contacts} setContacts={setContacts} />} />
                 <Route path="/contacts/animated" element={<Animated contacts={contacts} setContacts={setContacts} />} />
                 <Route path="/contacts/comedy" element={<Comedy contacts={contacts} setContacts={setContacts} />} />
-                <Route path="/contacts/thriller" element={<Thriller contacts={contacts} setContacts={setContacts} />} />
+                <Route path="/contacts/thriller" element={<Thriller contacts={contacts} setContacts={setContacts} />} /> */}
                 <Route path="/searchContacts" element={<SearchContact contacts={contacts} setContacts={setContacts} />} />
                 <Route path="/new_message" element={<NewMessage contacts={contacts} setContacts={setContacts} />} />
                 <Route path="/FAQs" element={<FAQs />} />
@@ -64,7 +65,6 @@ function App() {
                 )}
               </Routes>
             </div>
-            </body>
           </div>
         </Router>
       ) : (

@@ -26,18 +26,19 @@ const Sidebar = ({ userRole, username }) => {
         <div className="d-flex flex-column vh-200 p-3" 
         style={{
             width: '250px',
-            backgroundColor: 'darkRed',
+            backgroundColor: '#570335',
             height: '100vh', // Set the height to 100vh to fill the entire screen
             position: 'sticky', // Fix the sidebar on the left side
             top: 0, 
+            color: 'white'
         }}
         >
             <h2 className="text-center">Navigation</h2>
             <ul className="nav flex-column">
                 <li className="nav-item">
-                    <Link to="/" className="nav-link text-dark">Home</Link>
+                    <Link to="/" className="nav-link text-white">Home</Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                     <Link to="/contacts" className="nav-link text-dark">View Movies</Link>
                 </li>
                 <li className="nav-item">
@@ -51,26 +52,26 @@ const Sidebar = ({ userRole, username }) => {
                 </li>
                 <li className="nav-item">
                     <Link to="/contacts/comedy" className="nav-link text-dark">Comedy</Link>
+                </li> */}
+                <li className="nav-item">
+                    <Link to="/searchContacts" className="nav-link text-white">Search</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/searchContacts" className="nav-link text-dark">Search Movies</Link>
+                    <Link to="/new_message" className="nav-link text-white">Add New Review</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/new_message" className="nav-link text-dark">Add New Review</Link>
+                    <Link to="/FAQs" className="nav-link text-white">FAQs</Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/FAQs" className="nav-link text-dark">FAQs</Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="/About" className="nav-link text-dark">About Us</Link>
+                    <Link to="/About" className="nav-link text-white">About Us</Link>
                 </li>
                 {userRole === "admin" && (
                     <>
                         <li className="nav-item">
-                            <Link to="/add-contact" className="nav-link text-dark">Add Movie</Link>
+                            <Link to="/add-contact" className="nav-link text-white">Add Article</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/deletecontact" className="nav-link text-dark">Delete Movie</Link>
+                            <Link to="/deletecontact" className="nav-link text-white">Delete Article</Link>
                         </li>
                     </>
                 )}
