@@ -24,14 +24,14 @@ import Animated from "./Animated.js";
 function App() {
   const [contacts, setContacts] = useState([]);
   // const [userRole, setUserRole] = useState("admin");
-  const [userRole, setUserRole] = useState("null");
+  const [userRole, setUserRole] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   return (
     <div className="App">
       {userRole ? (
-        <Router basename="/DaytonLeader">
-        {/* // <Router> */}
+        // <Router basename="/DaytonLeader">
+        <Router>
           <div className="d-flex">
             {userRole && <SideBar userRole={userRole} username={username} />}
             <div className="flex-grow-1 p-3" 
