@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from './logo.svg';
 import './App.css';
@@ -31,7 +32,7 @@ function App() {
     <div className="App">
       {userRole ? (
         <Router basename="/DaytonLeader">
-        {/* <Router> */}
+        {/* </Router><Router> */}
           <div className="d-flex">
             {userRole && <SideBar userRole={userRole} username={username} />}
             <div className="flex-grow-1 p-3" 
