@@ -1,20 +1,18 @@
 {
   "files": {
-    "main.css": "/DaytonLeader/static/css/main.4c276fc4.css",
-    "main.js": "/DaytonLeader/static/js/main.c49e40d1.js",
+    "main.css": "/DaytonLeader/static/css/main.7fdcc5c5.css",
+    "main.js": "/DaytonLeader/static/js/main.ad259718.js",
     "static/js/453.8ab44547.chunk.js": "/DaytonLeader/static/js/453.8ab44547.chunk.js",
-    "static/media/caleb.jpg": "/DaytonLeader/static/media/caleb.e9d31d97ed42e5ab28aa.jpg",
     "static/media/Background.webp": "/DaytonLeader/static/media/Background.6c1f8f5d5f0cf37049cb.webp",
-    "static/media/Logo.webp": "/DaytonLeader/static/media/Logo.b640547d18205f5fe80b.webp",
-    "static/media/griffin.jpg": "/DaytonLeader/static/media/griffin.821cf463a9994f3217e7.jpg",
+    "static/media/logo.jpg": "/DaytonLeader/static/media/logo.7b4f9da4d5cf9adc1142.jpg",
     "static/media/logo.svg": "/DaytonLeader/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/DaytonLeader/index.html",
-    "main.4c276fc4.css.map": "/DaytonLeader/static/css/main.4c276fc4.css.map",
-    "main.c49e40d1.js.map": "/DaytonLeader/static/js/main.c49e40d1.js.map",
+    "main.7fdcc5c5.css.map": "/DaytonLeader/static/css/main.7fdcc5c5.css.map",
+    "main.ad259718.js.map": "/DaytonLeader/static/js/main.ad259718.js.map",
     "453.8ab44547.chunk.js.map": "/DaytonLeader/static/js/453.8ab44547.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4c276fc4.css",
-    "static/js/main.c49e40d1.js"
+    "static/css/main.7fdcc5c5.css",
+    "static/js/main.ad259718.js"
   ]
 }
