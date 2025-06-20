@@ -30,8 +30,8 @@ function App() {
   return (
     <div className="App">
       {userRole ? (
-        // <Router basename="/DaytonLeader">
-        <Router>
+        <Router basename="/DaytonLeader">
+        {/* <Router> */}
           <div className="d-flex">
             {userRole && <SideBar userRole={userRole} username={username} />}
             <div className="flex-grow-1 p-3" 
