@@ -1,12 +1,3 @@
-body {
-    /* height: 100%; */
-    background-image: url('./Images/background.webp'); /*Specify the path to your image */
-    background-attachment: fixed; 
-    /* background-size: cover; Make the image cover the entire background */
-    /* padding-top: 40rem; */
-    /* background-position: center; Center the image */
-}
-
 /* footer {
     background-color: bg-dark;
 } */
@@ -18,7 +9,7 @@ main {
 }
 
 h1 {
-    color: black;
+    color: white;
     font-family: inherit;
     text-shadow:     
     -1px -1px 0 #000,
@@ -57,7 +48,7 @@ h3 {
     padding: .75rem;
     margin-bottom: 1.5rem;
     background-color: rgba(36, 36, 36, 0.901);
-    border: 4px solid rgba(85, 6, 6, 0.612);
+    border: 4px solid rgb(255, 255, 255);
     border-radius: 5%;
 }
 

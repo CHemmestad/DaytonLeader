@@ -2,10 +2,8 @@ import React, { useState } from "react";
 // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import logo from './logo.svg';
 import './App.css';
 import reportWebVitals from './reportWebVitals.js';
-import background from "./Images/Background.webp"
 import SideBar from "./SideBar.js";
 import Contacts from "./Contacts.js";
 import AddContact from "./AddContacts.js";
@@ -24,8 +22,8 @@ import Animated from "./Animated.js";
 
 function App() {
   const [contacts, setContacts] = useState([]);
-  // const [userRole, setUserRole] = useState("admin");
-  const [userRole, setUserRole] = useState(null);
+  const [userRole, setUserRole] = useState("user");
+  // const [userRole, setUserRole] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   return (
@@ -35,7 +33,7 @@ function App() {
         <Router>
           <div className="d-flex">
             {userRole && <SideBar userRole={userRole} username={username} />}
-            <div className="flex-grow-1 p-3" 
+            <div className="flex-grow-1" 
               style={{
                 width: '88vw',
                 minHeight: '100vh',
@@ -44,8 +42,9 @@ function App() {
                 backgroundPosition: 'center',
                 backgroundAttachment: 'fixed',
                 backgroundColor: 'white',
+                padding: '0px',
+                margin: '0px',
               }}>
-              <h1 className="text-center">Dayton Leader</h1>
               <Routes>
                 <Route path="/" element={<Home />} />
                 {/* <Route path="/contacts" element={<Contacts contacts={contacts} setContacts={setContacts} />} />
