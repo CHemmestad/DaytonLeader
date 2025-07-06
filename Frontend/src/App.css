@@ -250,3 +250,9 @@ h3 {
   border: 4px solid rgba(85, 6, 6, 0.612);
   border-radius: 5%;
 }
+
+footer {
+  min-height: 40px;
+  background-color: lightgray;
+  color: #570335;
+}

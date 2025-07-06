@@ -12,8 +12,9 @@ import SearchContact from "./SearchContacts.js";
 import Authentication from "./Login";
 import NewMessage from "./NewMessages.js";
 import Home from "./Home.js";
-import FAQs from "./FAQ.js"; 
+import FAQs from "./FAQ.js";
 import About from "./About.js";
+import AdBar from "./AdBar.js";
 import Action from "./Action.js";
 import Comedy from "./Comedy.js";
 import Thriller from "./Thriller.js";
@@ -22,7 +23,7 @@ import Animated from "./Animated.js";
 
 function App() {
   const [contacts, setContacts] = useState([]);
-  const [userRole, setUserRole] = useState("user");
+  const [userRole, setUserRole] = useState("none");
   // const [userRole, setUserRole] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,39 +33,29 @@ function App() {
         // <Router basename="/DaytonLeader">
         <Router>
           <div className="d-flex">
-            {userRole && <SideBar userRole={userRole} username={username} />}
-            <div className="flex-grow-1" 
-              style={{
-                width: '88vw',
-                minHeight: '100vh',
-                // backgroundImage: `url(${background})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundAttachment: 'fixed',
-                backgroundColor: 'white',
-                padding: '0px',
-                margin: '0px',
-              }}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                {/* <Route path="/contacts" element={<Contacts contacts={contacts} setContacts={setContacts} />} />
-                <Route path="/contacts/action" element={<Action contacts={contacts} setContacts={setContacts} />} />
-                <Route path="/contacts/animated" element={<Animated contacts={contacts} setContacts={setContacts} />} />
-                <Route path="/contacts/comedy" element={<Comedy contacts={contacts} setContacts={setContacts} />} />
-                <Route path="/contacts/thriller" element={<Thriller contacts={contacts} setContacts={setContacts} />} /> */}
-                <Route path="/searchContacts" element={<SearchContact contacts={contacts} setContacts={setContacts} />} />
-                <Route path="/new_message" element={<NewMessage contacts={contacts} setContacts={setContacts} />} />
-                <Route path="/FAQs" element={<FAQs />} />
-                <Route path="/About" element={<About/>}/>
-                {userRole === "admin" && (
-                  <>
-                    <Route path="/add-contact" element={<AddContact contacts={contacts} setContacts={setContacts} />} />
-                    <Route path="/deletecontact" element={<DeleteContact contacts={contacts} setContacts={setContacts} />} />
-                    {/* <Route path="/updatecontact" element={<UpdateContact contacts={contacts} setContacts={setContacts} />} /> */}
-                  </>
-                )}
-              </Routes>
+            <SideBar userRole={userRole} username={username} />
+            <div className="flex-grow-1 d-flex flex-column">
+              <div className="flex-grow-1">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/searchContacts" element={<SearchContact contacts={contacts} setContacts={setContacts} />} />
+                  <Route path="/new_message" element={<NewMessage contacts={contacts} setContacts={setContacts} />} />
+                  <Route path="/FAQs" element={<FAQs />} />
+                  <Route path="/About" element={<About />} />
+                  {userRole === "admin" && (
+                    <>
+                      <Route path="/add-contact" element={<AddContact contacts={contacts} setContacts={setContacts} />} />
+                      <Route path="/deletecontact" element={<DeleteContact contacts={contacts} setContacts={setContacts} />} />
+                      {/* <Route path="/updatecontact" element={<UpdateContact contacts={contacts} setContacts={setContacts} />} /> */}
+                    </>
+                  )}
+                </Routes>
+              </div>
+              <footer className="p-2 text-center">
+                <p style={{margin: '0px'}}>Copyright © {new Date().getFullYear()} The Dayton Leader - All Rights Reserved.</p>
+              </footer>
             </div>
+            {(userRole !== "user" || userRole === "admin") && <AdBar />}
           </div>
         </Router>
       ) : (

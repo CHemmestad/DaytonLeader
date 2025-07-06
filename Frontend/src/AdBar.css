@@ -1,0 +1,41 @@
+.adbar-container {
+    width: 20vw;
+    min-width: 100px;
+    height: 100vh;
+    overflow-y: auto;
+    background-color: '#570335';
+    padding: 1rem;
+    box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+}
+
+.adcard {
+    display: block;
+    background: white;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ad-image {
+    width: 100%;
+    border-radius: 4px;
+}
+
+.ad-logo {
+    width: 60%;
+    margin-top: 0.5rem;
+}
+
+@keyframes scrollAds {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%); /* Adjust depending on content height */
+  }
+}

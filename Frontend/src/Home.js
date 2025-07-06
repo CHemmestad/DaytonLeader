@@ -26,10 +26,10 @@ function Home() {
     }, [showModal]);
 
     useEffect(() => {
-        fetch('/aboutText.txt')
+        fetch('aboutText.txt')
             .then((response) => response.text())
             .then((text) => setAboutText(text));
-        fetch('/featuredArticleText.txt')
+        fetch('featuredArticleText.txt')
             .then((response) => response.text())
             .then((text) => setFeaturedArticle(text));
     }, []);

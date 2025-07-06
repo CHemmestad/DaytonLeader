@@ -31,6 +31,7 @@ const Sidebar = ({ userRole, username }) => {
         <div className="d-flex flex-column vh-100 p-3"
             style={{
                 width: '160px',
+                // minWidth: '100px',
                 backgroundColor: '#570335',
                 // height: '100vh', // Set the height to 100vh to fill the entire screen
                 position: 'sticky', // Fix the sidebar on the left side
@@ -65,10 +66,16 @@ const Sidebar = ({ userRole, username }) => {
                                 <Link to="/" className="nav-link text-white">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/new_message" className="nav-link text-white">Articles</Link>
+                                <Link to="/new_message" className="nav-link text-white">Paper</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to="/FAQs" className="nav-link text-white">Subcribe</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/About" className="nav-link text-white">Sponsors</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/About" className="nav-link text-white">Contact</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to="/About" className="nav-link text-white">About</Link>
