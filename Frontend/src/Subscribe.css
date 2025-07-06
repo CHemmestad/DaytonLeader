@@ -1,0 +1,42 @@
+.subscribe-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.subscribe-container h2 {
+  margin-bottom: 2rem;
+  color: #570335;
+}
+
+.plans {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.plan-card {
+  background-color: #f8f8f8;
+  border: 2px solid #570335;
+  border-radius: 10px;
+  padding: 1.5rem;
+  width: 240px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.plan-card:hover {
+  transform: scale(1.03);
+}
+
+.plan-card {
+  color: #570335;
+  margin-bottom: 0.5rem;
+}
+
+.plan-card p {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}

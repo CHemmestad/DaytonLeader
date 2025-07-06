@@ -67,16 +67,21 @@ const AdBar = () => {
 
     useEffect(() => {
         const scrollContainer = scrollRef.current;
-        const scrollStep = 1; // pixels per frame
-        const intervalTime = 30; // milliseconds
+        let scrollStep = 1; // initial scroll direction: down
+        const intervalTime = 30; // ms
 
         const interval = setInterval(() => {
             if (scrollContainer) {
+                // Change direction at bottom
                 if (scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight) {
-                    scrollContainer.scrollTop = 0; // Reset to top
-                } else {
-                    scrollContainer.scrollTop += scrollStep;
+                    scrollStep = -1;
                 }
+                // Change direction at top
+                if (scrollContainer.scrollTop <= 0) {
+                    scrollStep = 1;
+                }
+
+                scrollContainer.scrollTop += scrollStep;
             }
         }, intervalTime);
 

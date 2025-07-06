@@ -153,6 +153,13 @@ h3 {
   color: white;
 }
 
+.btn:hover,
+.btn:focus,
+.btn:active {
+  background-color: #570335;
+  color: white;
+  box-shadow: none;
+}
 
 .large-font {
   font-size: 50px;

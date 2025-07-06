@@ -15,6 +15,9 @@ import Home from "./Home.js";
 import FAQs from "./FAQ.js";
 import About from "./About.js";
 import AdBar from "./AdBar.js";
+import Paper from "./Paper.js";
+import Subscribe from "./Subscribe.js";
+import Contact from "./Contact.js";
 import Action from "./Action.js";
 import Comedy from "./Comedy.js";
 import Thriller from "./Thriller.js";
@@ -24,6 +27,8 @@ import Animated from "./Animated.js";
 function App() {
   const [contacts, setContacts] = useState([]);
   const [userRole, setUserRole] = useState("none");
+  // const [userRole, setUserRole] = useState("user");
+  // const [userRole, setUserRole] = useState("admin");
   // const [userRole, setUserRole] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -38,9 +43,9 @@ function App() {
               <div className="flex-grow-1">
                 <Routes>
                   <Route path="/" element={<Home />} />
-                  <Route path="/searchContacts" element={<SearchContact contacts={contacts} setContacts={setContacts} />} />
-                  <Route path="/new_message" element={<NewMessage contacts={contacts} setContacts={setContacts} />} />
-                  <Route path="/FAQs" element={<FAQs />} />
+                  <Route path="/paper" element={<Paper userRole={userRole}/>} />
+                  <Route path="/subscribe" element={<Subscribe />} />
+                  <Route path="/contact" element={<Contact />} />
                   <Route path="/About" element={<About />} />
                   {userRole === "admin" && (
                     <>
@@ -55,7 +60,7 @@ function App() {
                 <p style={{margin: '0px'}}>Copyright © {new Date().getFullYear()} The Dayton Leader - All Rights Reserved.</p>
               </footer>
             </div>
-            {(userRole !== "user" || userRole === "admin") && <AdBar />}
+            {(userRole !== "user" && userRole !== "admin") && <AdBar />}
           </div>
         </Router>
       ) : (
