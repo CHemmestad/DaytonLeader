@@ -100,7 +100,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                 </li>
                             )}
                             <li className="nav-item">
-                                <Link to="/about" className="nav-link text-white">Sponsors</Link>
+                                <Link to="/sponsor" className="nav-link text-white">Sponsors</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to="/contact" className="nav-link text-white">Contact</Link>

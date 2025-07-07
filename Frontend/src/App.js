@@ -17,6 +17,7 @@ import About from "./About.js";
 import AdBar from "./AdBar.js";
 import Paper from "./Paper.js";
 import Subscribe from "./Subscribe.js";
+import Sponsor from "./Sponsor.js";
 import Contact from "./Contact.js";
 import { CheckoutForm, Return } from './Checkout'; 
 import Action from "./Action.js";
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/paper" element={<Paper userRole={userRole} />} />
                 <Route path="/subscribe" element={<Subscribe />} />
+                <Route path="/sponsor" element={<Sponsor />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
                 {userRole === "admin" && (
