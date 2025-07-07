@@ -18,8 +18,8 @@ var app = express();
 const allowedOrigins = ["http://localhost:3000", "https://chemmestad.github.io"];
 
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
+    origin: allowedOrigins,
+    credentials: true
 }));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -55,9 +55,9 @@ const username = process.env.COUCHBASE_USER;
 const password = process.env.COUCHBASE_PASS;
 
 const db = couchbase.connect(clusterConnStr, {
-  username,
-  password,
-  configProfile: "wanDevelopment",
+    username,
+    password,
+    configProfile: "wanDevelopment",
 });
 
 // Set up multer for image upload
@@ -76,40 +76,82 @@ if (!fs.existsSync("uploads")) {
     fs.mkdirSync("uploads");
 }
 
-app.post("/contact/login", async (req, res) => {
-  try {
-    const { username, password } = req.body;
+// This is your test secret API key.
+const stripeKey = process.env.STRIPE_KEY;
+const stripe = require('stripe')(stripeKey);
+const YOUR_DOMAIN = 'https://chemmestad.github.io';
 
-    if (!username || !password) {
-      return res.status(400).send({ error: "Username and password are required." });
+app.post('/create-checkout-session', async (req, res) => {
+    const { priceId } = req.body;
+
+    if (!priceId) {
+        return res.status(400).json({ error: 'Missing priceId' });
     }
 
-    const cluster = await db;
-    const query = `
+    try {
+        const session = await stripe.checkout.sessions.create({
+            ui_mode: 'embedded',
+            line_items: [
+                {
+                    price: priceId,
+                    quantity: 1,
+                },
+            ],
+            mode: 'payment', // or 'payment' if you're not using recurring plans
+            return_url: `${YOUR_DOMAIN}/return?session_id={CHECKOUT_SESSION_ID}`,
+        });
+
+        res.send({ clientSecret: session.client_secret });
+    } catch (err) {
+        console.error('Error creating checkout session:', err);
+        res.status(500).json({ error: 'Failed to create checkout session' });
+    }
+});
+
+
+app.get('/session-status', async (req, res) => {
+    const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+
+    res.send({
+        status: session.status,
+        customer_email: session.customer_details.email
+    });
+});
+
+app.post("/contact/login", async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).send({ error: "Username and password are required." });
+        }
+
+        const cluster = await db;
+        const query = `
       SELECT META().id, users.*
       FROM \`dayton_leader\`.\`tables\`.\`users\` AS users
       WHERE users.user = $1
       LIMIT 1
     `;
 
-    const result = await cluster.query(query, { parameters: [username] });
+        const result = await cluster.query(query, { parameters: [username] });
 
-    if (result.rows.length === 0) {
-      return res.status(401).send({ error: "Invalid username or password." });
+        if (result.rows.length === 0) {
+            return res.status(401).send({ error: "Invalid username or password." });
+        }
+
+        const user = result.rows[0];
+
+        if (user.password !== password) {
+            return res.status(401).send({ error: "Invalid username or password." });
+        }
+
+        res.status(200).send({ role: user.role });
+
+    } catch (err) {
+        console.error("Login error:", err);
+        res.status(500).send({ error: "Internal server error" });
     }
-
-    const user = result.rows[0];
-
-    if (user.password !== password) {
-      return res.status(401).send({ error: "Invalid username or password." });
-    }
-
-    res.status(200).send({ role: user.role });
-
-  } catch (err) {
-    console.error("Login error:", err);
-    res.status(500).send({ error: "Internal server error" });
-  }
 });
 
 
@@ -551,7 +593,7 @@ const port = process.env.PORT || 8081;
 const host = "0.0.0.0";
 
 app.listen(port, host, () => {
-  console.log(`App listening at http://${host}:${port}`);
+    console.log(`App listening at http://${host}:${port}`);
 });
 
 
