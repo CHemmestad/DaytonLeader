@@ -88,7 +88,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                             {userRole ? (
                                 <>
                                     <li className="nav-item">
-                                        <Link to="/About" className="nav-link text-white">Games</Link>
+                                        <Link to="/about" className="nav-link text-white">Games</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link to="/searchContacts" className="nav-link text-white">Settings</Link>
@@ -100,13 +100,13 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                 </li>
                             )}
                             <li className="nav-item">
-                                <Link to="/About" className="nav-link text-white">Sponsors</Link>
+                                <Link to="/about" className="nav-link text-white">Sponsors</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to="/contact" className="nav-link text-white">Contact</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/About" className="nav-link text-white">About</Link>
+                                <Link to="/about" className="nav-link text-white">About</Link>
                             </li>
                             {userRole === "admin" && (
                                 <>

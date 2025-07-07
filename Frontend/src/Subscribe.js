@@ -1,21 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Subscribe.css';
 import paper from "./Images/paperStack.png";
 import online from "./Images/onlinePaper.png";
 import bundle from "./Images/bundle.png";
 
 const Subscribe = () => {
-    const handleSubscribe = async (priceId) => {
-        const response = await fetch('http://localhost:8081/create-checkout-session', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ priceId }),
-        });
 
-        const { url } = await response.json();
-        window.location.href = url; // Redirects to Stripe Checkout
+    const navigate = useNavigate();
+
+    const handleSubscribe = (priceId) => {
+        navigate(`/checkout?priceId=${priceId}`);
     };
 
     return (
@@ -48,8 +43,8 @@ const Subscribe = () => {
                                 </ul>
                             </div>
                             <div className="plan-footer">
-                                <p>$100/year</p>
-                                <button className="btn" onClick={() => handleSubscribe('price_1XXX_Newspaper')}>Subscribe</button>
+                                <p>$40/year</p>
+                                <button className="btn" onClick={() => handleSubscribe('price_1RiLckQHfiVvd5iEDEsi4Bwy')}>Subscribe</button>
                             </div>
                         </div>
                     </div>
@@ -82,8 +77,8 @@ const Subscribe = () => {
                                 </ul>
                             </div>
                             <div className="plan-footer">
-                                <p>$50/year</p>
-                                <button className="btn" onClick={() => handleSubscribe('price_1XXX_Newspaper')}>Subscribe</button>
+                                <p>$20/year</p>
+                                <button className="btn" onClick={() => handleSubscribe('price_1RiLfYQHfiVvd5iEcub76Iaf')}>Subscribe</button>
                             </div>
                         </div>
                     </div>
@@ -120,8 +115,8 @@ const Subscribe = () => {
                                 </ul>
                             </div>
                             <div className="plan-footer">
-                                <p>$75/year</p>
-                                <button className="btn" onClick={() => handleSubscribe('price_1XXX_Newspaper')}>Subscribe</button>
+                                <p>$50/year</p>
+                                <button className="btn" onClick={() => handleSubscribe('price_1RiLhGQHfiVvd5iE1Dv46M53')}>Subscribe</button>
                             </div>
                         </div>
                     </div>

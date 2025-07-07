@@ -18,6 +18,7 @@ import AdBar from "./AdBar.js";
 import Paper from "./Paper.js";
 import Subscribe from "./Subscribe.js";
 import Contact from "./Contact.js";
+import { CheckoutForm, Return } from './Checkout'; 
 import Action from "./Action.js";
 import Comedy from "./Comedy.js";
 import Thriller from "./Thriller.js";
@@ -31,6 +32,7 @@ function App() {
   const [userRole, setUserRole] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   return (
     <div className="App">
       {/* {userRole ? ( */}
@@ -45,7 +47,7 @@ function App() {
                 <Route path="/paper" element={<Paper userRole={userRole} />} />
                 <Route path="/subscribe" element={<Subscribe />} />
                 <Route path="/contact" element={<Contact />} />
-                <Route path="/About" element={<About />} />
+                <Route path="/about" element={<About />} />
                 {userRole === "admin" && (
                   <>
                     <Route path="/add-contact" element={<AddContact contacts={contacts} setContacts={setContacts} />} />
@@ -53,6 +55,8 @@ function App() {
                     {/* <Route path="/updatecontact" element={<UpdateContact contacts={contacts} setContacts={setContacts} />} /> */}
                   </>
                 )}
+                <Route path="/checkout" element={<CheckoutForm />} />
+                <Route path="/return" element={<Return />} />
               </Routes>
             </div>
             <footer className="p-2 text-center">
