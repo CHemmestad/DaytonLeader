@@ -21,10 +21,10 @@ const Contact = () => {
         // You can add logic to send this data to a backend if needed
         setFormData({ name: '', email: '', message: '' });
     };
-    
+
     return (
         <div className="contact-container">
-            <h2 className="text-center mb-4">Contact Us</h2>
+            <h2 className="title text-center mb-4">Contact Us</h2>
             <form className="contact-form mx-auto" onSubmit={handleSubmit}>
                 <div className="form-group mb-3">
                     <label htmlFor="name">Name:</label>

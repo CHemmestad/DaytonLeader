@@ -26,7 +26,7 @@ const Authentication = ({ username, setUsername, password, setPassword, setUserR
             setUserRole(role);
         } catch (err) {
             console.log("Failed to log in. Please try again." + err);
-            setError("Failed to log in. Please try again. " + err);
+            setError("Failed to log in. Please try again." + err);
         } finally {
             setLoading(false);
         }

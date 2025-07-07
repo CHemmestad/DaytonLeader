@@ -28,7 +28,7 @@ const ads = [
         id: 3,
         imageUrl: 'https://www.appsflyer.com/wp-content/uploads/2021/11/What-is-an-ad-server.jpg',
         company: 'SkyNet WiFi',
-        link: 'https://www.a.net',
+        link: 'https://www.a.com',
     },
     {
         id: 4,
@@ -102,7 +102,7 @@ const AdBar = () => {
                 ref={scrollRef}
             >
                 <div className="align-items-center">
-                    <span className="title" style={{ color: 'white' }}>Ads</span>
+                    <span className="title" style={{ color: 'white' }}>ADs</span>
                 </div>
                 {/* {repeatedAds} */}
                 {ads.map(ad => (

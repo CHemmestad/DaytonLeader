@@ -26,49 +26,48 @@ import Animated from "./Animated.js";
 
 function App() {
   const [contacts, setContacts] = useState([]);
-  const [userRole, setUserRole] = useState("none");
   // const [userRole, setUserRole] = useState("user");
   // const [userRole, setUserRole] = useState("admin");
-  // const [userRole, setUserRole] = useState(null);
+  const [userRole, setUserRole] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   return (
     <div className="App">
-      {userRole ? (
-        // <Router basename="/DaytonLeader">
-        <Router>
-          <div className="d-flex">
-            <SideBar userRole={userRole} username={username} />
-            <div className="flex-grow-1 d-flex flex-column">
-              <div className="flex-grow-1">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/paper" element={<Paper userRole={userRole}/>} />
-                  <Route path="/subscribe" element={<Subscribe />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/About" element={<About />} />
-                  {userRole === "admin" && (
-                    <>
-                      <Route path="/add-contact" element={<AddContact contacts={contacts} setContacts={setContacts} />} />
-                      <Route path="/deletecontact" element={<DeleteContact contacts={contacts} setContacts={setContacts} />} />
-                      {/* <Route path="/updatecontact" element={<UpdateContact contacts={contacts} setContacts={setContacts} />} /> */}
-                    </>
-                  )}
-                </Routes>
-              </div>
-              <footer className="p-2 text-center">
-                <p style={{margin: '0px'}}>Copyright © {new Date().getFullYear()} The Dayton Leader - All Rights Reserved.</p>
-              </footer>
+      {/* {userRole ? ( */}
+      {/* // <Router basename="/DaytonLeader"> */}
+      <Router>
+        <div className="d-flex">
+          <SideBar userRole={userRole} setUserRole={setUserRole} />
+          <div className="flex-grow-1 d-flex flex-column">
+            <div className="flex-grow-1">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/paper" element={<Paper userRole={userRole} />} />
+                <Route path="/subscribe" element={<Subscribe />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/About" element={<About />} />
+                {userRole === "admin" && (
+                  <>
+                    <Route path="/add-contact" element={<AddContact contacts={contacts} setContacts={setContacts} />} />
+                    <Route path="/deletecontact" element={<DeleteContact contacts={contacts} setContacts={setContacts} />} />
+                    {/* <Route path="/updatecontact" element={<UpdateContact contacts={contacts} setContacts={setContacts} />} /> */}
+                  </>
+                )}
+              </Routes>
             </div>
-            {(userRole !== "user" && userRole !== "admin") && <AdBar />}
+            <footer className="p-2 text-center">
+              <p style={{ margin: '0px' }}>Copyright © {new Date().getFullYear()} The Dayton Leader - All Rights Reserved.</p>
+            </footer>
           </div>
-        </Router>
-      ) : (
+          {(userRole !== "user" && userRole !== "admin") && <AdBar />}
+        </div>
+      </Router>
+      {/* ) : (
         <Authentication
           username={username} setUsername={setUsername}
           password={password} setPassword={setPassword}
           setUserRole={setUserRole} />
-      )}
+      )} */}
     </div>
   );
 }

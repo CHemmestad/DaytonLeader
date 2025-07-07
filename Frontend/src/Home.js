@@ -51,7 +51,7 @@ function Home() {
                         <strong className="title large-font">The Dayton Leader</strong>
                     </h3>
                     <p style={{ whiteSpace: 'pre-line' }}>{aboutText}</p>
-                    <a className="btn" style={{ backgroundColor: '#570335', color: 'white' }} href="https://jhdaytonleader.wixsite.com/israelatwar/news" target="_blank" rel="noopener noreferrer" role="button">Link</a>
+                    <a className="btn" href="https://jhdaytonleader.wixsite.com/israelatwar/news" target="_blank" rel="noopener noreferrer" role="button">Link</a>
                 </div>
             </div>
             <div className="article-divider d-flex align-items-center m-3">
@@ -67,7 +67,7 @@ function Home() {
                     <h5 className="article-title">Knowing Your Community</h5>
                     <p className="card-text article-content article-content-fade">{featuredArticle}</p>
                     <p className="card-text"><strong>By Justine Hemmestad</strong></p>
-                    <a onClick={handleOpen} className="btn" style={{ backgroundColor: '#570335', color: 'white' }}>Read More</a>
+                    <button onClick={handleOpen} className="btn">Read More</button>
                 </div>
                 <div className="card-footer text-muted">
                     2 days ago
@@ -106,7 +106,7 @@ function Home() {
                     <div>
                         <h5 className="article-title">Special title treatment</h5>
                         <p className="card-text article-content article-content-fade">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" className="btn" style={{ backgroundColor: '#570335', color: 'white' }}>Read More</a>
+                        <button className="btn">Read More</button>
                     </div>
                     <div className="card-footer text-muted">
                         2 days ago
@@ -119,7 +119,7 @@ function Home() {
                     <div>
                         <h5 className="article-title">Special title treatment</h5>
                         <p className="card-text article-content article-content-fade">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" className="btn" style={{ backgroundColor: '#570335', color: 'white' }}>Read More</a>
+                        <button className="btn">Read More</button>
                     </div>
                     <div className="card-footer text-muted">
                         2 days ago
