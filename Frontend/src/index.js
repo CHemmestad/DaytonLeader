@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import AddContact from "./AddContacts.js";
-import DeleteContact from "./DeleteContacts.js";
-import SearchContact from "./SearchContacts.js";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

@@ -5,25 +5,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 import reportWebVitals from './reportWebVitals.js';
 import SideBar from "./SideBar.js";
-import Contacts from "./Contacts.js";
 import AddContact from "./AddContacts.js";
-import DeleteContact from "./DeleteContacts.js";
 import SearchContact from "./SearchContacts.js";
-import Authentication from "./Login";
 import NewMessage from "./NewMessages.js";
 import Home from "./Home.js";
-import FAQs from "./FAQ.js";
 import About from "./About.js";
 import AdBar from "./AdBar.js";
 import Paper from "./Paper.js";
+import Game from "./Game.js";
 import Subscribe from "./Subscribe.js";
-import Sponsor from "./Sponsor.js";
+import Israel from "./Columns/Iserael.js";
+import Picture from "./Picture.js";
 import Contact from "./Contact.js";
-import { CheckoutForm, Return } from './Checkout'; 
-import Action from "./Action.js";
-import Comedy from "./Comedy.js";
-import Thriller from "./Thriller.js";
-import Animated from "./Animated.js";
+import { CheckoutForm, Return } from './Checkout';
 // import { useState } from 'react';
 
 function App() {
@@ -31,13 +25,29 @@ function App() {
   // const [userRole, setUserRole] = useState("user");
   // const [userRole, setUserRole] = useState("admin");
   const [userRole, setUserRole] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const columnRoutes = [
+    { path: "/columns/war", element: <Israel /> },
+    // { path: "/columns/historical-perspective", element: <HistoricalPerspective /> },
+    // { path: "/columns/readers-corner", element: <ReadersCorner /> },
+    // { path: "/columns/coffee-break", element: <CoffeeBreak /> },
+    // Add more as needed
+  ];
+
+  // const columns = [
+  //   { title: "Israel At War", path: "/war" },
+  //   { title: "Historical Perspective", path: "/hist" },
+  //   { title: "Readers Corner", path: "/readers" },
+  //   { title: "Coffee Break", path: "/break" },
+  //   { title: "Coffee Therapy", path: "/therapy" },
+  //   { title: "Conservative Corner", path: "/conserv" },
+  //   { title: "Ryan's Reviews", path: "/ryan" },
+  //   { title: "Liberal Librarian", path: "/libs" },
+  //   { title: "Local Eats", path: "/eats" },
+  //   { title: "Pastor Kay", path: "/kay" },
+  // ];
 
   return (
     <div className="App">
-      {/* {userRole ? ( */}
-      {/* // <Router basename="/DaytonLeader"> */}
       <Router>
         <div className="d-flex">
           <SideBar userRole={userRole} setUserRole={setUserRole} />
@@ -46,14 +56,17 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/paper" element={<Paper userRole={userRole} />} />
+                <Route path="/game" element={<Game />} />
                 <Route path="/subscribe" element={<Subscribe />} />
-                <Route path="/sponsor" element={<Sponsor />} />
+                {columnRoutes.map((route, index) => (
+                  <Route key={index} path={route.path} element={route.element} />
+                ))}
+                <Route path="/picture" element={<Picture />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
                 {userRole === "admin" && (
                   <>
                     <Route path="/add-contact" element={<AddContact contacts={contacts} setContacts={setContacts} />} />
-                    <Route path="/deletecontact" element={<DeleteContact contacts={contacts} setContacts={setContacts} />} />
                     {/* <Route path="/updatecontact" element={<UpdateContact contacts={contacts} setContacts={setContacts} />} /> */}
                   </>
                 )}
@@ -68,12 +81,6 @@ function App() {
           {(userRole !== "user" && userRole !== "admin") && <AdBar />}
         </div>
       </Router>
-      {/* ) : (
-        <Authentication
-          username={username} setUsername={setUsername}
-          password={password} setPassword={setPassword}
-          setUserRole={setUserRole} />
-      )} */}
     </div>
   );
 }

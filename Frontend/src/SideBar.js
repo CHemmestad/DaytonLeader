@@ -6,8 +6,20 @@ import logo from "./Images/logo.jpg";
 const Sidebar = ({ userRole, setUserRole }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [username, setUsername] = useState("Caleb");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const columns = [
+        { title: "Israel At War", path: "/columns/war" },
+        { title: "Historical Perspective", path: "/columns/hist" },
+        { title: "Readers Corner", path: "/columns/readers" },
+        { title: "Coffee Break", path: "/columns/break" },
+        { title: "Coffee Therapy", path: "/columns/therapy" },
+        { title: "Conservative Corner", path: "/columns/conserv" },
+        { title: "Ryan's Reviews", path: "/columns/ryan" },
+        { title: "Liberal Librarian", path: "/columns/libs" },
+        { title: "Local Eats", path: "/columns/eats" },
+        { title: "Pastor Kay", path: "/columns/kay" },
+    ];
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -45,7 +57,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
     };
 
     return (
-        <div className="d-flex flex-column vh-100 p-3"
+        <div className="d-flex flex-column vh-100 p-3 justify-content-center"
             style={{
                 width: '160px',
                 // minWidth: '100px',
@@ -88,7 +100,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                             {userRole ? (
                                 <>
                                     <li className="nav-item">
-                                        <Link to="/about" className="nav-link text-white">Games</Link>
+                                        <Link to="/game" className="nav-link text-white">Games</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link to="/searchContacts" className="nav-link text-white">Settings</Link>
@@ -99,11 +111,31 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                     <Link to="/subscribe" className="nav-link text-white">Subcribe</Link>
                                 </li>
                             )}
-                            <li className="nav-item">
-                                <Link to="/sponsor" className="nav-link text-white">Sponsors</Link>
+                            <li class="nav-item dropdown">
+                                <a className="nav-link text-white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Columns
+                                </a>
+                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown"
+                                    style={{
+                                        textAlign: 'center',
+                                        maxHeight: '300px',
+                                        overflowY: 'scroll',
+                                    }}
+                                >
+                                    {columns.map((col, index) => (
+                                        <li className="nav-item" key={index}>
+                                            <Link to={col.path} className="nav-link text-black">
+                                                {col.title}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
                             </li>
                             <li className="nav-item">
-                                <Link to="/contact" className="nav-link text-white">Contact</Link>
+                                <Link to="/picture" className="nav-link text-white">Pictures</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/contact" className="nav-link text-white">Contact Us</Link>
                             </li>
                             <li className="nav-item">
                                 <Link to="/about" className="nav-link text-white">About</Link>
@@ -112,9 +144,6 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                 <>
                                     <li className="nav-item">
                                         <Link to="/add-contact" className="nav-link text-white">Add/Delete User</Link>
-                                    </li>
-                                    <li className="nav-item">
-                                        <Link to="/deletecontact" className="nav-link text-white">Edit</Link>
                                     </li>
                                 </>
                             )}

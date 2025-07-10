@@ -43,7 +43,7 @@ const Subscribe = () => {
                                 </ul>
                             </div>
                             <div className="plan-footer">
-                                <p>$40/year</p>
+                                <p>$50/year</p>
                                 <button className="btn" onClick={() => handleSubscribe('price_1RiLckQHfiVvd5iEDEsi4Bwy')}>Subscribe</button>
                             </div>
                         </div>
@@ -77,7 +77,7 @@ const Subscribe = () => {
                                 </ul>
                             </div>
                             <div className="plan-footer">
-                                <p>$20/year</p>
+                                <p>$35/year</p>
                                 <button className="btn" onClick={() => handleSubscribe('price_1RiLfYQHfiVvd5iEcub76Iaf')}>Subscribe</button>
                             </div>
                         </div>
@@ -115,7 +115,7 @@ const Subscribe = () => {
                                 </ul>
                             </div>
                             <div className="plan-footer">
-                                <p>$50/year</p>
+                                <p>$60/year</p>
                                 <button className="btn" onClick={() => handleSubscribe('price_1RiLhGQHfiVvd5iE1Dv46M53')}>Subscribe</button>
                             </div>
                         </div>
