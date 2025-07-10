@@ -2,6 +2,7 @@ import React, { useState } from "react";
 // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
 import reportWebVitals from './reportWebVitals.js';
 import SideBar from "./SideBar.js";
@@ -76,6 +77,26 @@ function App() {
             </div>
             <footer className="p-2 text-center">
               <p style={{ margin: '0px' }}>Copyright © {new Date().getFullYear()} The Dayton Leader - All Rights Reserved.</p>
+              <div>
+                <a
+                  href="https://www.facebook.com/daytonleader"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="me-3"
+                  style={{color: '#570335'}}
+                >
+                  <i class="bi bi-facebook fs-3"></i>
+                </a>
+                <a
+                  href="https://www.instagram.com/daytonleader/?hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="me-3"
+                  style={{color: '#570335'}}
+                >
+                  <i class="bi bi-instagram fs-3"></i>
+                </a>
+              </div>
             </footer>
           </div>
           {(userRole !== "user" && userRole !== "admin") && <AdBar />}

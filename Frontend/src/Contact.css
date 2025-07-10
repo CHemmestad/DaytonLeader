@@ -15,3 +15,53 @@
   color: white;
   width: 100%;
 }
+
+.bio-card {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background-color: #f8f9fa;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  justify-self: center;
+}
+
+.bio-text {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* vertically center within the row */
+  align-items: center;
+  /* center content horizontally */
+  text-align: center;
+}
+
+.bio-text p {
+  margin: 0.3rem 0;
+}
+
+.bios {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h4 {
+  font-family: Georgia, serif;
+  color: #570335;
+}
+
+.exciting-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(87, 3, 53, 0.6);
+}
