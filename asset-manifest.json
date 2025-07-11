@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/DaytonLeader/static/css/main.3ea2a2c5.css",
-    "main.js": "/DaytonLeader/static/js/main.94f77d58.js",
+    "main.js": "/DaytonLeader/static/js/main.6f91394c.js",
     "static/js/453.d855a71b.chunk.js": "/DaytonLeader/static/js/453.d855a71b.chunk.js",
     "static/media/article3Image.jpg": "/DaytonLeader/static/media/article3Image.bab6b7cbf70b6576c86b.jpg",
     "static/media/daytonSign.jpg": "/DaytonLeader/static/media/daytonSign.bab6b7cbf70b6576c86b.jpg",
@@ -42,11 +42,11 @@
     "static/media/B_W Coalville Stop-N-Shoop4.png": "/DaytonLeader/static/media/B_W Coalville Stop-N-Shoop4.6afbea4ab1ef90ec937b.png",
     "index.html": "/DaytonLeader/index.html",
     "main.3ea2a2c5.css.map": "/DaytonLeader/static/css/main.3ea2a2c5.css.map",
-    "main.94f77d58.js.map": "/DaytonLeader/static/js/main.94f77d58.js.map",
+    "main.6f91394c.js.map": "/DaytonLeader/static/js/main.6f91394c.js.map",
     "453.d855a71b.chunk.js.map": "/DaytonLeader/static/js/453.d855a71b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3ea2a2c5.css",
-    "static/js/main.94f77d58.js"
+    "static/js/main.6f91394c.js"
   ]
 }
