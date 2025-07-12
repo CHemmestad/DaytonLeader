@@ -1,25 +1,32 @@
 {
   "files": {
-    "main.css": "/DaytonLeader/static/css/main.c5931b1b.css",
-    "main.js": "/DaytonLeader/static/js/main.bcc35838.js",
+    "main.css": "/DaytonLeader/static/css/main.1c635a6a.css",
+    "main.js": "/DaytonLeader/static/js/main.a17b4057.js",
     "static/js/453.d855a71b.chunk.js": "/DaytonLeader/static/js/453.d855a71b.chunk.js",
+    "static/media/paperStack2.png": "/DaytonLeader/static/media/paperStack2.d3d106782872e7f40c1c.png",
     "static/media/article3Image.jpg": "/DaytonLeader/static/media/article3Image.bab6b7cbf70b6576c86b.jpg",
     "static/media/daytonSign.jpg": "/DaytonLeader/static/media/daytonSign.bab6b7cbf70b6576c86b.jpg",
     "static/media/sponsor.png": "/DaytonLeader/static/media/sponsor.1db03860e1a7f8911669.png",
     "static/media/courtney.png": "/DaytonLeader/static/media/courtney.5f798de739b4e2d3d9f3.png",
     "static/media/bundle.png": "/DaytonLeader/static/media/bundle.36313e78f4a17af8ae89.png",
-    "static/media/paperStack.png": "/DaytonLeader/static/media/paperStack.4633636a6fcb2ee01f78.png",
     "static/media/onlinePaper.png": "/DaytonLeader/static/media/onlinePaper.07b3e6a7a9f8d75b6f7b.png",
+    "static/media/background.jpg": "/DaytonLeader/static/media/background.f33b9cc3a3dca5571200.jpg",
+    "static/media/LiberalLibrarian.png": "/DaytonLeader/static/media/LiberalLibrarian.2abb3209ac6a76d16030.png",
     "static/media/justine.png": "/DaytonLeader/static/media/justine.22e64db6657e0d1f6e56.png",
+    "static/media/Justine1.png": "/DaytonLeader/static/media/Justine1.8e984005b2df4594ac73.png",
+    "static/media/Courtney1nb.png": "/DaytonLeader/static/media/Courtney1nb.5633f37ab220451ef4c2.png",
+    "static/media/Shawn1.png": "/DaytonLeader/static/media/Shawn1.f1408d6912f02d01c296.png",
     "static/media/paperExample.jpg": "/DaytonLeader/static/media/paperExample.f512a8584000df82aecf.jpg",
     "static/media/article2Image.jpg": "/DaytonLeader/static/media/article2Image.9d54f0028aca02f54661.jpg",
     "static/media/2x3 Savings State Bank.jpg": "/DaytonLeader/static/media/2x3 Savings State Bank.ae898bbbc9b7a10c3c5b.jpg",
     "static/media/emanuel ad.jpg": "/DaytonLeader/static/media/emanuel ad.2ab7d6edae631a8807a5.jpg",
     "static/media/Meredith neighbor ad.jpg": "/DaytonLeader/static/media/Meredith neighbor ad.7ae22cf71594be8e29c1.jpg",
     "static/media/2x3 Al Price.jpg": "/DaytonLeader/static/media/2x3 Al Price.aed7e79021088efcf421.jpg",
+    "static/media/bootstrap-icons.woff?": "/DaytonLeader/static/media/bootstrap-icons.1295669cd4e305c97f2c.woff",
     "static/media/2x3 Engquist.jpg": "/DaytonLeader/static/media/2x3 Engquist.7fc4ac906942eaeeb4b0.jpg",
     "static/media/blair proof two.jpg": "/DaytonLeader/static/media/blair proof two.2c91a0fc51bb971685ad.jpg",
     "static/media/2x2 Peterson Crop Serv.jpg": "/DaytonLeader/static/media/2x2 Peterson Crop Serv.069775f697af3731bc61.jpg",
+    "static/media/bootstrap-icons.woff2?": "/DaytonLeader/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
     "static/media/3x3_Classifieds.png": "/DaytonLeader/static/media/3x3_Classifieds.7be984d045f6f01a3ab2.png",
     "static/media/COLOR 3x2 tfn CHC_Dayton3x2_Aug23.png": "/DaytonLeader/static/media/COLOR 3x2 tfn CHC_Dayton3x2_Aug23.5fbfdad135297ab0a7ba.png",
     "static/media/article1Image.jpg": "/DaytonLeader/static/media/article1Image.f7dc0beecad047cecc9a.jpg",
@@ -35,12 +42,12 @@
     "static/media/Our Dayton Leader Directory.png": "/DaytonLeader/static/media/Our Dayton Leader Directory.bd0a98e5e1ca1bd749fb.png",
     "static/media/B_W Coalville Stop-N-Shoop4.png": "/DaytonLeader/static/media/B_W Coalville Stop-N-Shoop4.6afbea4ab1ef90ec937b.png",
     "index.html": "/DaytonLeader/index.html",
-    "main.c5931b1b.css.map": "/DaytonLeader/static/css/main.c5931b1b.css.map",
-    "main.bcc35838.js.map": "/DaytonLeader/static/js/main.bcc35838.js.map",
+    "main.1c635a6a.css.map": "/DaytonLeader/static/css/main.1c635a6a.css.map",
+    "main.a17b4057.js.map": "/DaytonLeader/static/js/main.a17b4057.js.map",
     "453.d855a71b.chunk.js.map": "/DaytonLeader/static/js/453.d855a71b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c5931b1b.css",
-    "static/js/main.bcc35838.js"
+    "static/css/main.1c635a6a.css",
+    "static/js/main.a17b4057.js"
   ]
 }

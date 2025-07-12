@@ -10,15 +10,15 @@ const Sidebar = ({ userRole, setUserRole }) => {
     const [password, setPassword] = useState("");
     const columns = [
         { title: "Israel At War", path: "/columns/war" },
-        { title: "Historical Perspective", path: "/columns/hist" },
-        { title: "Readers Corner", path: "/columns/readers" },
+        // { title: "Historical Perspective", path: "/columns/hist" },
+        // { title: "Readers Corner", path: "/columns/readers" },
         { title: "Coffee Break", path: "/columns/break" },
-        { title: "Coffee Therapy", path: "/columns/therapy" },
-        { title: "Conservative Corner", path: "/columns/conserv" },
-        { title: "Ryan's Reviews", path: "/columns/ryan" },
+        // { title: "Coffee Therapy", path: "/columns/therapy" },
+        // { title: "Conservative Corner", path: "/columns/conserv" },
+        // { title: "Ryann's Reviews", path: "/columns/ryan" },
         { title: "Liberal Librarian", path: "/columns/libs" },
-        { title: "Local Eats", path: "/columns/eats" },
-        { title: "Pastor Kay", path: "/columns/kay" },
+        // { title: "Local Eats", path: "/columns/eats" },
+        // { title: "Pastor Kay", path: "/columns/kay" },
     ];
 
     const handleLogin = async (e) => {
@@ -65,7 +65,8 @@ const Sidebar = ({ userRole, setUserRole }) => {
                 // height: '100vh', // Set the height to 100vh to fill the entire screen
                 position: 'sticky', // Fix the sidebar on the left side
                 top: 0,
-                color: 'white'
+                color: 'white',
+                zIndex: 10,
             }}
         >
             <div
@@ -111,17 +112,26 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                     <Link to="/subscribe" className="nav-link text-white">Subcribe</Link>
                                 </li>
                             )}
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropend">
                                 <a className="nav-link text-white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Columns
                                 </a>
-                                <ul className="dropdown-menu" aria-labelledby="navbarDropdown"
+                                <ul
+                                    className="dropdown-menu"
+                                    aria-labelledby="navbarDropdown"
                                     style={{
                                         textAlign: 'center',
                                         maxHeight: '300px',
                                         overflowY: 'scroll',
+                                        top: '50%',
+                                        transform: 'translateY(-50%)',
+                                        zIndex: 9999,
+                                        position: 'absolute',
                                     }}
                                 >
+                                    <li>
+                                        ▲
+                                    </li>
                                     {columns.map((col, index) => (
                                         <li className="nav-item" key={index}>
                                             <Link to={col.path} className="nav-link text-black">
@@ -129,6 +139,9 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                             </Link>
                                         </li>
                                     ))}
+                                    <li>
+                                        ▼
+                                    </li>
                                 </ul>
                             </li>
                             <li className="nav-item">
@@ -144,6 +157,9 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                 <>
                                     <li className="nav-item">
                                         <Link to="/add-contact" className="nav-link text-white">Add/Delete User</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/add-contact" className="nav-link text-white">Edit</Link>
                                     </li>
                                 </>
                             )}

@@ -42,11 +42,63 @@ const AdBar = () => {
             }}
         >
             <div className="align-items-center">
-                <span className="title" style={{ color: 'white' }}>ADs</span>
+                <span
+                    className="title"
+                    style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        color: 'white',
+                        backgroundColor: '#570335',
+                        padding: '0.4rem 1.2rem',
+                        borderRadius: '10px',
+                        zIndex: 10,
+                        boxShadow: '0 0px 5px rgba(0, 0, 0, 0.47)',
+                        width: '85%',
+                    }}
+                >
+                    ADs
+                </span>
+                {/* <div className="glass-card"
+                    style={{
+                        height: 'auto',
+                        position: 'absolute',
+                        top: '10px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        padding: '10px',
+                        borderRadius: '10px',
+                        zIndex: 10,
+                        width: '85%',
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(87,3,53,0.25))',
+                        backdropFilter: 'blur(3px)',
+                        WebkitBackdropFilter: 'blur(3px)',
+                    }}
+                >
+                    <span
+                        className="title"
+                        style={{
+                            top: '10px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            color: 'white',
+                            backgroundColor: '#570335',
+                            padding: '0.4rem 1.2rem',
+                            borderRadius: '10px',
+                            zIndex: 10,
+                            boxShadow: '0 0px 5px rgba(0, 0, 0, 0.47)',
+                            width: '85%',
+                        }}
+                    >
+                        ADs
+                    </span>
+                </div> */}
             </div>
             <div
                 className="adbar-container"
                 ref={scrollRef}
+                style={{ paddingTop: '12vh' }}
             >
                 {/* {repeatedAds} */}
                 {importedAds.map(ad => (

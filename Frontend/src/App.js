@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
+import ScrollToTop from './ScrollToTop.js';
 import reportWebVitals from './reportWebVitals.js';
 import SideBar from "./SideBar.js";
 import AddContact from "./AddContacts.js";
@@ -15,7 +16,9 @@ import AdBar from "./AdBar.js";
 import Paper from "./Paper.js";
 import Game from "./Game.js";
 import Subscribe from "./Subscribe.js";
-import Israel from "./Columns/Iserael.js";
+import Israel from "./Columns/Israel.js";
+import Librarian from "./Columns/Librarian.js";
+import Coffee from "./Columns/Coffee.js";
 import Picture from "./Picture.js";
 import Contact from "./Contact.js";
 import { CheckoutForm, Return } from './Checkout';
@@ -28,6 +31,8 @@ function App() {
   const [userRole, setUserRole] = useState(null);
   const columnRoutes = [
     { path: "/columns/war", element: <Israel /> },
+    { path: "/columns/libs", element: <Librarian /> },
+    { path: "/columns/break", element: <Coffee /> },
     // { path: "/columns/historical-perspective", element: <HistoricalPerspective /> },
     // { path: "/columns/readers-corner", element: <ReadersCorner /> },
     // { path: "/columns/coffee-break", element: <CoffeeBreak /> },
@@ -50,6 +55,7 @@ function App() {
   return (
     <div className="App">
       <Router>
+        <ScrollToTop />
         <div className="d-flex">
           <SideBar userRole={userRole} setUserRole={setUserRole} />
           <div className="flex-grow-1 d-flex flex-column">

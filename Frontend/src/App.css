@@ -137,6 +137,7 @@ h3 {
 
 .article-content-fade {
   position: relative;
+  z-index: 0;
 }
 
 .article-content-fade::after {
@@ -147,6 +148,7 @@ h3 {
   right: 0;
   height: 2rem;
   background: linear-gradient(to bottom, transparent, white);
+  z-index: 0;
 }
 
 .btn {

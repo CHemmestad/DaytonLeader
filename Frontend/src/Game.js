@@ -35,36 +35,61 @@ const Game = () => {
   };
 
   return (
-    <div className="wordle-container">
-      <h2>Wordle Clone</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={currentGuess}
-          onChange={handleInputChange}
-          maxLength={WORD.length}
-          disabled={gameStatus !== 'playing'}
-          className="word-input"
-        />
-        <button type="submit" disabled={gameStatus !== 'playing'}>
-          Guess
-        </button>
-      </form>
-
-      <div className="guesses">
-        {guesses.map((guess, i) => (
-          <div key={i} className="guess-row">
-            {guess.split('').map((letter, j) => (
-              <span key={j} className={`letter-box ${getLetterStyle(letter, j)}`}>
-                {letter}
-              </span>
-            ))}
-          </div>
-        ))}
+    <div className="container">
+      <h2 className="title text-center mb-4">Games</h2>
+      <div style={{ width: '100%', height: '75vh', overflow: 'hidden' }}>
+        <div
+          style={{
+            transform: 'scale(0.75)',
+            transformOrigin: 'top left',
+            width: `${100 / 0.75}%`,  // ≈ 133.33%
+            height: `${100 / 0.75}vh`, // ≈ 133.33vh
+          }}
+        >
+          <iframe
+            title="Driving Game"
+            src="/DaytonLeader/DemoGame/index.html"
+            style={{
+              width: '100%',
+              height: '100vh',
+              border: 'none',
+              borderRadius: '8px',
+            }}
+            allowFullScreen
+          ></iframe>
+        </div>
       </div>
+      {/* <div className="wordle-container">
+        <h2>Wordle Clone</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={currentGuess}
+            onChange={handleInputChange}
+            maxLength={WORD.length}
+            disabled={gameStatus !== 'playing'}
+            className="word-input"
+          />
+          <button type="submit" disabled={gameStatus !== 'playing'}>
+            Guess
+          </button>
+        </form>
 
-      {gameStatus === 'won' && <p className="win-msg">🎉 You guessed it!</p>}
-      {gameStatus === 'lost' && <p className="lose-msg">The word was {WORD}. Try again!</p>}
+        <div className="guesses">
+          {guesses.map((guess, i) => (
+            <div key={i} className="guess-row">
+              {guess.split('').map((letter, j) => (
+                <span key={j} className={`letter-box ${getLetterStyle(letter, j)}`}>
+                  {letter}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {gameStatus === 'won' && <p className="win-msg">🎉 You guessed it!</p>}
+        {gameStatus === 'lost' && <p className="lose-msg">The word was {WORD}. Try again!</p>}
+      </div> */}
     </div>
   );
 };
