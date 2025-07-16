@@ -154,6 +154,50 @@ app.post("/contact/login", async (req, res) => {
     }
 });
 
+app.post('/columns', async (req, res) => {
+    const { column, title, content, date } = req.body;
+    const key = `${column}`;
+
+    try {
+        const cluster = await db;
+
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('columns');
+        // Try upserting (will create or overwrite if exists)
+        console.log('Saving to:', key);
+        console.log('Data:', { title, content, date });
+        console.log('Using bucket/scope/collection: dayton_leader/tables/columns');
+        await collection.upsert(key, {
+            title,
+            content,
+            date,
+        });
+        res.status(200).json({ message: 'Column saved' });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to save column' });
+    }
+});
+
+app.get('/columns/:column', async (req, res) => {
+    const { column } = req.params;
+    const key = column;
+
+    try {
+        const cluster = await db;
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('columns');
+
+        const result = await collection.get(key);
+
+        res.status(200).json(result.value); // title, content, date
+    } catch (err) {
+        console.error('Error fetching column:', err);
+        res.status(404).json({ error: 'Column not found' });
+    }
+});
+
 
 // app.post("/contact/login", async (req, res) => {
 //     let num = 0;
