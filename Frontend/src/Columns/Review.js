@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import './Columns.css';
 import { getVhPx } from '../utils/viewportUtils.js';
-import background from "../Images/Backgrounds/coffeeBreak.png";
-import headshot from "../Images/HeadShots/Kendra1nb.png";
-import title from "../Images/Titles/coffeeBreak.png"
+import background from "../Images/Backgrounds/ryannsReviews.png";
+import headshot from "../Images/HeadShots/Ryann1nb.png";
+import title from "../Images/Titles/ryannsReviews.png"
 
-const Librarian = () => {
+const Review = () => {
     const [content, setContent] = useState('');
+    const textColor = 'white'
 
     const column = {
-        title: "The First Break of the Summer with COFFEE!",
-        author: "Kendra Breitsprecher",
-        date: "July 12, 2025",
+        title: "New Pizza Shop Down the Street",
+        author: "Ryann Shipley",
+        date: "July 15, 2025",
         contentPath: "/DaytonLeader/columns/demo.txt"
     };
 
@@ -24,16 +25,15 @@ const Librarian = () => {
     return (
         <div
             style={{
-                height: '100%',                         
+                height: '100%',
                 backgroundImage: `url(${background})`,
-                backgroundRepeat: 'repeat-y',            
-                backgroundSize: '100% auto',             
-                backgroundPosition: 'bottom center',       
-                backgroundAttachment: 'fixed',          
+                backgroundRepeat: 'repeat-y',
+                backgroundSize: '100% auto',
+                backgroundPosition: 'bottom center',
+                backgroundAttachment: 'fixed',
                 display: 'flex',
                 flexDirection: 'column',
             }}
-
         >
             <div className="container d-flex flex-column flex-grow-1 align-items-center">
                 <header className="header">
@@ -41,8 +41,8 @@ const Librarian = () => {
                 </header>
                 <div className="flex-grow-1 p-4" style={{ width: '100%', marginBottom: '15vh' }}>
                     <h3 className="title outline mb-2">{column.title}</h3>
-                    <p className="mb-3" style={{color: 'white'}}>By {column.author} — {column.date}</p>
-                    <div className="content glass" style={{color: 'white'}}>
+                    <p className="mb-3" style={{color: textColor}}>By {column.author} — {column.date}</p>
+                    <div className="content glass" style={{color: textColor}}>
                         {content
                             .split('\n\n') // split into paragraphs on double line breaks
                             .map((paragraph, i) => <p key={i}>{paragraph}</p>)}
@@ -51,7 +51,7 @@ const Librarian = () => {
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
                     <div className="footer-left">
                         <div className="outline author-name">{column.author}</div>
-                        <p style={{color: 'white'}}>Kendra has been teaching since God was a boy and been writing even longer than that.</p>
+                        <p style={{color: textColor}}><br /></p>
                     </div>
                     <img src={headshot} className="footer-img" alt="Footer Image" />
                 </footer>
@@ -60,4 +60,4 @@ const Librarian = () => {
     );
 };
 
-export default Librarian;
+export default Review;

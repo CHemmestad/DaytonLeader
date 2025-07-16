@@ -17,8 +17,8 @@ const About = () => {
                         <h4>Justine & Shawn Hemmestad</h4>
                         <p><strong>Justine - Education:</strong> Master’s Degree in English Literature</p>
                         <p><strong>Justine - Writing:</strong> Author of 3 novels and a contributor to 18 anthologies</p>
-                        <p><strong>Justine - Role:</strong> Editor</p>
-                        <p><strong>Shawn - Role:</strong> Graphic Designer and Photographer</p>
+                        <p><strong>Justine - Role:</strong> Editor and writer</p>
+                        <p><strong>Shawn - Role:</strong> Graphic Designer and Photography</p>
                         <p><strong>Ownership:</strong> Co-owners of the Dayton Leader</p>
                     </div>
                 </div>
@@ -28,7 +28,7 @@ const About = () => {
                         <h4>Courtney Sogard</h4>
                         <p><strong>Education:</strong> Bachelor’s in Secondary Education from Buena Vista University</p>
                         <p><strong>Occupation:</strong> Director at Dayton and Harcourt Public Libraries</p>
-                        <p><strong>Role:</strong> Managing Editor of the Dayton Leader</p>
+                        <p><strong>Role:</strong> Managing Editor and writer</p>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import image2 from "./Images/Articles/article2Image.jpg";
 import image3 from "./Images/Articles/article3Image.jpg";
 
 function Home() {
+    const [weather, setWeather] = useState(null);
     const [aboutText, setAboutText] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState(null);
@@ -75,6 +76,39 @@ function Home() {
         });
     }, []);
 
+    useEffect(() => {
+        const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
+        const location = 'Dayton,IA';
+
+        fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=${apiKey}&include=days,current`)
+            .then(res => res.json())
+            .then(data => {
+                const current = data.currentConditions;
+                const forecast = data.days.slice(1, 8); // skip today, show next 7 days
+
+                setWeather({
+                    current: {
+                        temp: Math.round(current.temp),
+                        feelslike: Math.round(current.feelslike),
+                        humidity: current.humidity,
+                        windspeed: current.windspeed,
+                        condition: current.conditions,
+                        icon: current.icon,
+                        description: current.description,
+                        precipitation: current.precip
+                    },
+                    forecast: forecast.map(day => ({
+                        date: day.datetime,
+                        icon: day.icon,
+                        high: Math.round(day.tempmax),
+                        low: Math.round(day.tempmin),
+                        condition: day.conditions,
+                    })),
+                });
+            })
+            .catch(err => console.error("Weather fetch error:", err));
+    }, []);
+
     return (
         <div>
             <div
@@ -87,6 +121,48 @@ function Home() {
                     backgroundPosition: 'center',
                 }}
             ></div>
+            {weather && (
+                <div className="weather-bar row g-0 p-1">
+                    {/* Left: Current Weather */}
+                    <div className="col-md-5">
+                        <div className="card p-3 d-flex flex-row align-items-center m-1">
+                            {/* Big Icon on the left */}
+                            <div className="display-4 me-4" style={{ fontSize: '3rem' }}>
+                                {getIcon(weather.current.icon)}
+                            </div>
+                            {/* Weather Info on the right */}
+                            <div className="text-start">
+                                <h6 className="mb-1">Currently in Dayton, IA</h6>
+                                <p className="mb-0">
+                                    Temp: {weather.current.temp}°F (Feels like {weather.current.feelslike}°F)
+                                </p>
+                                <p className="mb-0">
+                                    Humidity: {weather.current.humidity}% | Wind: {weather.current.windspeed} mph
+                                </p>
+                                <p className="mb-0">
+                                    Condition: {weather.current.condition} | Precipitation: {weather.current.precipitation}%
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Right: 6-Day Forecast */}
+                    <div className="col row">
+                        {weather.forecast.map((day, index) => (
+                            <div key={index} className="col card m-1 justify-content-center">
+                                <div style={{ fontSize: '0.9rem', fontWeight: '500' }}>
+                                    {new Date(`${day.date}T12:00:00`).toLocaleDateString('en-US', { weekday: 'short' })}
+                                </div>
+                                <div style={{ fontSize: '1.2rem' }}>
+                                    {getIcon(day.icon)} {/* Optional icon map */}
+                                </div>
+                                <div style={{ fontSize: '0.9rem' }}>
+                                    H: {day.high}°<br />L: {day.low}°
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
             <div className="about centered m-3 p-3">
                 <div className="col">
                     <h3>
@@ -214,4 +290,20 @@ function getRelativeTime(dateString) {
     if (days < 365) return `${Math.floor(days / 30)} month${Math.floor(days / 30) > 1 ? 's' : ''} ago`;
 
     return `${Math.floor(days / 365)} year${Math.floor(days / 365) > 1 ? 's' : ''} ago`;
+}
+
+function getIcon(icon) {
+    const icons = {
+        'clear-day': '☀️',
+        'clear-night': '🌙',
+        'partly-cloudy-day': '⛅',
+        'partly-cloudy-night': '🌤️',
+        'rain': '🌧️',
+        'snow': '❄️',
+        'cloudy': '☁️',
+        'fog': '🌫️',
+        'wind': '🌬️',
+        'thunder-storm': '⛈️',
+    };
+    return icons[icon] || '❓';
 }

@@ -4,7 +4,6 @@ import './Subscribe.css';
 import paper from "./Images/paperStack2.png";
 import online from "./Images/onlinePaper.png";
 import bundle from "./Images/bundle.png";
-import background from "./Images/Backgrounds/background.jpg"
 
 const Subscribe = () => {
 

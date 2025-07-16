@@ -10,15 +10,15 @@ const Sidebar = ({ userRole, setUserRole }) => {
     const [password, setPassword] = useState("");
     const columns = [
         { title: "Israel At War", path: "/columns/war" },
-        // { title: "Historical Perspective", path: "/columns/hist" },
-        // { title: "Readers Corner", path: "/columns/readers" },
+        { title: "Historical Perspectives", path: "/columns/hist" },
+        { title: "Readers Corner", path: "/columns/readers" },
         { title: "Coffee Break", path: "/columns/break" },
-        // { title: "Coffee Therapy", path: "/columns/therapy" },
-        // { title: "Conservative Corner", path: "/columns/conserv" },
-        // { title: "Ryann's Reviews", path: "/columns/ryan" },
+        { title: "Coffee Therapy", path: "/columns/therapy" },
+        { title: "Conservative Corner", path: "/columns/conserv" },
+        { title: "Ryann's Reviews", path: "/columns/ryann" },
         { title: "Liberal Librarian", path: "/columns/libs" },
-        // { title: "Local Eats", path: "/columns/eats" },
-        // { title: "Pastor Kay", path: "/columns/kay" },
+        { title: "Local Eats", path: "/columns/eats" },
+        { title: "Pastor Kay", path: "/columns/pastor" },
     ];
 
     const handleLogin = async (e) => {

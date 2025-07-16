@@ -18,7 +18,14 @@ import Game from "./Game.js";
 import Subscribe from "./Subscribe.js";
 import Israel from "./Columns/Israel.js";
 import Librarian from "./Columns/Librarian.js";
+import Conservative from "./Columns/Conservative.js";
+import Review from "./Columns/Review.js";
 import Coffee from "./Columns/Coffee.js";
+import Therapy from "./Columns/Therapy.js";
+import Historical from "./Columns/Historical.js";
+import Readers from "./Columns/Readers.js";
+import Local from "./Columns/Local.js";
+import Pastor from "./Columns/Pastor.js";
 import Picture from "./Picture.js";
 import Contact from "./Contact.js";
 import { CheckoutForm, Return } from './Checkout';
@@ -26,21 +33,24 @@ import { CheckoutForm, Return } from './Checkout';
 
 function App() {
   const [contacts, setContacts] = useState([]);
-  // const [userRole, setUserRole] = useState("user");
+  const [userRole, setUserRole] = useState("user");
   // const [userRole, setUserRole] = useState("admin");
-  const [userRole, setUserRole] = useState(null);
+  // const [userRole, setUserRole] = useState(null);
   const columnRoutes = [
     { path: "/columns/war", element: <Israel /> },
     { path: "/columns/libs", element: <Librarian /> },
     { path: "/columns/break", element: <Coffee /> },
-    // { path: "/columns/historical-perspective", element: <HistoricalPerspective /> },
-    // { path: "/columns/readers-corner", element: <ReadersCorner /> },
-    // { path: "/columns/coffee-break", element: <CoffeeBreak /> },
-    // Add more as needed
+    { path: "/columns/conserv", element: <Conservative /> },
+    { path: "/columns/ryann", element: <Review /> },
+    { path: "/columns/therapy", element: <Therapy /> },
+    { path: "/columns/hist", element: <Historical /> },
+    { path: "/columns/readers", element: <Readers /> },
+    { path: "/columns/eats", element: <Local /> },
+    { path: "/columns/pastor", element: <Pastor /> },
   ];
 
   // const columns = [
-  //   { title: "Israel At War", path: "/war" },
+  //   { title: "Israel At War", path: "/war" }, 
   //   { title: "Historical Perspective", path: "/hist" },
   //   { title: "Readers Corner", path: "/readers" },
   //   { title: "Coffee Break", path: "/break" },

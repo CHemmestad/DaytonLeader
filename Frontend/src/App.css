@@ -266,3 +266,20 @@ footer {
   background-color: lightgray;
   color: #570335;
 }
+
+.weather-bar {
+  background-color: #f0f0f0;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #ccc;
+  flex-wrap: wrap;
+}
+
+.current-weather {
+  flex: 1;
+}
+
+.forecast {
+  flex: 1;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
