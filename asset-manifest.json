@@ -1,14 +1,23 @@
 {
   "files": {
-    "main.css": "/DaytonLeader/static/css/main.db72ed47.css",
-    "main.js": "/DaytonLeader/static/js/main.f040bb2f.js",
+    "main.css": "/DaytonLeader/static/css/main.fd7087a3.css",
+    "main.js": "/DaytonLeader/static/js/main.ee4d378d.js",
     "static/js/453.d855a71b.chunk.js": "/DaytonLeader/static/js/453.d855a71b.chunk.js",
     "static/media/paperStack2.png": "/DaytonLeader/static/media/paperStack2.d3d106782872e7f40c1c.png",
     "static/media/article3Image.jpg": "/DaytonLeader/static/media/article3Image.bab6b7cbf70b6576c86b.jpg",
     "static/media/daytonSign.jpg": "/DaytonLeader/static/media/daytonSign.bab6b7cbf70b6576c86b.jpg",
     "static/media/sponsor.png": "/DaytonLeader/static/media/sponsor.1db03860e1a7f8911669.png",
     "static/media/courtney.png": "/DaytonLeader/static/media/courtney.5f798de739b4e2d3d9f3.png",
+    "static/media/historicalPerspective.png": "/DaytonLeader/static/media/historicalPerspective.4a5d6c70d541328f6840.png",
+    "static/media/Paul1nb.png": "/DaytonLeader/static/media/Paul1nb.5cc738c5aec6305a10d6.png",
+    "static/media/israelAtWar.png": "/DaytonLeader/static/media/israelAtWar.dd668f90887b826ce759.png",
+    "static/media/conservativeCorner.png": "/DaytonLeader/static/media/conservativeCorner.71e8d2815bfd644f96c0.png",
+    "static/media/coffeeTherapy.png": "/DaytonLeader/static/media/coffeeTherapy.de78fdfc9e80b3916f2a.png",
+    "static/media/pastorKay.png": "/DaytonLeader/static/media/pastorKay.8d442cdcaa9ec7ffea81.png",
+    "static/media/readersCorner.png": "/DaytonLeader/static/media/readersCorner.d2b88ead8be24282900f.png",
     "static/media/coffeeBreak.png": "/DaytonLeader/static/media/coffeeBreak.95232f4353f0547d1133.png",
+    "static/media/ryannsReviews.png": "/DaytonLeader/static/media/ryannsReviews.723b99c6cbd4b5d5a55e.png",
+    "static/media/localEats.png": "/DaytonLeader/static/media/localEats.bf35332c325fbfa4249d.png",
     "static/media/bundle.png": "/DaytonLeader/static/media/bundle.36313e78f4a17af8ae89.png",
     "static/media/onlinePaper.png": "/DaytonLeader/static/media/onlinePaper.07b3e6a7a9f8d75b6f7b.png",
     "static/media/liberalLibrarian.jpg": "/DaytonLeader/static/media/liberalLibrarian.f33b9cc3a3dca5571200.jpg",
@@ -17,10 +26,13 @@
     "static/media/Justine1.png": "/DaytonLeader/static/media/Justine1.8e984005b2df4594ac73.png",
     "static/media/Courtney1nb.png": "/DaytonLeader/static/media/Courtney1nb.5633f37ab220451ef4c2.png",
     "static/media/Shawn1.png": "/DaytonLeader/static/media/Shawn1.f1408d6912f02d01c296.png",
+    "static/media/Karen1nb.png": "/DaytonLeader/static/media/Karen1nb.69be01b94c23907bcb23.png",
     "static/media/paperExample.jpg": "/DaytonLeader/static/media/paperExample.f512a8584000df82aecf.jpg",
     "static/media/article2Image.jpg": "/DaytonLeader/static/media/article2Image.9d54f0028aca02f54661.jpg",
     "static/media/liberalLibrarian.png": "/DaytonLeader/static/media/liberalLibrarian.751ad1d210f96c7c22d1.png",
     "static/media/2x3 Savings State Bank.jpg": "/DaytonLeader/static/media/2x3 Savings State Bank.ae898bbbc9b7a10c3c5b.jpg",
+    "static/media/Justine1nb.png": "/DaytonLeader/static/media/Justine1nb.483c51e466e2a210ec7e.png",
+    "static/media/historicalPerspectives.png": "/DaytonLeader/static/media/historicalPerspectives.d6dc1288964dc0b6d7b0.png",
     "static/media/emanuel ad.jpg": "/DaytonLeader/static/media/emanuel ad.2ab7d6edae631a8807a5.jpg",
     "static/media/Meredith neighbor ad.jpg": "/DaytonLeader/static/media/Meredith neighbor ad.7ae22cf71594be8e29c1.jpg",
     "static/media/2x3 Al Price.jpg": "/DaytonLeader/static/media/2x3 Al Price.aed7e79021088efcf421.jpg",
@@ -43,13 +55,14 @@
     "static/media/logo.jpg": "/DaytonLeader/static/media/logo.7b4f9da4d5cf9adc1142.jpg",
     "static/media/Our Dayton Leader Directory.png": "/DaytonLeader/static/media/Our Dayton Leader Directory.bd0a98e5e1ca1bd749fb.png",
     "static/media/B_W Coalville Stop-N-Shoop4.png": "/DaytonLeader/static/media/B_W Coalville Stop-N-Shoop4.6afbea4ab1ef90ec937b.png",
+    "static/media/Ryann1nb.png": "/DaytonLeader/static/media/Ryann1nb.461dbd0f4b469d0b7b54.png",
     "index.html": "/DaytonLeader/index.html",
-    "main.db72ed47.css.map": "/DaytonLeader/static/css/main.db72ed47.css.map",
-    "main.f040bb2f.js.map": "/DaytonLeader/static/js/main.f040bb2f.js.map",
+    "main.fd7087a3.css.map": "/DaytonLeader/static/css/main.fd7087a3.css.map",
+    "main.ee4d378d.js.map": "/DaytonLeader/static/js/main.ee4d378d.js.map",
     "453.d855a71b.chunk.js.map": "/DaytonLeader/static/js/453.d855a71b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.db72ed47.css",
-    "static/js/main.f040bb2f.js"
+    "static/css/main.fd7087a3.css",
+    "static/js/main.ee4d378d.js"
   ]
 }
