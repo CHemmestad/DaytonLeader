@@ -21,27 +21,89 @@ const Sidebar = ({ userRole, setUserRole }) => {
         { title: "Pastor Kay", path: "/columns/pastor" },
     ];
 
+    // const handleLogin = async (e) => {
+    //     e.preventDefault();
+    //     setLoading(true);
+    //     try {
+    //         const response = await
+    //             fetch("https://daytonleader.onrender.com/contact/login", {
+    //                 method: "POST",
+    //                 headers: { "Content-Type": "application/json", },
+    //                 body: JSON.stringify({ username, password }),
+    //             }
+    //             );
+    //         if (!response.ok) {
+    //             const errorData = await response.json();
+    //             setError(errorData.error);
+    //             setLoading(false);
+    //             return;
+    //         }
+    //         const { role } = await response.json();
+    //         setUserRole(role);
+    //     } catch (err) {
+    //         console.log("Failed to log in. Please try again." + err);
+    //         setError("Failed to log in. Please try again. " + err);
+    //     } finally {
+    //         setPassword("");
+    //         setLoading(false);
+    //     }
+    // };
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+
+        if (token) {
+            setUserRole("user");
+        }
+    }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+
+        if (token) {
+            fetch("http://localhost:8081/protected", {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Invalid token");
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(data.message);
+                    setUserRole(data.role);
+                    setUsername(data.name);
+                })
+                .catch(() => {
+                    localStorage.removeItem("authToken");
+                    localStorage.removeItem("name");
+                    setUserRole(null);
+                });
+        }
+    }, []);
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await
-                fetch("https://daytonleader.onrender.com/contact/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json", },
-                    body: JSON.stringify({ username, password }),
-                }
-                );
+            const response = await fetch("http://localhost:8081/contact/login", {
+                // const response = await fetch("https://daytonleader.onrender.com/contact/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password }),
+            });
+
             if (!response.ok) {
                 const errorData = await response.json();
                 setError(errorData.error);
                 setLoading(false);
                 return;
             }
-            const { role } = await response.json();
+
+            const { role, token, name } = await response.json();
+
+            localStorage.setItem("authToken", token);
             setUserRole(role);
         } catch (err) {
-            console.log("Failed to log in. Please try again." + err);
+            console.log("Failed to log in. Please try again.", err);
             setError("Failed to log in. Please try again. " + err);
         } finally {
             setPassword("");
@@ -49,7 +111,14 @@ const Sidebar = ({ userRole, setUserRole }) => {
         }
     };
 
+    // const handleLogout = () => {
+    //     setUserRole(null);
+    //     setUsername("");
+    //     setPassword("");
+    //     setError("");
+    // };
     const handleLogout = () => {
+        localStorage.removeItem("authToken");
         setUserRole(null);
         setUsername("");
         setPassword("");

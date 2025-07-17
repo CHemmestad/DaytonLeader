@@ -52,7 +52,8 @@ function Home() {
     }, [showModal]);
 
     useEffect(() => {
-        fetch('http://0.0.0.0:8081/about')
+        fetch("https://daytonleader.onrender.com/about")
+        // fetch('http://0.0.0.0:8081/about')
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Failed to load About section');
@@ -89,7 +90,8 @@ function Home() {
     useEffect(() => {
         setLoadingArticles(true);
 
-        fetch('http://0.0.0.0:8081/article')
+        fetch("https://daytonleader.onrender.com/article")
+        // fetch('http://0.0.0.0:8081/article')
             .then(res => {
                 if (!res.ok) {
                     throw new Error('Failed to load articles section');

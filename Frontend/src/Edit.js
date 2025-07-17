@@ -66,8 +66,8 @@ const Edit = () => {
         }
 
         if (page === 'Home' && homeSection === 'About') {
-            fetch('http://0.0.0.0:8081/about', {
-            // fetch("https://daytonleader.onrender.com/about", {
+            // fetch('http://0.0.0.0:8081/about', {
+            fetch("https://daytonleader.onrender.com/about", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -93,8 +93,8 @@ const Edit = () => {
                 articleForm.append('image', formData.image);
             }
 
-            fetch('http://0.0.0.0:8081/article', {
-            // fetch("https://daytonleader.onrender.com/articles", {
+            // fetch('http://0.0.0.0:8081/article', {
+            fetch("https://daytonleader.onrender.com/articles", {
                 method: 'POST',
                 body: articleForm,
             })
