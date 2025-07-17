@@ -7,6 +7,24 @@ var express = require("express");
 var cors = require("cors");
 var fs = require("fs");
 var bodyParser = require("body-parser");
+const crypto = require('crypto');
+const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const path = require("path");
+const couchbase = require("couchbase");
+
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1]; // format: "Bearer <token>"
+
+    if (!token) return res.sendStatus(401);
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+};
 
 // var app = express();
 // app.use(cors());
@@ -30,8 +48,7 @@ app.use("/uploads", express.static("uploads")); // Serve images statically
 // const host = "localhost";
 
 // const { MongoClient } = require("mongodb");
-const multer = require("multer");
-const path = require("path");
+
 
 // const url = "mongodb://127.0.0.1:27017";
 // const dbName = "secoms3190";
@@ -40,7 +57,7 @@ const path = require("path");
 
 // MySQL
 //jdbc:mysql://coms-3090-027.class.las.iastate.edu:3306/new_schema
-const couchbase = require("couchbase");
+
 // const db = mysql.createConnection({
 //     host: "localhost",       // or 127.0.0.1
 //     user: "root",            // or your MySQL username (e.g., "Caleb")
@@ -69,6 +86,7 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + path.extname(file.originalname)); // Unique filename
     }
 });
+
 const upload = multer({ storage: storage });
 // Create "uploads" folder if it doesn't exist
 // const fs = require("fs");
@@ -146,12 +164,21 @@ app.post("/contact/login", async (req, res) => {
             return res.status(401).send({ error: "Invalid username or password." });
         }
 
-        res.status(200).send({ role: user.role });
+        const token = jwt.sign(
+            { username: user.user, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' } // 1 day expiration
+        );
 
+        res.status(200).send({ role: user.role, token });
     } catch (err) {
         console.error("Login error:", err);
         res.status(500).send({ error: "Internal server error" });
     }
+});
+
+app.get("/protected", authenticateToken, (req, res) => {
+    res.json({ message: `Welcome, ${req.user.username}!` });
 });
 
 app.post('/columns', async (req, res) => {
@@ -198,6 +225,117 @@ app.get('/columns/:column', async (req, res) => {
     }
 });
 
+app.post('/about', async (req, res) => {
+    const { text } = req.body;
+    const key = 'about';
+
+    try {
+        const cluster = await db;
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('about'); // You can use a separate collection for clarity
+
+        console.log('Saving About content to:', key);
+        await collection.upsert(key, {
+            text,
+        });
+
+        res.status(200).json({ message: 'About section saved' });
+    } catch (err) {
+        console.error('Failed to save About section:', err);
+        res.status(500).json({ error: 'Failed to save About section' });
+    }
+});
+
+app.get('/about', async (req, res) => {
+    const key = 'about';
+
+    try {
+        const cluster = await db;
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('about');
+
+        const result = await collection.get(key);
+        res.status(200).json(result.value);
+    } catch (err) {
+        console.error('Failed to fetch About section:', err);
+        res.status(404).json({ error: 'About section not found' });
+    }
+});
+
+app.post('/article', upload.single('image'), async (req, res) => {
+    const { title, author, content, date } = req.body;
+    const imageFile = req.file;
+
+    try {
+        const cluster = await db;
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('articles');
+
+        // Prepare the article document
+        const newArticle = {
+            title,
+            author,
+            date,
+            image: `/uploads/${imageFile.filename}`,
+            content,
+        };
+
+        console.log('📄 Article to save:', newArticle);
+
+        // Fetch all current article keys
+        const query = `
+            SELECT META().id, articles.date
+            FROM \`dayton_leader\`.\`tables\`.\`articles\` AS articles
+            ORDER BY articles.date ASC
+        `;
+        const result = await cluster.query(query);
+
+        // If there are already 3 articles, delete the oldest (FIFO)
+        if (result.rows.length >= 3) {
+            const oldestId = result.rows[0].id;
+            console.log('🗑️ Deleting oldest article:', oldestId);
+            await collection.remove(oldestId);
+        }
+
+        // Insert the new article with autogenerated key
+        const insertResult = await collection.insert(crypto.randomUUID(), newArticle);
+
+        console.log('✅ Article saved with key:', insertResult.cas.toString());
+        res.status(200).json({ message: 'Article saved' });
+
+    } catch (err) {
+        console.error('❌ Failed to save article:', err);
+        res.status(500).json({ error: 'Failed to save article' });
+    }
+});
+
+app.get('/article', async (req, res) => {
+    try {
+        const cluster = await db;
+
+        // Get articles sorted by date DESC
+        const query = `
+            SELECT articles.*
+            FROM \`dayton_leader\`.\`tables\`.\`articles\` AS articles
+            ORDER BY articles.date DESC
+            LIMIT 3
+        `;
+
+        const result = await cluster.query(query);
+
+        const articles = Array.isArray(result)
+            ? (Array.isArray(result[0]) ? result[0] : result)
+            : (Array.isArray(result.rows) ? result.rows : []);
+
+        res.status(200).json(articles);
+    } catch (err) {
+        console.error('Error fetching articles:', err);
+        res.status(500).json({ error: 'Failed to fetch articles' });
+    }
+});
 
 // app.post("/contact/login", async (req, res) => {
 //     let num = 0;
