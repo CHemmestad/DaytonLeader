@@ -165,21 +165,49 @@ app.post("/contact/login", async (req, res) => {
         }
 
         const token = jwt.sign(
-            { username: user.user, role: user.role },
+            { name: user.user },
             process.env.JWT_SECRET,
-            { expiresIn: '7d' } // 1 day expiration
+            { expiresIn: '7d' }
         );
 
-        res.status(200).send({ role: user.role, token });
+        res.status(200).send({ role: user.role, name: user.user, token });
     } catch (err) {
         console.error("Login error:", err);
         res.status(500).send({ error: "Internal server error" });
     }
 });
 
-app.get("/protected", authenticateToken, (req, res) => {
-    res.json({ message: `Welcome, ${req.user.username}!` });
+app.get("/protected", authenticateToken, async (req, res) => {
+    try {
+        const name = req.user.name; // from decoded token
+
+        const cluster = await db;
+        const query = `
+            SELECT users.*
+            FROM \`dayton_leader\`.\`tables\`.\`users\` AS users
+            WHERE users.user = $1
+            LIMIT 1
+        `;
+
+        const result = await cluster.query(query, { parameters: [name] });
+
+        if (result.rows.length === 0) {
+            return res.status(403).json({ error: "User not found" });
+        }
+
+        const user = result.rows[0];
+
+        res.json({
+            message: `Welcome, ${user.user}`,
+            name: name,
+            role: user.role,
+        });
+    } catch (err) {
+        console.error("Protected route error:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
+
 
 app.post('/columns', async (req, res) => {
     const { column, title, content, date } = req.body;
