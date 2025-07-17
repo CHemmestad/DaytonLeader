@@ -156,10 +156,10 @@ const Sidebar = ({ userRole, setUserRole }) => {
                             {userRole === "admin" && (
                                 <>
                                     <li className="nav-item">
-                                        <Link to="/add-contact" className="nav-link text-white">Add/Delete User</Link>
+                                        <Link to="/add-contact" className="nav-link text-white">Edit Users</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to="/add-contact" className="nav-link text-white">Edit</Link>
+                                        <Link to="/edit" className="nav-link text-white">Edit</Link>
                                     </li>
                                 </>
                             )}

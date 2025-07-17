@@ -1,38 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import banner from "./Images/daytonSign.jpg";
-import image1 from "./Images/Articles/article1Image.jpg";
-import image2 from "./Images/Articles/article2Image.jpg";
-import image3 from "./Images/Articles/article3Image.jpg";
+import image from "./Images/logo.jpg";
 
 function Home() {
     const [weather, setWeather] = useState(null);
     const [aboutText, setAboutText] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [selectedArticle, setSelectedArticle] = useState(null);
-    const [articles, setArticles] = useState([
-        {
-            title: "The Trial",
-            image: image1,
-            textFile: "/DaytonLeader/article1Text.txt",
-            author: "Justine Hemmestad",
-            date: "2025-07-09T08:00:00",
-        },
-        {
-            title: "Knowing Your Community",
-            image: image2,
-            textFile: "/DaytonLeader/article2Text.txt",
-            author: "Justine Hemmestad",
-            date: "2025-07-02T08:00:00",
-        },
-        {
-            title: "Knowing Your Community",
-            image: image2,
-            textFile: "/DaytonLeader/article2Text.txt",
-            author: "Justine Hemmestad",
-            date: "2025-07-02T08:00:00",
-        },
-    ]);
+    const [articles, setArticles] = useState([]);
+    const [loadingArticles, setLoadingArticles] = useState(true);
+
+    const defaultArticle = {
+        title: "Default",
+        image: banner, // or a default image like '/default.jpg'
+        content: "Default",
+        author: "Dayton Leader",
+        date: "2025-01-01T08:00:00",
+    };
+
+    const errorArticle = {
+        title: "Something went wrong while loading",
+        image: image, // or a default image like '/default.jpg'
+        content: "Error",
+        author: "Dayton Leader",
+        date: "2025-01-01T08:00:00",
+    };
 
     const handleClose = () => {
         setShowModal(false);
@@ -59,9 +52,65 @@ function Home() {
     }, [showModal]);
 
     useEffect(() => {
-        fetch('/DaytonLeader/aboutText.txt')
-            .then((response) => response.text())
-            .then((text) => setAboutText(text));
+        fetch('http://0.0.0.0:8081/about')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to load About section');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setAboutText(data.text || '');
+            })
+            .catch((err) => {
+                console.error('Error loading About section:', err);
+                setAboutText("We couldn't load the About section at this time.");
+            });
+    }, []);
+
+    // useEffect(() => {
+    //     // fetch('https://daytonleader.onrender.com/articles')
+    //     fetch('http://0.0.0.0:8081/article')
+    //         .then(res => {
+    //             if (!res.ok) {
+    //                 throw new Error('Failed to load articles section');
+    //             }
+    //             return res.json();
+    //         })
+    //         .then(data => {
+    //             setArticles(data);
+    //         })
+    //         .catch(err => {
+    //             console.error('Failed to fetch articles:', err);
+    //             setArticles.content("We couldn't load the article section at this time.");
+    //         });
+    // }, []);
+
+    useEffect(() => {
+        setLoadingArticles(true);
+
+        fetch('http://0.0.0.0:8081/article')
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Failed to load articles section');
+                }
+                return res.json();
+            })
+            .then(data => {
+                const filledArticles = [...data];
+
+                while (filledArticles.length < 3) {
+                    filledArticles.push(defaultArticle);
+                }
+                setArticles(filledArticles);
+            })
+            .catch(err => {
+                console.error('Failed to fetch articles:', err);
+                setArticles([errorArticle, errorArticle, errorArticle]);
+            })
+            .finally(() => {
+                setLoadingArticles(false);
+            });
     }, []);
 
     useEffect(() => {
@@ -146,7 +195,7 @@ function Home() {
                         </div>
                     </div>
                     {/* Right: 6-Day Forecast */}
-                    <div className="col row">
+                    <div className="col row g-0">
                         {weather.forecast.map((day, index) => (
                             <div key={index} className="col card m-1 justify-content-center">
                                 <div style={{ fontSize: '0.9rem', fontWeight: '500' }}>
@@ -169,7 +218,7 @@ function Home() {
                         <strong className="title large-font">The Dayton Leader</strong>
                     </h3>
                     <p style={{ whiteSpace: 'pre-line' }} dangerouslySetInnerHTML={{ __html: aboutText }}></p>
-                    <a className="btn" href="https://jhdaytonleader.wixsite.com/israelatwar/news" target="_blank" rel="noopener noreferrer" role="button">Link</a>
+                    {/* <a className="btn" href="https://jhdaytonleader.wixsite.com/israelatwar/news" target="_blank" rel="noopener noreferrer" role="button">Link</a> */}
                 </div>
             </div>
             <div className="article-divider d-flex align-items-center m-3">
@@ -177,92 +226,98 @@ function Home() {
                 <span className="px-3 title">Featured</span>
                 <div className="flex-grow-1 line-right" />
             </div>
-            <div className="text-center m-3 p-3">
-                <div
-                    className="article-image" style={{ backgroundImage: `url(${articles[0].image})` }}
-                ></div>
-                <div>
-                    <h5 className="article-title">{articles[0].title}</h5>
-                    <p className="card-text article-content article-content-fade">{articles[0].text}</p>
-                    <p className="card-text"><strong>By {articles[0].author}</strong></p>
-                    <button onClick={() => handleOpen({
-                        title: articles[0].title,
-                        image: articles[0].image,
-                        text: articles[0].text,
-                        author: articles[0].author
-                    })} className="btn">Read More</button>
-                </div>
-                <div className="card-footer text-muted">
-                    {getRelativeTime(articles[0].date)}
-                </div>
-            </div>
-            <div className="article-divider d-flex align-items-center m-3">
-                <div className="flex-grow-1 line-left" />
-                <span className="px-3 title">More</span>
-                <div className="flex-grow-1 line-right" />
-            </div>
-            <div className="container-fluid">
-                <div className="row justify-content-center">
-                    <div className="col-sm-5 p-3 m-3">
+            {loadingArticles ? (
+                <div className="text-center my-5">
+                    <div className="text-center m-3 p-3">
                         <div
-                            className="article-image" style={{ backgroundImage: `url(${articles[1].image})` }}
+                            className="article-image placeholder-glow"
+                            style={{
+                                height: '300px',
+                                backgroundColor: '#e0e0e0',
+                                borderRadius: '8px',
+                            }}
                         ></div>
+                        <div className="placeholder-glow mt-3">
+                            <h5 className="placeholder col-6"></h5>
+                            <p className="placeholder col-8"></p>
+                            <p className="placeholder col-4"></p>
+                            <button className="btn btn-secondary disabled placeholder col-4 mt-2"></button>
+                        </div>
+                        <div className="card-footer text-muted placeholder col-3 mt-3 mx-auto"></div>
+                    </div>
+                </div>
+            ) : articles.length >= 3 && (
+                <>
+                    {/* Featured Article */}
+                    <div className="text-center m-3 p-3">
+                        <div className="article-image" style={{ backgroundImage: `url(http://localhost:8081${articles[0].image})` }}></div>
                         <div>
-                            <h5 className="article-title">{articles[1].title}</h5>
-                            <p className="card-text article-content article-content-fade">{articles[1].text}</p>
-                            <p className="card-text"><strong>By {articles[1].author}</strong></p>
+                            <h5 className="article-title">{articles[0].title}</h5>
+                            <p className="card-text article-content article-content-fade">{articles[0].content}</p>
+                            <p className="card-text"><strong>By {articles[0].author}</strong></p>
                             <button onClick={() => handleOpen({
-                                title: articles[1].title,
-                                image: articles[1].image,
-                                text: articles[1].text,
-                                author: articles[1].author
+                                title: articles[0].title,
+                                image: articles[0].image,
+                                text: articles[0].content,
+                                author: articles[0].author
                             })} className="btn">Read More</button>
                         </div>
                         <div className="card-footer text-muted">
-                            {getRelativeTime(articles[1].date)}
+                            {getRelativeTime(articles[0].date)}
                         </div>
                     </div>
-                    <div className="col-sm-5 p-3 m-3">
-                        <div
-                            className="article-image" style={{ backgroundImage: `url(${articles[2].image})` }}
-                        ></div>
-                        <div>
-                            <h5 className="article-title">{articles[2].title}</h5>
-                            <p className="card-text article-content article-content-fade">{articles[2].text}</p>
-                            <p className="card-text"><strong>By {articles[2].author}</strong></p>
-                            <button onClick={() => handleOpen({
-                                title: articles[2].title,
-                                image: articles[2].image,
-                                text: articles[2].text,
-                                author: articles[2].author
-                            })} className="btn">Read More</button>
-                        </div>
-                        <div className="card-footer text-muted">
-                            {getRelativeTime(articles[2].date)}
-                        </div>
+
+                    {/* More Articles */}
+                    <div className="article-divider d-flex align-items-center m-3">
+                        <div className="flex-grow-1 line-left" />
+                        <span className="px-3 title">More</span>
+                        <div className="flex-grow-1 line-right" />
                     </div>
-                    {showModal && (
-                        <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                            <div className="modal-dialog modal-lg" role="document">
-                                <div className="modal-content">
-                                    <div className="modal-header">
-                                        <h5 className="modal-title article-title">{selectedArticle.title}</h5>
-                                        <button type="button" className="btn-close" onClick={handleClose}></button>
+                    <div className="container-fluid">
+                        <div className="row justify-content-center">
+                            {[1, 2].map(i => (
+                                <div key={i} className="col-sm-5 p-3 m-3">
+                                    <div className="article-image" style={{ backgroundImage: `url(http://localhost:8081${articles[i].image})` }}></div>
+                                    <div>
+                                        <h5 className="article-title">{articles[i].title}</h5>
+                                        <p className="card-text article-content article-content-fade">{articles[i].content}</p>
+                                        <p className="card-text"><strong>By {articles[i].author}</strong></p>
+                                        <button onClick={() => handleOpen({
+                                            title: articles[i].title,
+                                            image: articles[i].image,
+                                            text: articles[i].content,
+                                            author: articles[i].author
+                                        })} className="btn">Read More</button>
                                     </div>
-                                    <div className="modal-body text-center">
-                                        <img src={selectedArticle.image} alt="Article" style={{ maxHeight: '400px', maxWidth: '100%', borderRadius: '8px', marginBottom: '1rem' }} />
-                                        <p>{selectedArticle.text}</p>
-                                        <p><strong>By {selectedArticle.author}</strong></p>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button className="btn" onClick={handleClose}>Close</button>
+                                    <div className="card-footer text-muted">
+                                        {getRelativeTime(articles[i].date)}
                                     </div>
                                 </div>
+                            ))}
+                        </div>
+                    </div>
+                </>
+            )}
+            {showModal && (
+                <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <div className="modal-dialog modal-lg" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title article-title">{selectedArticle.title}</h5>
+                                <button type="button" className="btn-close" onClick={handleClose}></button>
+                            </div>
+                            <div className="modal-body text-center">
+                                <img src={`http://localhost:8081${selectedArticle.image}`} alt="Article" style={{ maxHeight: '400px', maxWidth: '100%', borderRadius: '8px', marginBottom: '1rem' }} />
+                                <p>{selectedArticle.text}</p>
+                                <p><strong>By {selectedArticle.author}</strong></p>
+                            </div>
+                            <div className="modal-footer">
+                                <button className="btn" onClick={handleClose}>Close</button>
                             </div>
                         </div>
-                    )}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
@@ -297,7 +352,7 @@ function getIcon(icon) {
         'clear-day': '☀️',
         'clear-night': '🌙',
         'partly-cloudy-day': '⛅',
-        'partly-cloudy-night': '🌤️',
+        'partly-cloudy-night': '🌙☁️',
         'rain': '🌧️',
         'snow': '❄️',
         'cloudy': '☁️',

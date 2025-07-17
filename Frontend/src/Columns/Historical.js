@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import './Columns.css';
 import { getVhPx } from '../utils/viewportUtils.js';
+import { ColumnData } from './ColumnData';
 import background from "../Images/Backgrounds/historicalPerspective.png";
 import headshot from "../Images/HeadShots/Justine1nb.png";
 import title from "../Images/Titles/historicalPerspectives.png"
 
 const Historical = () => {
-    const [content, setContent] = useState('');
+    // const [content, setContent] = useState('');
+    const column = ColumnData("Historical", "Justine Hemmestad");
     const textColor = 'white'
 
-    const column = {
-        title: "Something About Trump Probably",
-        author: "Justine Hemmestad",
-        date: "July 15, 2025",
-        contentPath: "/DaytonLeader/columns/demo.txt"
-    };
+    // const column = {
+    //     title: "Something About Trump Probably",
+    //     author: "Justine Hemmestad",
+    //     date: "July 15, 2025",
+    //     contentPath: "/DaytonLeader/columns/demo.txt"
+    // };
 
-    useEffect(() => {
-        fetch(column.contentPath)
-            .then((res) => res.text())
-            .then((text) => setContent(text))
-    }, []);
+    // useEffect(() => {
+    //     fetch(column.contentPath)
+    //         .then((res) => res.text())
+    //         .then((text) => setContent(text))
+    // }, []);
 
     return (
         <div
@@ -41,9 +43,9 @@ const Historical = () => {
                 </header>
                 <div className="flex-grow-1 p-4" style={{ width: '100%', marginBottom: '15vh' }}>
                     <h3 className="title outline mb-2">{column.title}</h3>
-                    <p className="mb-3" style={{color: textColor}}>By {column.author} — {column.date}</p>
+                    <p className="mb-3" style={{color: textColor}}>By {column.author} - {column.date}</p>
                     <div className="content glass" style={{color: textColor}}>
-                        {content
+                        {column.content
                             .split('\n\n') // split into paragraphs on double line breaks
                             .map((paragraph, i) => <p key={i}>{paragraph}</p>)}
                     </div>

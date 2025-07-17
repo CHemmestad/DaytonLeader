@@ -1,25 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import './Columns.css';
 import { getVhPx } from '../utils/viewportUtils.js';
+import { ColumnData } from './ColumnData';
 import background from "../Images/Backgrounds/israelAtWar.png";
 import headshot from "../Images/HeadShots/Justine1nb.png";
 import title from "../Images/Titles/israelAtWar.png"
 
 const Israel = () => {
-    const [content, setContent] = useState('');
+    // const [content, setContent] = useState('');
+    const column = ColumnData("Israel", "Justine Hemmestad");
 
-    const column = {
-        title: "Trump Bombs Iran in Attempt to End War",
-        author: "Justine Hemmestad",
-        date: "July 15, 2025",
-        contentPath: "/DaytonLeader/columns/demo.txt"
-    };
+    // const defaultColumn = {
+    //     title: "Loading...",
+    //     author: "Justine Hemmestad",
+    //     date: "Loading...",
+    //     content: "Loading...",
+    // };
 
-    useEffect(() => {
-        fetch(column.contentPath)
-            .then((res) => res.text())
-            .then((text) => setContent(text))
-    }, []);
+    // const failedFetchColumn = {
+    //     title: "Could not load title",
+    //     author: "Justine Hemmestad",
+    //     date: "Unavailable",
+    //     content: "We're sorry, this article could not be retrieved at this time.",
+    // };
+
+    // const [column, setColumn] = useState(defaultColumn);
+
+    // useEffect(() => {
+    //     fetch(column.contentPath)
+    //         .then((res) => res.text())
+    //         .then((text) => setContent(text))
+    // }, []);
+
+    // useEffect(() => {
+    //     fetch('http://0.0.0.0:8081/columns/Israel%20at%20War')
+    //         .then((res) => res.ok ? res.json() : Promise.reject('Not found'))
+    //         .then((data) => {
+    //             setColumn((prev) => ({
+    //                 ...prev,
+    //                 title: data.title || prev.title,
+    //                 date: data.date
+    //                     ? new Date(data.date).toLocaleDateString('en-US', {
+    //                         year: 'numeric',
+    //                         month: 'long',
+    //                         day: 'numeric',
+    //                     })
+    //                     : prev.date,
+    //                 content: data.content || prev.content,
+    //             }));
+    //         })
+    //         .catch(() => {
+    //             console.warn("Using fallback content (failed to fetch from DB)");
+    //             setColumn(failedFetchColumn);
+    //         });
+    // }, []);
 
     return (
         <div
@@ -45,10 +79,12 @@ const Israel = () => {
                 </div>
                 <div className="flex-grow-1 p-4" style={{ width: '100%', marginBottom: '15vh' }}>
                     <h3 className="title outline mb-2">{column.title}</h3>
-                    <p className="mb-3" style={{color: 'white'}}>By {column.author} — {column.date}</p>
-                    <div className="content glass" style={{color: 'white'}}>
-                        {content
-                            .split('\n\n') // split into paragraphs on double line breaks
+                    <p className="mb-3" style={{ color: 'white' }}>
+                        By {column.author} - {column.date}
+                    </p>
+                    <div className="content glass" style={{ color: 'white' }}>
+                        {column.content
+                            .split('\n\n')
                             .map((paragraph, i) => <p key={i}>{paragraph}</p>)}
                     </div>
                 </div>

@@ -28,14 +28,27 @@ import Local from "./Columns/Local.js";
 import Pastor from "./Columns/Pastor.js";
 import Picture from "./Picture.js";
 import Contact from "./Contact.js";
+import Edit from "./Edit.js";
 import { CheckoutForm, Return } from './Checkout';
 // import { useState } from 'react';
 
 function App() {
   const [contacts, setContacts] = useState([]);
-  const [userRole, setUserRole] = useState("user");
-  // const [userRole, setUserRole] = useState("admin");
+  // const [userRole, setUserRole] = useState("user");
+  const [userRole, setUserRole] = useState("admin");
   // const [userRole, setUserRole] = useState(null);
+
+  const constRoutes = [
+    { path: "/", element: <Home /> },
+    { path: "/paper", element: <Paper userRole={userRole} /> },
+    { path: "/subscribe", element: <Subscribe /> },
+    { path: "/picture", element: <Picture /> },
+    { path: "/contact", element: <Contact /> },
+    { path: "/about", element: <About /> },
+    { path: "/checkout", element: <CheckoutForm /> },
+    { path: "/return", element: <Return /> },
+  ]
+
   const columnRoutes = [
     { path: "/columns/war", element: <Israel /> },
     { path: "/columns/libs", element: <Librarian /> },
@@ -49,18 +62,14 @@ function App() {
     { path: "/columns/pastor", element: <Pastor /> },
   ];
 
-  // const columns = [
-  //   { title: "Israel At War", path: "/war" }, 
-  //   { title: "Historical Perspective", path: "/hist" },
-  //   { title: "Readers Corner", path: "/readers" },
-  //   { title: "Coffee Break", path: "/break" },
-  //   { title: "Coffee Therapy", path: "/therapy" },
-  //   { title: "Conservative Corner", path: "/conserv" },
-  //   { title: "Ryan's Reviews", path: "/ryan" },
-  //   { title: "Liberal Librarian", path: "/libs" },
-  //   { title: "Local Eats", path: "/eats" },
-  //   { title: "Pastor Kay", path: "/kay" },
-  // ];
+  const adminOrUserRoutes = [
+    { path: "/game", element: <Game /> },
+  ]
+
+  const adminRoutes = [
+    { path: "/add-contact", element: <AddContact contacts={contacts} setContacts={setContacts} /> },
+    { path: "/edit", element: <Edit /> },
+  ]
 
   return (
     <div className="App">
@@ -71,24 +80,22 @@ function App() {
           <div className="flex-grow-1 d-flex flex-column">
             <div className="flex-grow-1">
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/paper" element={<Paper userRole={userRole} />} />
-                <Route path="/game" element={<Game />} />
-                <Route path="/subscribe" element={<Subscribe />} />
+                {constRoutes.map((route, index) => (
+                  <Route key={index} path={route.path} element={route.element} />
+                ))}
                 {columnRoutes.map((route, index) => (
                   <Route key={index} path={route.path} element={route.element} />
                 ))}
-                <Route path="/picture" element={<Picture />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/about" element={<About />} />
-                {userRole === "admin" && (
-                  <>
-                    <Route path="/add-contact" element={<AddContact contacts={contacts} setContacts={setContacts} />} />
-                    {/* <Route path="/updatecontact" element={<UpdateContact contacts={contacts} setContacts={setContacts} />} /> */}
-                  </>
+                {(userRole === "admin" || userRole === "user") && (
+                  adminOrUserRoutes.map((route, index) => (
+                    <Route key={index} path={route.path} element={route.element} />
+                  ))
                 )}
-                <Route path="/checkout" element={<CheckoutForm />} />
-                <Route path="/return" element={<Return />} />
+                {userRole === "admin" && (
+                  adminRoutes.map((route, index) => (
+                    <Route key={index} path={route.path} element={route.element} />
+                  ))
+                )}
               </Routes>
             </div>
             <footer className="p-2 text-center">
@@ -99,7 +106,7 @@ function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="me-3"
-                  style={{color: '#570335'}}
+                  style={{ color: '#570335' }}
                 >
                   <i class="bi bi-facebook fs-3"></i>
                 </a>
@@ -108,7 +115,7 @@ function App() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="me-3"
-                  style={{color: '#570335'}}
+                  style={{ color: '#570335' }}
                 >
                   <i class="bi bi-instagram fs-3"></i>
                 </a>
