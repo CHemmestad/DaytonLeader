@@ -60,7 +60,8 @@ const Sidebar = ({ userRole, setUserRole }) => {
         const token = localStorage.getItem("authToken");
 
         if (token) {
-            fetch("http://localhost:8081/protected", {
+            // fetch("http://localhost:8081/protected", {
+            fetch("https://daytonleader.onrender.com/protected", {
                 headers: { Authorization: `Bearer ${token}` },
             })
                 .then(res => {
@@ -84,8 +85,8 @@ const Sidebar = ({ userRole, setUserRole }) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:8081/contact/login", {
-                // const response = await fetch("https://daytonleader.onrender.com/contact/login", {
+            // const response = await fetch("http://localhost:8081/contact/login", {
+            const response = await fetch("https://daytonleader.onrender.com/contact/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),

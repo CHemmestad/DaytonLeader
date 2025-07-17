@@ -94,7 +94,7 @@ const Edit = () => {
             }
 
             // fetch('http://0.0.0.0:8081/article', {
-            fetch("https://daytonleader.onrender.com/articles", {
+            fetch("https://daytonleader.onrender.com/article", {
                 method: 'POST',
                 body: articleForm,
             })

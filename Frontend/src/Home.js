@@ -252,7 +252,7 @@ function Home() {
                 <>
                     {/* Featured Article */}
                     <div className="text-center m-3 p-3">
-                        <div className="article-image" style={{ backgroundImage: `url(http://localhost:8081${articles[0].image})` }}></div>
+                        <div className="article-image" style={{ backgroundImage: `url(https://daytonleader.onrender.com${articles[0].image})` }}></div>
                         <div>
                             <h5 className="article-title">{articles[0].title}</h5>
                             <p className="card-text article-content article-content-fade">{articles[0].content}</p>
@@ -279,7 +279,7 @@ function Home() {
                         <div className="row justify-content-center">
                             {[1, 2].map(i => (
                                 <div key={i} className="col-sm-5 p-3 m-3">
-                                    <div className="article-image" style={{ backgroundImage: `url(http://localhost:8081${articles[i].image})` }}></div>
+                                    <div className="article-image" style={{ backgroundImage: `url(https://daytonleader.onrender.com${articles[i].image})` }}></div>
                                     <div>
                                         <h5 className="article-title">{articles[i].title}</h5>
                                         <p className="card-text article-content article-content-fade">{articles[i].content}</p>
@@ -309,7 +309,7 @@ function Home() {
                                 <button type="button" className="btn-close" onClick={handleClose}></button>
                             </div>
                             <div className="modal-body text-center">
-                                <img src={`http://localhost:8081${selectedArticle.image}`} alt="Article" style={{ maxHeight: '400px', maxWidth: '100%', borderRadius: '8px', marginBottom: '1rem' }} />
+                                <img src={`https://daytonleader.onrender.com${selectedArticle.image}`} alt="Article" style={{ maxHeight: '400px', maxWidth: '100%', borderRadius: '8px', marginBottom: '1rem' }} />
                                 <p>{selectedArticle.text}</p>
                                 <p><strong>By {selectedArticle.author}</strong></p>
                             </div>
