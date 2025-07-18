@@ -9,6 +9,7 @@ import title from "../Images/Titles/israelAtWar.png"
 const Israel = () => {
     // const [content, setContent] = useState('');
     const column = ColumnData("Israel", "Justine Hemmestad");
+    const textColor = 'white'
 
     // const defaultColumn = {
     //     title: "Loading...",
@@ -72,26 +73,20 @@ const Israel = () => {
                 <header className="header">
                     <img className="image" src={title} />
                 </header>
-                <div className="mt-3">
-                    <div className="col">
-                        <a className="btn" href="https://jhdaytonleader.wixsite.com/israelatwar/news" target="_blank" rel="noopener noreferrer" role="button">Link</a>
-                    </div>
-                </div>
                 <div className="flex-grow-1 p-4" style={{ width: '100%', marginBottom: '15vh' }}>
                     <h3 className="title outline mb-2">{column.title}</h3>
-                    <p className="mb-3" style={{ color: 'white' }}>
-                        By {column.author} - {column.date}
-                    </p>
-                    <div className="content glass" style={{ color: 'white' }}>
+                    <p className="mb-3" style={{ color: textColor }}>By {column.author} - {column.date}</p>
+                    <div className="content glass" style={{ color: textColor }}>
                         {column.content
-                            .split('\n\n')
+                            .split('\n\n') // split into paragraphs on double line breaks
                             .map((paragraph, i) => <p key={i}>{paragraph}</p>)}
                     </div>
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
-                    <div className="footer-left">
-                        <div className="outline author-name">{column.author}</div>
-                        <p><br /></p>
+                    <div className="footer-left no-overflow">
+                        <div className="author-name">{column.author}</div>
+                        <p style={{ color: textColor }}>Justine Hemmestad is an author of three novels and a contributor to 18 anthologies.<br />
+                            She has Master's Degree in English Literature.</p>
                     </div>
                     <img src={headshot} className="footer-img" alt="Footer Image" />
                 </footer>

@@ -43,17 +43,19 @@ const Pastor = () => {
                 </header>
                 <div className="flex-grow-1 p-4" style={{ width: '100%', marginBottom: '15vh' }}>
                     <h3 className="title outline mb-2">{column.title}</h3>
-                    <p className="mb-3" style={{color: textColor}}>By {column.author} - {column.date}</p>
-                    <div className="content glass" style={{color: textColor}}>
+                    <p className="mb-3" style={{ color: textColor }}>By {column.author} - {column.date}</p>
+                    <div className="content glass" style={{ color: textColor }}>
                         {column.content
                             .split('\n\n') // split into paragraphs on double line breaks
                             .map((paragraph, i) => <p key={i}>{paragraph}</p>)}
                     </div>
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
-                    <div className="footer-left">
-                        <div className="outline author-name">{column.author}</div>
-                        <p style={{color: textColor}}><br /></p>
+                    <div className="footer-left no-overflow">
+                        <div className="author-name">{column.author}</div>
+                        <p style={{ color: textColor }}>Pastor Kay serves the United Methodist Churches of Dayton and Harcourt as a full-time pastor and feels very honored to be in this role.
+                            She also serves as Chaplain for the police, fire, ambulance, and school system, as well as most of Southern Webster County.
+                            Pastor Kay enjoys writing poetry and short stories, as well as using artistic mediums such as pencil drawing, acrylic paints, and wood.</p>
                     </div>
                     {/* <img src={headshot} className="footer-img" alt="Footer Image" /> */}
                 </footer>

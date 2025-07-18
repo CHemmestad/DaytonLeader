@@ -51,9 +51,10 @@ const Readers = () => {
                     </div>
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
-                    <div className="footer-left">
-                        <div className="outline author-name">{column.author}</div>
-                        <p style={{color: textColor}}><br /></p>
+                    <div className="footer-left no-overflow">
+                        <div className="author-name">{column.author}</div>
+                        <p style={{ color: textColor }}>Justine Hemmestad is an author of three novels and a contributor to 18 anthologies.<br />
+                            She has Master's Degree in English Literature.</p>
                     </div>
                     <img src={headshot} className="footer-img" alt="Footer Image" />
                 </footer>

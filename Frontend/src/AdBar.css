@@ -1,42 +1,58 @@
+.adbar-container.scroll {
+  scrollbar-width: none; /* Firefox */
+}
+
+.adbar-container.scroll::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 0px;
+  background-color: transparent;
+}
+
+.adbar-container.scroll::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
 .adbar-container {
-    width: 20vw;
-    min-width: 100px;
-    height: 100vh;
-    overflow-y: auto;
-    background-color: '#570335';
-    padding: 1rem;
-    box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
+  width: 20vw;
+  min-width: 100px;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #570335;
+  padding: 1rem;
+  box-shadow: -1px 0 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
 }
 
 .adcard {
-    display: block;
-    background: white;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border-radius: 8px;
-    text-align: center;
-    text-decoration: none;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: block;
+  background: white;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .ad-image {
-    width: 100%;
-    border-radius: 4px;
+  width: 100%;
+  border-radius: 4px;
 }
 
 .ad-logo {
-    width: 60%;
-    margin-top: 0.5rem;
+  width: 60%;
+  margin-top: 0.5rem;
 }
 
 @keyframes scrollAds {
   0% {
     transform: translateY(0%);
   }
+
   100% {
-    transform: translateY(-50%); /* Adjust depending on content height */
+    transform: translateY(-50%);
+    /* Adjust depending on content height */
   }
 }
 
@@ -48,7 +64,7 @@
   -webkit-backdrop-filter: blur(5px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.5),
     inset 0 -1px 0 rgba(255, 255, 255, 0.1),
@@ -64,12 +80,10 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.8),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.8),
+      transparent);
 }
 
 .glass-card::after {
@@ -79,10 +93,8 @@
   left: 0;
   width: 1px;
   height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.8),
-    transparent,
-    rgba(255, 255, 255, 0.3)
-  );
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.8),
+      transparent,
+      rgba(255, 255, 255, 0.3));
 }

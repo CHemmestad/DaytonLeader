@@ -2,8 +2,8 @@
     -webkit-appearance: none;
     width: 7px;
     background-color: white;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-right-radius: 3.5px;
+    border-bottom-right-radius: 3.5px;
 }
 
 .scroll::-webkit-scrollbar-thumb {

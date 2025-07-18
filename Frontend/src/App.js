@@ -7,9 +7,8 @@ import './App.css';
 import ScrollToTop from './ScrollToTop.js';
 import reportWebVitals from './reportWebVitals.js';
 import SideBar from "./SideBar.js";
-import AddContact from "./AddContacts.js";
-import SearchContact from "./SearchContacts.js";
-import NewMessage from "./NewMessages.js";
+import Expired from "./ExpiredHeader.js";
+import Footer from "./Footer.js";
 import Home from "./Home.js";
 import About from "./About.js";
 import AdBar from "./AdBar.js";
@@ -28,6 +27,8 @@ import Local from "./Columns/Local.js";
 import Pastor from "./Columns/Pastor.js";
 import Picture from "./Picture.js";
 import Contact from "./Contact.js";
+import Setting from "./Setting.js";
+import User from "./User.js";
 import Edit from "./Edit.js";
 import { CheckoutForm, Return } from './Checkout';
 // import { useState } from 'react';
@@ -62,12 +63,17 @@ function App() {
     { path: "/columns/pastor", element: <Pastor /> },
   ];
 
+  const expiredRoutes = [
+    { path: "/setting", element: <Setting userRole={userRole} /> },
+  ]
+
   const adminOrUserRoutes = [
     { path: "/game", element: <Game /> },
+    { path: "/setting", element: <Setting userRole={userRole} /> },
   ]
 
   const adminRoutes = [
-    { path: "/add-contact", element: <AddContact contacts={contacts} setContacts={setContacts} /> },
+    { path: "/user", element: <User /> },
     { path: "/edit", element: <Edit /> },
   ]
 
@@ -78,6 +84,9 @@ function App() {
         <div className="d-flex">
           <SideBar userRole={userRole} setUserRole={setUserRole} />
           <div className="flex-grow-1 d-flex flex-column">
+            {userRole === "expired" && (
+              <Expired />
+            )}
             <div className="flex-grow-1">
               <Routes>
                 {constRoutes.map((route, index) => (
@@ -86,6 +95,11 @@ function App() {
                 {columnRoutes.map((route, index) => (
                   <Route key={index} path={route.path} element={route.element} />
                 ))}
+                {userRole === "expired" && (
+                  expiredRoutes.map((route, index) => (
+                    <Route key={index} path={route.path} element={route.element} />
+                  ))
+                )}
                 {(userRole === "admin" || userRole === "user") && (
                   adminOrUserRoutes.map((route, index) => (
                     <Route key={index} path={route.path} element={route.element} />
@@ -98,29 +112,7 @@ function App() {
                 )}
               </Routes>
             </div>
-            <footer className="p-2 text-center">
-              <p style={{ margin: '0px' }}>Copyright © {new Date().getFullYear()} The Dayton Leader - All Rights Reserved.</p>
-              <div>
-                <a
-                  href="https://www.facebook.com/daytonleader"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="me-3"
-                  style={{ color: '#570335' }}
-                >
-                  <i class="bi bi-facebook fs-3"></i>
-                </a>
-                <a
-                  href="https://www.instagram.com/daytonleader/?hl=en"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="me-3"
-                  style={{ color: '#570335' }}
-                >
-                  <i class="bi bi-instagram fs-3"></i>
-                </a>
-              </div>
-            </footer>
+            <Footer />
           </div>
           {(userRole !== "user" && userRole !== "admin") && <AdBar />}
         </div>

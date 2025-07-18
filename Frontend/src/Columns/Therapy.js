@@ -52,8 +52,11 @@ const Therapy = () => {
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
                     <div className="footer-left">
-                        <div className="outline author-name">{column.author}</div>
-                        <p style={{color: textColor}}><br /></p>
+                        <div className="author-name no-overflow">{column.author}</div>
+                        <p style={{color: textColor}}>Karen attended school in LeMars community and then SUI, where she received her BSN.<br />
+                        She married a Luthren minister and had to live a moral life for 35 years.<br />
+                        She began writing for the Leader when it first began.<br />
+                        She has 2 sons, 1 in politics and 1 who writes the Conservative Corner for the Leader.</p>
                     </div>
                     <img src={headshot} className="footer-img" alt="Footer Image" />
                 </footer>

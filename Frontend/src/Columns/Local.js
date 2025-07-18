@@ -51,8 +51,8 @@ const Local = () => {
                     </div>
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
-                    <div className="footer-left">
-                        <div className="outline author-name">{column.author}</div>
+                    <div className="footer-left no-overflow">
+                        <div className="author-name">{column.author}</div>
                         <p style={{color: textColor}}><br /></p>
                     </div>
                     {/* <img src={headshot} className="footer-img" alt="Footer Image" /> */}

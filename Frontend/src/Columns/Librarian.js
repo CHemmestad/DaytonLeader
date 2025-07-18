@@ -50,8 +50,8 @@ const Librarian = () => {
                     </div>
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
-                    <div className="footer-left">
-                        <div className="outline author-name">{column.author}</div>
+                    <div className="footer-left no-overflow">
+                        <div className="author-name">{column.author}</div>
                         <p>Courtney Sogard has a Bachelor's in Secondary Education from Buena Vista University.<br />
                             She is currently the Library Director at both Dayton and Harcourt Public Libraries.</p>
                     </div>

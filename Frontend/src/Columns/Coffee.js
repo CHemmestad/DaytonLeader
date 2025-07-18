@@ -9,6 +9,7 @@ import title from "../Images/Titles/coffeeBreak.png"
 const Librarian = () => {
     // const [content, setContent] = useState('');
     const column = ColumnData("Coffee", "Kendra Breitsprecher");
+    const textColor = 'white'
 
     // const column = {
     //     title: "The First Break of the Summer with COFFEE!",
@@ -43,17 +44,17 @@ const Librarian = () => {
                 </header>
                 <div className="flex-grow-1 p-4" style={{ width: '100%', marginBottom: '15vh' }}>
                     <h3 className="title outline mb-2">{column.title}</h3>
-                    <p className="mb-3" style={{color: 'white'}}>By {column.author} - {column.date}</p>
-                    <div className="content glass" style={{color: 'white'}}>
+                    <p className="mb-3" style={{color: textColor}}>By {column.author} - {column.date}</p>
+                    <div className="content glass" style={{color: textColor}}>
                         {column.content
                             .split('\n\n') // split into paragraphs on double line breaks
                             .map((paragraph, i) => <p key={i}>{paragraph}</p>)}
                     </div>
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
-                    <div className="footer-left">
-                        <div className="outline author-name">{column.author}</div>
-                        <p style={{color: 'white'}}>Kendra has been teaching since God was a boy and been writing even longer than that.</p>
+                    <div className="footer-left no-overflow">
+                        <div className="author-name">{column.author}</div>
+                        <p style={{color: textColor}}>Kendra has been teaching since God was a boy and been writing even longer than that.</p>
                     </div>
                     <img src={headshot} className="footer-img" alt="Footer Image" />
                 </footer>

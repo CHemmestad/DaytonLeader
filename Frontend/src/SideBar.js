@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { Link } from 'react-router-dom';
 import logo from "./Images/logo.jpg";
+import "./SideBar.css";
 
 const Sidebar = ({ userRole, setUserRole }) => {
     const [loading, setLoading] = useState(false);
@@ -127,7 +128,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
     };
 
     return (
-        <div className="d-flex flex-column vh-100 p-3 justify-content-center"
+        <div className="d-flex flex-column vh-100 p-1 justify-content-center"
             style={{
                 width: '160px',
                 // minWidth: '100px',
@@ -142,6 +143,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
             <div
                 className="themed-grid-col"
                 style={{
+                    marginLeft: '15%',
                     width: '150px',
                     height: '150px',
                     minWidth: '80px',
@@ -166,7 +168,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                 <Link to="/" className="nav-link text-white">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/paper" className="nav-link text-white">Paper</Link>
+                                <Link to="/paper" className="nav-link text-white">Current Issue</Link>
                             </li>
                             {userRole ? (
                                 <>
@@ -174,7 +176,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                         <Link to="/game" className="nav-link text-white">Games</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link to="/searchContacts" className="nav-link text-white">Settings</Link>
+                                        <Link to="/setting" className="nav-link text-white">Settings</Link>
                                     </li>
                                 </>
                             ) : (
@@ -187,7 +189,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                     Columns
                                 </a>
                                 <ul
-                                    className="dropdown-menu"
+                                    className="scroll dropdown-menu"
                                     aria-labelledby="navbarDropdown"
                                     style={{
                                         textAlign: 'center',
@@ -199,9 +201,6 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                         position: 'absolute',
                                     }}
                                 >
-                                    <li>
-                                        ▲
-                                    </li>
                                     {columns.map((col, index) => (
                                         <li className="nav-item" key={index}>
                                             <Link to={col.path} className="nav-link text-black">
@@ -209,9 +208,6 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                             </Link>
                                         </li>
                                     ))}
-                                    <li>
-                                        ▼
-                                    </li>
                                 </ul>
                             </li>
                             <li className="nav-item">
@@ -226,7 +222,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                             {userRole === "admin" && (
                                 <>
                                     <li className="nav-item">
-                                        <Link to="/add-contact" className="nav-link text-white">Edit Users</Link>
+                                        <Link to="/user" className="nav-link text-white">Users</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link to="/edit" className="nav-link text-white">Edit</Link>
@@ -238,7 +234,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                 </div>
             </nav>
             {userRole ? (
-                <div className="mt-auto text-center" >
+                <div className="mb-3 mt-auto text-center" >
                     <p>{username}</p>
                     <button
                         type="logout"
@@ -250,7 +246,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                     </button>
                 </div>
             ) : (
-                <form className="mt-auto text-center" style={{ width: '100%' }} onSubmit={handleLogin}>
+                <form className="mb-3 mt-auto text-center" style={{ width: '100%' }} onSubmit={handleLogin}>
                     <div className="mb-2">
                         <input type="text"
                             placeholder="Username"

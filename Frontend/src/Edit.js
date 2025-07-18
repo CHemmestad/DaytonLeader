@@ -107,7 +107,7 @@ const Edit = () => {
     };
 
     return (
-        <div className="container py-4">
+        <div className="container">
             <h2 className="title mb-4">Admin Edit Page</h2>
 
             {/* Page Selector */}

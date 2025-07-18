@@ -43,17 +43,18 @@ const Historical = () => {
                 </header>
                 <div className="flex-grow-1 p-4" style={{ width: '100%', marginBottom: '15vh' }}>
                     <h3 className="title outline mb-2">{column.title}</h3>
-                    <p className="mb-3" style={{color: textColor}}>By {column.author} - {column.date}</p>
-                    <div className="content glass" style={{color: textColor}}>
+                    <p className="mb-3" style={{ color: textColor }}>By {column.author} - {column.date}</p>
+                    <div className="content glass" style={{ color: textColor }}>
                         {column.content
                             .split('\n\n') // split into paragraphs on double line breaks
                             .map((paragraph, i) => <p key={i}>{paragraph}</p>)}
                     </div>
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
-                    <div className="footer-left">
-                        <div className="outline author-name">{column.author}</div>
-                        <p style={{color: textColor}}><br /></p>
+                    <div className="footer-left no-overflow">
+                        <div className="author-name">{column.author}</div>
+                        <p style={{ color: textColor }}>Justine Hemmestad is an author of three novels and a contributor to 18 anthologies.<br />
+                            She has Master's Degree in English Literature.</p>
                     </div>
                     <img src={headshot} className="footer-img" alt="Footer Image" />
                 </footer>

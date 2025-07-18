@@ -1,7 +1,3 @@
-// Author: Caleb Hemmestad & Griffin Urban
-// ISU Netid : cihem@iastate.edu | griffinu@iastate.edu
-// Date :  12 11, 2024
-
 require("dotenv").config();
 var express = require("express");
 var cors = require("cors");
@@ -12,6 +8,9 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const couchbase = require("couchbase");
+const { DocumentNotFoundError } = require("couchbase");
+const bcrypt = require('bcrypt');
+
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -160,9 +159,36 @@ app.post("/contact/login", async (req, res) => {
 
         const user = result.rows[0];
 
-        if (user.password !== password) {
-            return res.status(401).send({ error: "Invalid username or password." });
+        // console.log("Password submitted:", password);
+        // console.log("Password hash in DB:", user.password);
+        const match = await bcrypt.compare(password, user.password);
+        // console.log("Password match result:", match);
+
+        // if (user.password !== password) {
+        //     return res.status(401).send({ error: "Invalid username or password." });
+        // }
+
+        if (!match) {
+            return res.status(401).send({ error: "Invalid username or password2." });
         }
+
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('users');
+
+        const today = new Date().toISOString().split("T")[0];
+        let role = user.role;
+
+        if (user.expirationDate < today && (user.role !== "admin" && user.role !== "expired")) {
+            await collection.mutateIn(user.id, [
+                couchbase.MutateInSpec.replace("role", "expired")
+            ]);
+            role = "expired";
+        }
+
+        await collection.mutateIn(user.id, [
+            couchbase.MutateInSpec.replace("lastLogin", today)
+        ]);
 
         const token = jwt.sign(
             { name: user.user },
@@ -170,7 +196,7 @@ app.post("/contact/login", async (req, res) => {
             { expiresIn: '7d' }
         );
 
-        res.status(200).send({ role: user.role, name: user.user, token });
+        res.status(200).send({ role, name: user.user, token });
     } catch (err) {
         console.error("Login error:", err);
         res.status(500).send({ error: "Internal server error" });
@@ -364,6 +390,106 @@ app.get('/article', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch articles' });
     }
 });
+
+app.get("/users", async (req, res) => {
+    try {
+        const cluster = await db;
+
+        const query = `
+        SELECT META().id,
+                users.user AS username,
+                users.email,
+                users.\`role\`,
+                users.expirationDate,
+                users.lastLogin
+        FROM \`dayton_leader\`.\`tables\`.\`users\` AS users
+        `;
+        const result = await cluster.query(query);
+
+        const users = Array.isArray(result?.rows) ? result.rows : [];
+
+        res.status(200).json(users);
+    } catch (err) {
+        console.error("Error fetching users:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
+app.delete("/users/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const cluster = await db;
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('users');
+
+        await collection.remove(id);
+
+        res.status(200).json({ message: "User deleted successfully" });
+    } catch (err) {
+        console.error("Error deleting user:", err);
+        if (err.code === 13) {
+            res.status(404).json({ error: "User not found" });
+        } else {
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+});
+
+app.post("/users", async (req, res) => {
+    try {
+        const { username, email, password, role, expirationDate, lastLogin } = req.body;
+
+        if (!username || !email || !password || !role) {
+            return res.status(400).json({ error: "Missing required fields." });
+        }
+
+        const cluster = await db;
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('users');
+
+        try {
+            await collection.get(username);
+            return res.status(409).json({ error: "Username already exists." });
+        } catch (err) {
+            if (err instanceof DocumentNotFoundError) {
+                // This is expected — do nothing
+            } else {
+                console.error("Unexpected error checking user:", err);
+                return res.status(500).json({ error: "Internal server error" });
+            }
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const userData = {
+            user: username,
+            email,
+            password: hashedPassword,
+            role,
+            expirationDate,
+            lastLogin,
+            settings: {
+                newIssue: true,
+                newArticle: true,
+                columnUpdate: true,
+                events: true,
+                breakingNews: true,
+                announcements: true,
+            }
+        };
+
+        await collection.insert(username, userData);
+
+        res.status(201).json({ message: "User created", userId: username });
+    } catch (err) {
+        console.error("Error creating user:", err);
+        res.status(500).json({ error: "Internal server error" });
+    }
+});
+
 
 // app.post("/contact/login", async (req, res) => {
 //     let num = 0;

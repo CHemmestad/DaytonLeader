@@ -32,7 +32,7 @@ const AdBar = () => {
     }, []);
 
     return (
-        <div className="d-flex flex-column"
+        <div className="scroll d-flex flex-column"
             style={{
                 backgroundColor: '#570335',
                 height: '100vh',
@@ -41,7 +41,7 @@ const AdBar = () => {
                 top: 0,
             }}
         >
-            <div className="align-items-center">
+            <div className="scroll align-items-center">
                 <span
                     className="title"
                     style={{
@@ -96,7 +96,7 @@ const AdBar = () => {
                 </div> */}
             </div>
             <div
-                className="adbar-container"
+                className="scroll adbar-container"
                 ref={scrollRef}
                 style={{ paddingTop: '12vh' }}
             >

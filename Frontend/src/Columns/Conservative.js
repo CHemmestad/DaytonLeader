@@ -51,9 +51,9 @@ const Conservative = () => {
                     </div>
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
-                    <div className="footer-left">
-                        <div className="outline author-name">{column.author}</div>
-                        <p><br /></p>
+                    <div className="footer-left no-overflow">
+                        <div className="author-name">{column.author}</div>
+                        <p style={{ color: textColor }}></p>
                     </div>
                     <img src={headshot} className="footer-img" alt="Footer Image" />
                 </footer>
