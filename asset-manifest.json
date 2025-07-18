@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/DaytonLeader/static/css/main.fd7087a3.css",
-    "main.js": "/DaytonLeader/static/js/main.f9f22a58.js",
+    "main.css": "/DaytonLeader/static/css/main.718f01ee.css",
+    "main.js": "/DaytonLeader/static/js/main.26d1e4c2.js",
     "static/js/453.d855a71b.chunk.js": "/DaytonLeader/static/js/453.d855a71b.chunk.js",
     "static/media/paperStack2.png": "/DaytonLeader/static/media/paperStack2.d3d106782872e7f40c1c.png",
     "static/media/daytonSign.jpg": "/DaytonLeader/static/media/daytonSign.bab6b7cbf70b6576c86b.jpg",
-    "static/media/sponsor.png": "/DaytonLeader/static/media/sponsor.1db03860e1a7f8911669.png",
     "static/media/courtney.png": "/DaytonLeader/static/media/courtney.5f798de739b4e2d3d9f3.png",
     "static/media/historicalPerspective.png": "/DaytonLeader/static/media/historicalPerspective.4a5d6c70d541328f6840.png",
     "static/media/Paul1nb.png": "/DaytonLeader/static/media/Paul1nb.5cc738c5aec6305a10d6.png",
-    "static/media/israelAtWar.png": "/DaytonLeader/static/media/israelAtWar.dd668f90887b826ce759.png",
+    "static/media/israelAtWar.png": "/DaytonLeader/static/media/israelAtWar.1b4d28b409bfe2877a42.png",
     "static/media/conservativeCorner.png": "/DaytonLeader/static/media/conservativeCorner.71e8d2815bfd644f96c0.png",
     "static/media/coffeeTherapy.png": "/DaytonLeader/static/media/coffeeTherapy.de78fdfc9e80b3916f2a.png",
     "static/media/pastorKay.png": "/DaytonLeader/static/media/pastorKay.8d442cdcaa9ec7ffea81.png",
     "static/media/readersCorner.png": "/DaytonLeader/static/media/readersCorner.d2b88ead8be24282900f.png",
     "static/media/coffeeBreak.png": "/DaytonLeader/static/media/coffeeBreak.95232f4353f0547d1133.png",
+    "static/media/genericPictures.png": "/DaytonLeader/static/media/genericPictures.3ed27bd0996662535253.png",
     "static/media/ryannsReviews.png": "/DaytonLeader/static/media/ryannsReviews.723b99c6cbd4b5d5a55e.png",
     "static/media/localEats.png": "/DaytonLeader/static/media/localEats.bf35332c325fbfa4249d.png",
     "static/media/bundle.png": "/DaytonLeader/static/media/bundle.36313e78f4a17af8ae89.png",
@@ -54,12 +54,12 @@
     "static/media/B_W Coalville Stop-N-Shoop4.png": "/DaytonLeader/static/media/B_W Coalville Stop-N-Shoop4.6afbea4ab1ef90ec937b.png",
     "static/media/Ryann1nb.png": "/DaytonLeader/static/media/Ryann1nb.461dbd0f4b469d0b7b54.png",
     "index.html": "/DaytonLeader/index.html",
-    "main.fd7087a3.css.map": "/DaytonLeader/static/css/main.fd7087a3.css.map",
-    "main.f9f22a58.js.map": "/DaytonLeader/static/js/main.f9f22a58.js.map",
+    "main.718f01ee.css.map": "/DaytonLeader/static/css/main.718f01ee.css.map",
+    "main.26d1e4c2.js.map": "/DaytonLeader/static/js/main.26d1e4c2.js.map",
     "453.d855a71b.chunk.js.map": "/DaytonLeader/static/js/453.d855a71b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fd7087a3.css",
-    "static/js/main.f9f22a58.js"
+    "static/css/main.718f01ee.css",
+    "static/js/main.26d1e4c2.js"
   ]
 }
