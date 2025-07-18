@@ -98,7 +98,7 @@ const UsersPage = () => {
 
         try {
             // const res = await fetch("http://localhost:8081/users", {
-            const response = await fetch("https://daytonleader.onrender.com/contact/users", {
+            const res = await fetch("https://daytonleader.onrender.com/contact/users", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userPayload),
