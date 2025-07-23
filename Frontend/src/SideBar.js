@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import logo from "./Images/logo.jpg";
 import "./SideBar.css";
 
-const Sidebar = ({ userRole, setUserRole }) => {
+const Sidebar = ({ userRole, setUserRole, usernameReal, setUsernameReal }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [username, setUsername] = useState("");
@@ -72,12 +72,13 @@ const Sidebar = ({ userRole, setUserRole }) => {
                 .then(data => {
                     console.log(data.message);
                     setUserRole(data.role);
-                    setUsername(data.name);
+                    setUsernameReal(data.name);
                 })
                 .catch(() => {
-                    localStorage.removeItem("authToken");
-                    localStorage.removeItem("name");
-                    setUserRole(null);
+                    // localStorage.removeItem("authToken");
+                    // localStorage.removeItem("name");
+                    // setUserRole(null);
+                    handleLogout();
                 });
         }
     }, []);
@@ -104,6 +105,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
 
             localStorage.setItem("authToken", token);
             setUserRole(role);
+            setUsernameReal(username);
         } catch (err) {
             console.log("Failed to log in. Please try again.", err);
             setError("Failed to log in. Please try again. " + err);
@@ -121,8 +123,10 @@ const Sidebar = ({ userRole, setUserRole }) => {
     // };
     const handleLogout = () => {
         localStorage.removeItem("authToken");
+        localStorage.removeItem("name");
         setUserRole(null);
         setUsername("");
+        setUsernameReal("");
         setPassword("");
         setError("");
     };
@@ -184,7 +188,7 @@ const Sidebar = ({ userRole, setUserRole }) => {
                                     <Link to="/subscribe" className="nav-link text-white">Subcribe</Link>
                                 </li>
                             )}
-                            <li class="nav-item dropend">
+                            <li className="nav-item dropend">
                                 <a className="nav-link text-white" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Columns
                                 </a>

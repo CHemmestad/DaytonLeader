@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 // import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
@@ -10,6 +11,7 @@ import SideBar from "./SideBar.js";
 import Expired from "./ExpiredHeader.js";
 import Footer from "./Footer.js";
 import Home from "./Home.js";
+import CreateAccount from "./CreateAccount.js";
 import About from "./About.js";
 import AdBar from "./AdBar.js";
 import Paper from "./Paper.js";
@@ -38,9 +40,11 @@ function App() {
   // const [userRole, setUserRole] = useState("user");
   // const [userRole, setUserRole] = useState("admin");
   const [userRole, setUserRole] = useState(null);
+  const [username, setUsername] = useState(null);
 
   const constRoutes = [
-    { path: "/", element: <Home /> },
+    { path: "/", element: <Home username={username}/> },
+    { path: "/create-account/:token", element: <CreateAccount setUserRole={setUserRole} setUsername={setUsername}/> },
     { path: "/paper", element: <Paper userRole={userRole} /> },
     { path: "/subscribe", element: <Subscribe /> },
     { path: "/picture", element: <Picture /> },
@@ -82,7 +86,7 @@ function App() {
       <Router>
         <ScrollToTop />
         <div className="d-flex">
-          <SideBar userRole={userRole} setUserRole={setUserRole} />
+          <SideBar userRole={userRole} setUserRole={setUserRole} usernameReal={username} setUsernameReal={setUsername} />
           <div className="flex-grow-1 d-flex flex-column">
             {userRole === "expired" && (
               <Expired />
@@ -110,6 +114,7 @@ function App() {
                     <Route key={index} path={route.path} element={route.element} />
                   ))
                 )}
+                <Route path="*" element={<Navigate to="/" />} />
               </Routes>
             </div>
             <Footer />

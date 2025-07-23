@@ -76,6 +76,8 @@ const Israel = () => {
                 <div className="flex-grow-1 p-4" style={{ width: '100%', marginBottom: '15vh' }}>
                     <h3 className="title outline mb-2">{column.title}</h3>
                     <p className="mb-3" style={{ color: textColor }}>By {column.author} - {column.date}</p>
+                    <a className="btn m-3" href="https://jhdaytonleader.wixsite.com/israelatwar/news" target="_blank" rel="noopener noreferrer" role="button">Israel</a>
+                    <a className="btn m-3" href="https://blogs.timesofisrael.com/author/justine-johnston-hemmestad/" target="_blank" rel="noopener noreferrer" role="button">Blog</a>
                     <div className="content glass" style={{ color: textColor }}>
                         {column.content
                             .split('\n\n') // split into paragraphs on double line breaks

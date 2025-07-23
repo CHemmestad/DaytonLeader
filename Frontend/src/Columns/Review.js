@@ -52,7 +52,7 @@ const Review = () => {
                 </div>
                 <footer className="footer glass" style={{ height: getVhPx(20) }}>
                     <div className="footer-left no-overflow">
-                        <div className="author-name no-overflow">{column.author}</div>
+                        <div className="author-name">{column.author}</div>
                         <p style={{ color: textColor }}>Hi, my name is Ryann Shipley. 
                             I am the daughter of Robert and Jami Shipley, owners of the Dayton Veterinary Clinic. 
                             I am currently a sophomore at Des Moines Area Community College (DMACC), while also taking dual credits at lowa State University. 

@@ -64,7 +64,71 @@ const Paper = ({ userRole }) => {
 
     return (
         <div className="paper-wrapper" style={styles.wrapper}>
-            <img src={paperExample} alt="Front Page" style={styles.image} />
+            <div className="row">
+                {/* Left column: Main Paper */}
+                <div className="col-lg-8">
+                    <div className="article-divider d-flex align-items-center m-3 mt-0 ">
+                        <div className="flex-grow-1 line-left" />
+                        <span className="px-3 title">Current</span>
+                        <div className="flex-grow-1 line-right" />
+                    </div>
+                    <div className="paper-wrapper" style={styles.wrapper}>
+                        <img src={paperExample} alt="Front Page" style={styles.image} />
+                        <div style={styles.buttonGroup}>
+                            <a
+                                className="btn mx-2"
+                                onClick={() => handleProtectedAction()}
+                            >
+                                Read
+                            </a>
+                            <a
+                                className="btn mx-2"
+                                onClick={() => handleProtectedAction('/paper/download')}
+                            >
+                                Download
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right column: Previous Papers */}
+                <div className="col-lg-4 d-flex flex-column justify-content-center">
+                    <div className="article-divider d-flex align-items-center m-3 mt-0 ">
+                        <div className="flex-grow-1 line-left" />
+                        <span className="px-3 title">Previous</span>
+                        <div className="flex-grow-1 line-right" />
+                    </div>
+                    <div className="paper-wrapper" style={styles.wrapper}>
+                        <img
+                            src={paperExample}
+                            alt="Previous Paper 1"
+                            // style={{ width: '100%', borderRadius: '8px',  }}
+                            style={styles.image}
+                        />
+                        <button
+                            className="btn mt-2"
+                            onClick={() => handleProtectedAction('/paper/previous/1')}
+                        >
+                            Read
+                        </button>
+                    </div>
+
+                    <div className="paper-wrapper" style={styles.wrapper}>
+                        <img
+                            src={paperExample}
+                            alt="Previous Paper 1"
+                            // style={{ width: '100%', borderRadius: '8px',  }}
+                            style={styles.image}
+                        />
+                        <button
+                            className="btn mt-2"
+                            onClick={() => handleProtectedAction('/paper/previous/1')}
+                        >
+                            Read
+                        </button>
+                    </div>
+                </div>
+            </div>
             {showModal && (
                 <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
                     <div className="modal-dialog modal-xl modal-dialog-scrollable" role="document">
@@ -105,20 +169,6 @@ const Paper = ({ userRole }) => {
                     </div>
                 </div>
             )}
-            <div style={styles.buttonGroup}>
-                <a
-                    className="btn mx-2"
-                    onClick={() => handleProtectedAction()}
-                >
-                    Read
-                </a>
-                <a
-                    className="btn mx-2"
-                    onClick={() => handleProtectedAction('/paper/download')}
-                >
-                    Download
-                </a>
-            </div>
         </div>
     );
 };
@@ -129,7 +179,7 @@ const styles = {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '2rem',
+        padding: '1.5rem',
     },
     image: {
         width: '100%',

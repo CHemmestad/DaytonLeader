@@ -17,7 +17,7 @@ const AdBar = () => {
             if (scrollContainer) {
                 // Change direction at bottom
                 if (scrollContainer.scrollTop + scrollContainer.clientHeight >= scrollContainer.scrollHeight) {
-                    scrollStep = -1;
+                    scrollStep = 0;
                 }
                 // Change direction at top
                 if (scrollContainer.scrollTop <= 0) {
@@ -42,7 +42,7 @@ const AdBar = () => {
             }}
         >
             <div className="scroll align-items-center">
-                <span
+                {/* <span
                     className="title"
                     style={{
                         position: 'absolute',
@@ -59,7 +59,7 @@ const AdBar = () => {
                     }}
                 >
                     ADs
-                </span>
+                </span> */}
                 {/* <div className="glass-card"
                     style={{
                         height: 'auto',
@@ -98,7 +98,7 @@ const AdBar = () => {
             <div
                 className="scroll adbar-container"
                 ref={scrollRef}
-                style={{ paddingTop: '12vh' }}
+                // style={{ paddingTop: '12vh' }}
             >
                 {/* {repeatedAds} */}
                 {importedAds.map(ad => (

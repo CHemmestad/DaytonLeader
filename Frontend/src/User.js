@@ -3,14 +3,23 @@ import "./User.css";
 
 const UsersPage = () => {
     const [users, setUsers] = useState([]);
+    const [generatedLink, setGeneratedLink] = useState('');
     const [overrideDelete, setOverrideDelete] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(true);
     const [expirationDate, setExpirationDate] = useState(() => {
-        const today = new Date().toISOString().split("T")[0];
-        return today;
+        const today = new Date();
+        today.setFullYear(today.getFullYear() + 1);
+
+        // Format as YYYY-MM-DD in local time
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+        const day = String(today.getDate()).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
     });
+
     const [newUser, setNewUser] = useState({
         email: '',
         username: '',
@@ -22,9 +31,9 @@ const UsersPage = () => {
         try {
             setLoading(true);
             // const res = await fetch("http://localhost:8081/users");
-            const res = await fetch("https://daytonleader.onrender.com/contact/users");
+            const res = await fetch("https://daytonleader.onrender.com/users");
             const data = await res.json();
-            const roleOrder = { admin: 0, user: 1, expired: 2 };
+            const roleOrder = { admin: 0, editor: 1, user: 2, expired: 3 };
             const sorted = Array.isArray(data)
                 ? data.sort((a, b) => {
                     const roleA = roleOrder[a.role] ?? 99;
@@ -56,7 +65,7 @@ const UsersPage = () => {
 
         try {
             // const res = await fetch(`http://localhost:8081/users/${userId}`, {
-            const res = await fetch(`https://daytonleader.onrender.com//users/${userId}`, {
+            const res = await fetch(`https://daytonleader.onrender.com/users/${userId}`, {
                 method: 'DELETE',
             });
 
@@ -98,7 +107,7 @@ const UsersPage = () => {
 
         try {
             // const res = await fetch("http://localhost:8081/users", {
-            const res = await fetch("https://daytonleader.onrender.com/contact/users", {
+            const res = await fetch("https://daytonleader.onrender.com/users", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(userPayload),
@@ -118,6 +127,32 @@ const UsersPage = () => {
         } catch (err) {
             console.error("Failed to add user", err);
             setErrorMessage("Failed to add user");
+            setTimeout(() => setErrorMessage(''), 3000);
+        }
+    };
+
+    const handleGenerateLink = async () => {
+        try {
+            // const res = await fetch('http://localhost:8081/generate-token', {
+            const res = await fetch("https://daytonleader.onrender.com/generate-token", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: newUser.email,
+                    role: newUser.role,
+                    expirationDate,
+                }),
+            });
+
+            const data = await res.json();
+            if (data.token) {
+                setGeneratedLink(`${window.location.origin}/#/create-account/${data.token}`);
+            } else {
+                throw new Error(data.message || 'Token generation failed');
+            }
+        } catch (err) {
+            setGeneratedLink('');
+            setErrorMessage(err.message);
             setTimeout(() => setErrorMessage(''), 3000);
         }
     };
@@ -254,6 +289,7 @@ const UsersPage = () => {
                         >
                             <option value="user">User</option>
                             <option value="admin">Admin</option>
+                            <option value="editor">Editor</option>
                         </select>
                     </div>
                     <div className="col-md-1 d-grid">
@@ -275,6 +311,62 @@ const UsersPage = () => {
                     </div>
                 )
             }
+            <h4 className="mt-4">Create One-Time Setup Link (1 day)</h4>
+            <form onSubmit={(e) => { e.preventDefault(); handleGenerateLink(); }} className="card p-3 mb-2">
+                <div className="row g-3">
+                    <div className="col-md-4">
+                        <input
+                            type="email"
+                            className="form-control"
+                            placeholder="Email"
+                            required
+                            value={newUser.email}
+                            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                        />
+                    </div>
+                    <div className="col-md-4">
+                        <input
+                            type="date"
+                            className="form-control"
+                            value={expirationDate}
+                            onChange={(e) => setExpirationDate(e.target.value)}
+                        />
+                    </div>
+                    <div className="col-md-2">
+                        <select
+                            className="form-select"
+                            value={newUser.role}
+                            onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+                        >
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                            <option value="editor">Editor</option>
+                        </select>
+                    </div>
+                    <div className="col-md-2 d-grid">
+                        <button className="btn" type="submit">
+                            Create Link
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {generatedLink && (
+                <div
+                    className="mt-2 p-3 rounded border d-flex align-items-center justify-content-between"
+                    style={{ backgroundColor: '#f3f0f2', color: '#2e2e2e' }}
+                >
+                    <div style={{ wordBreak: 'break-all' }}>
+                        <strong>One-Time Link:</strong><br />
+                        <code>{generatedLink}</code>
+                    </div>
+                    <button
+                        className="btn btn-sm ms-3"
+                        onClick={() => navigator.clipboard.writeText(generatedLink)}
+                    >
+                        Copy
+                    </button>
+                </div>
+            )}
         </div >
     );
 };

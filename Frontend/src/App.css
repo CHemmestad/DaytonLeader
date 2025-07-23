@@ -109,6 +109,12 @@ h3 {
   font-size: 35px;
 }
 
+.sm-title {
+  font-family: Georgia, serif;
+  color: #570335;
+  font-size: 20px;
+}
+
 
 .article-image {
   flex: 1;
@@ -127,13 +133,29 @@ h3 {
   font-size: 28px;
 }
 
-.article-content {
+.article-content-lg {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 8;
   line-clamp: 8;
   -webkit-box-orient: vertical;
 }
+
+.article-content-sm {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+/* .article-content-sm {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+} */
 
 .article-content-fade {
   position: relative;
@@ -149,6 +171,30 @@ h3 {
   height: 2rem;
   background: linear-gradient(to bottom, transparent, white);
   z-index: 0;
+}
+
+.article-image-lg {
+  min-height: 400px;
+  max-height: 400px;
+  background-size: auto 100%;
+  background-position: center;
+  border-radius: 8px;
+}
+
+.article-image-sm {
+  min-height: 250px;
+  max-height: 250px;
+  background-size: auto 100%;
+  background-position: center;
+  border-radius: 8px;
+}
+
+.comments-container {
+  max-height: 100%;
+  overflow-y: auto;
+}
+.comment {
+  font-size: 0.95rem;
 }
 
 .btn {

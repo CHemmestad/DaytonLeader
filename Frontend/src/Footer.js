@@ -10,7 +10,7 @@ const Footer = () => {
                     className="me-3"
                     style={{ color: '#570335' }}
                 >
-                    <i class="bi bi-facebook fs-3"></i>
+                    <i className="bi bi-facebook fs-3"></i>
                 </a>
                 <a
                     href="https://www.instagram.com/daytonleader/?hl=en"
@@ -19,7 +19,7 @@ const Footer = () => {
                     className="me-3"
                     style={{ color: '#570335' }}
                 >
-                    <i class="bi bi-instagram fs-3"></i>
+                    <i className="bi bi-instagram fs-3"></i>
                 </a>
             </div>
         </footer>
