@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const CreateAccount = ({ setUserRole, setUsername }) => {
+const CreateAccount = ({ setUserRole, setUsernameReal }) => {
     const { token } = useParams();
     const navigate = useNavigate();
 
-    const [username, setUsernameTemp] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -38,7 +38,7 @@ const CreateAccount = ({ setUserRole, setUsername }) => {
 
             localStorage.setItem("authToken", authToken);
             setUserRole(role);
-            setUsername(username);
+            setUsernameReal(name);
             navigate('/');
         } catch (err) {
             console.error("Create account error:", err);
@@ -58,7 +58,8 @@ const CreateAccount = ({ setUserRole, setUsername }) => {
                         className="form-control"
                         required
                         value={username}
-                        onChange={(e) => setUsernameTemp(e.target.value)}
+                        onChange={(e) => setUsername(e.target.value.trimStart())}
+                        onKeyDown={(e) => {if (e.key === ' ') e.preventDefault();}}
                     />
                 </div>
                 <div className="mb-3">
@@ -68,7 +69,8 @@ const CreateAccount = ({ setUserRole, setUsername }) => {
                         className="form-control"
                         required
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value.trimStart())}
+                        onKeyDown={(e) => {if (e.key === ' ') e.preventDefault();}}
                     />
                 </div>
                 <button className="btn mb-2" type="submit">

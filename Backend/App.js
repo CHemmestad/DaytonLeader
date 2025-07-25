@@ -72,7 +72,10 @@ const loginUser = async ({ username, password }) => {
     ]);
 
     const token = jwt.sign(
-        { name: user.user },
+        {
+            name: user.user,
+            role: user.role
+        },
         process.env.JWT_SECRET,
         { expiresIn: '7d' }
     );
@@ -209,27 +212,28 @@ app.post("/contact/login", async (req, res) => {
 app.get("/protected", authenticateToken, async (req, res) => {
     try {
         const name = req.user.name; // from decoded token
+        const role = req.user.role;
 
-        const cluster = await db;
-        const query = `
-            SELECT users.*
-            FROM \`dayton_leader\`.\`tables\`.\`users\` AS users
-            WHERE users.user = $1
-            LIMIT 1
-        `;
+        // const cluster = await db;
+        // const query = `
+        //     SELECT users.*
+        //     FROM \`dayton_leader\`.\`tables\`.\`users\` AS users
+        //     WHERE users.user = $1
+        //     LIMIT 1
+        // `;
 
-        const result = await cluster.query(query, { parameters: [name] });
+        // const result = await cluster.query(query, { parameters: [name] });
 
-        if (result.rows.length === 0) {
-            return res.status(403).json({ error: "User not found" });
-        }
+        // if (result.rows.length === 0) {
+        //     return res.status(403).json({ error: "User not found" });
+        // }
 
-        const user = result.rows[0];
+        // const user = result.rows[0];
 
         res.json({
-            message: `Welcome, ${user.user}`,
+            message: `Welcome, ${name}`,
             name: name,
-            role: user.role,
+            role: role,
         });
     } catch (err) {
         console.error("Protected route error:", err);
@@ -237,7 +241,7 @@ app.get("/protected", authenticateToken, async (req, res) => {
     }
 });
 
-app.post('/columns', async (req, res) => {
+app.post('/columns', authenticateToken, async (req, res) => {
     const { column, title, content, date } = req.body;
     const key = `${column}`;
 
@@ -281,7 +285,7 @@ app.get('/columns/:column', async (req, res) => {
     }
 });
 
-app.post('/about', async (req, res) => {
+app.post('/about', authenticateToken, async (req, res) => {
     const { text } = req.body;
     const key = 'about';
 
@@ -320,7 +324,7 @@ app.get('/about', async (req, res) => {
     }
 });
 
-app.post('/article', upload.single('image'), async (req, res) => {
+app.post('/article', authenticateToken, upload.single('image'), async (req, res) => {
     const { title, author, content, date } = req.body;
     const imageFile = req.file;
 
@@ -418,7 +422,7 @@ app.get("/comments", async (req, res) => {
 app.post("/comments", async (req, res) => {
     const { user, text, timestamp } = req.body;
 
-    if (!user || !text || !timestamp ) {
+    if (!user || !text || !timestamp) {
         return res.status(400).json({ message: "Missing required comment fields." });
     }
 
@@ -437,8 +441,139 @@ app.post("/comments", async (req, res) => {
     }
 });
 
-app.get("/users", async (req, res) => {
+app.get("/user/:id", authenticateToken, async (req, res) => {
     try {
+        const tokenUser = req.user.name;
+        const { id } = req.params;
+
+        if (tokenUser !== id) {
+            return res.status(403).json({ error: "Not authorized" });
+        }
+
+        const cluster = await db;
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('users');
+
+        const result = await collection.get(id);
+        const user = result.content;
+
+        res.status(200).json({
+            username: user.username,
+            expirationDate: user.expirationDate,
+            email: user.email,
+            settings: user.settings
+        });
+    } catch (err) {
+        console.error("Error fetching user:", err);
+        if (err.code === 13) {
+            res.status(404).json({ error: "User not found" });
+        } else {
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+});
+
+app.put("/user/:id", authenticateToken, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const tokenUser = req.user.name;
+        const { email, password, newPassword, notifications } = req.body;
+
+        if (tokenUser !== id) {
+            return res.status(403).json({ error: "Not authorized." });
+        }
+
+        if (!password) {
+            return res.status(400).json({ error: "Password is required." });
+        }
+
+        const cluster = await db;
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('users');
+
+        // Get current user doc
+        const result = await collection.get(id);
+        const user = result.content;
+
+        // Verify password
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            return res.status(403).json({ error: "Invalid password." });
+        }
+
+        const updatedUser = { ...user };
+
+        if (email && email.trim() !== "") updatedUser.email = email;
+        if (notifications && typeof notifications === "object") updatedUser.settings = notifications;
+
+        if (newPassword && newPassword.trim() !== "") {
+            const saltRounds = 10;
+            updatedUser.password = await bcrypt.hash(newPassword, saltRounds);
+        }
+        
+        await collection.replace(id, updatedUser);
+        res.status(200).json({ message: "User updated successfully." });
+    } catch (err) {
+        console.error("Error updating user:", err);
+        if (err.code === 13) {
+            res.status(404).json({ error: "User not found." });
+        } else {
+            res.status(500).json({ error: "Internal server error." });
+        }
+    }
+});
+
+app.delete("/user/:id", authenticateToken, async (req, res) => {
+    try {
+        const { password } = req.body;
+        const tokenUser = req.user.name;
+        const { id } = req.params;
+
+        if (!password) {
+            return res.status(400).send({ error: "password is required." });
+        }
+
+        if (tokenUser !== id) {
+            return res.status(403).json({ error: "Not authorized." });
+        }
+
+        const cluster = await db;
+        const bucket = cluster.bucket('dayton_leader');
+        const scope = bucket.scope('tables');
+        const collection = scope.collection('users');
+
+        const result = await collection.get(id);
+        const user = result.content;
+
+        const match = await bcrypt.compare(password, user.password);
+
+        if (!match) {
+            return res.status(403).json({ error: "Invalid password." });
+        }
+
+        await collection.remove(id);
+
+        res.status(200).json({ message: "User deleted successfully" });
+    } catch (err) {
+        console.error("Error deleting user:", err);
+        if (err.code === 13) {
+            res.status(404).json({ error: "User not found" });
+        } else {
+            res.status(500).json({ error: "Internal server error" });
+        }
+    }
+});
+
+app.get("/users", authenticateToken, async (req, res) => {
+    try {
+        const tokenRole = req.user.role;
+
+        if (tokenRole != "admin") {
+            return res.status(403).json({ error: "Not authorized" });
+        }
+
         const cluster = await db;
 
         const query = `
@@ -461,9 +596,14 @@ app.get("/users", async (req, res) => {
     }
 });
 
-app.delete("/users/:id", async (req, res) => {
+app.delete("/users/:id", authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
+        const tokenRole = req.user.role;
+
+        if (tokenRole != "admin") {
+            return res.status(403).json({ error: "Not authorized" });
+        }
 
         const cluster = await db;
         const bucket = cluster.bucket('dayton_leader');
@@ -483,9 +623,14 @@ app.delete("/users/:id", async (req, res) => {
     }
 });
 
-app.post("/users", async (req, res) => {
+app.post("/users", authenticateToken, async (req, res) => {
     try {
         const { username, email, password, role, expirationDate, lastLogin } = req.body;
+        const tokenRole = req.user.role;
+
+        if (tokenRole != "admin") {
+            return res.status(403).json({ error: "Not authorized" });
+        }
 
         if (!username || !email || !password || !role) {
             return res.status(400).json({ error: "Missing required fields." });
@@ -536,9 +681,14 @@ app.post("/users", async (req, res) => {
     }
 });
 
-app.post("/generate-token", async (req, res) => {
+app.post("/generate-token", authenticateToken, async (req, res) => {
     try {
         const { email, role, expirationDate } = req.body;
+        const tokenRole = req.user.role;
+
+        if (tokenRole != "admin") {
+            return res.status(403).json({ error: "Not authorized" });
+        }
 
         if (!email || !role || !expirationDate) {
             return res.status(400).send({ error: "Email, role, and expirationDate are required." });
@@ -566,8 +716,13 @@ app.post("/generate-token", async (req, res) => {
     }
 });
 
-app.post('/create-account', async (req, res) => {
+app.post('/create-account', authenticateToken, async (req, res) => {
     const { token, username, password } = req.body;
+    const tokenRole = req.user.role;
+
+    if (tokenRole != "admin") {
+        return res.status(403).json({ error: "Not authorized" });
+    }
 
     if (!token || !username || !password) {
         return res.status(400).json({ message: 'All fields are required' });

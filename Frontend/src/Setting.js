@@ -1,23 +1,105 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const Settings = ({ userRole }) => {
+const Settings = ({ userRole, setUserRole, username, setUsername }) => {
+    const [password, setPassword] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [subscriptionEndDate, setSubscriptionEndDate] = useState('');
     const [formData, setFormData] = useState({
         username: '',
         email: '',
-        password: '',
+        newPassword: '',
         notifications: {
-            newIssue: true,
-            newArticle: true,
-            columnUpdates: true,
-            events: true,
-            breakingNews: true,
-            announcements: true,
+            newIssue: false,
+            newArticle: false,
+            columnUpdates: false,
+            events: false,
+            breakingNews: false,
+            announcements: false,
         },
-        // darkMode: false,
     });
 
-    const [successMessage, setSuccessMessage] = useState('');
-    const subscriptionEndDate = "12/31/2025"; // Example value — replace with actual
+    const handleDeleteAccount = async (e) => {
+        e.preventDefault();
+        if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+            console.log("Account deleted");
+        } else {
+            return;
+        }
+        const token = localStorage.getItem("authToken");
+
+        try {
+            const res = await fetch(`https://daytonleader.onrender.com/user/${username}`, {
+            // const res = await fetch(`http://localhost:8081/user/${username}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ password: password }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                setErrorMessage(data.error || "Failed to delete account");
+                setTimeout(() => setErrorMessage(""), 3000);
+                return;
+            }
+
+            // Clear session
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("name");
+            localStorage.removeItem("role");
+
+            setSuccessMessage("Account deleted successfully");
+            setTimeout(() => {
+                setSuccessMessage('');
+                setUserRole(null);
+                setUsername("");
+            }, 3000);
+
+        } catch (err) {
+            console.error("Account deletion error:", err);
+            setErrorMessage("Something went wrong");
+            setTimeout(() => setErrorMessage(""), 3000);
+        }
+    };
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            const token = localStorage.getItem("authToken");
+            const userId = username;
+
+            if (!token || !userId) return;
+
+            try {
+                const res = await fetch(`https://daytonleader.onrender.com/user/${userId}`, {
+                // const res = await fetch(`http://localhost:8081/user/${userId}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!res.ok) throw new Error("Failed to fetch user data");
+
+                const data = await res.json();
+
+                setFormData({
+                    username: userId,
+                    email: data.email,
+                    newPassword: '',
+                    notifications: data.settings || {},
+                });
+
+                setSubscriptionEndDate(data.expirationDate ? new Date(data.expirationDate).toLocaleDateString('en-US') : '');
+            } catch (err) {
+                console.error("Error loading user data:", err);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -35,38 +117,43 @@ const Settings = ({ userRole }) => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Updated settings:", formData);
 
-        setSuccessMessage("Settings saved successfully");
+        const token = localStorage.getItem("authToken");
 
-        // Reset form fields after saving
-        setFormData({
-            username: '',
-            email: '',
-            password: '',
-            notifications: {
-                newIssue: true,
-                newArticle: true,
-                columnUpdates: true,
-                events: true,
-                breakingNews: true,
-                announcements: true,
-            },
-            // darkMode: false,
-        });
+        try {
+            const res = await fetch(`https://daytonleader.onrender.com/user/${username}`, {
+            // const res = await fetch(`http://localhost:8081/user/${username}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    password // current password needed to authorize
+                }),
+            });
 
-        // Clear success message after 3 seconds
-        setTimeout(() => setSuccessMessage(''), 3000);
+            const data = await res.json();
 
-        // Optionally send to backend here
-    };
+            if (!res.ok) {
+                setErrorMessage(data.error || "Failed to save settings");
+                setTimeout(() => setErrorMessage(""), 3000);
+                return;
+            }
 
-    const handleDeleteAccount = () => {
-        if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-            console.log("Account deleted");
-            // Send delete request here
+            setSuccessMessage("Settings updated successfully");
+            setTimeout(() => setSuccessMessage(""), 3000);
+
+        } catch (err) {
+            console.error("Settings update error:", err);
+            setErrorMessage("Something went wrong");
+            setTimeout(() => setErrorMessage(""), 3000);
+        } finally {
+            setFormData(prev => ({ ...prev, newPassword: '' }));
+            setPassword('');
         }
     };
 
@@ -75,6 +162,7 @@ const Settings = ({ userRole }) => {
             <h2 className="title mb-4">Account Settings</h2>
             <form onSubmit={handleSubmit} className="card p-4 shadow-sm">
                 <p>
+                    <div className="title justify-text-center"><strong>Hello {formData.username}</strong></div>
                     <strong>Subscription ends:</strong> {subscriptionEndDate}
                     {userRole === "expired" && (
                         <button
@@ -86,17 +174,17 @@ const Settings = ({ userRole }) => {
                         </button>
                     )}
                 </p>
-                <div className="mb-3">
+                {/* <div className="mb-3">
                     <label className="form-label">Change Username</label>
                     <input type="text" className="form-control" name="username" value={formData.username} onChange={handleChange} />
-                </div>
+                </div> */}
                 <div className="mb-3">
                     <label className="form-label">Change Email</label>
                     <input type="email" className="form-control" name="email" value={formData.email} onChange={handleChange} />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Change Password</label>
-                    <input type="password" className="form-control" name="password" value={formData.password} onChange={handleChange} />
+                    <input type="password" className="form-control" name="newPassword" value={formData.newPassword} onChange={handleChange} />
                 </div>
 
                 <hr />
@@ -119,9 +207,18 @@ const Settings = ({ userRole }) => {
                         </div>
                     ))}
                 </div>
+                <div className="mb-3">
+                    <label className="form-label">Current Password</label>
+                    <input type="password" className="form-control" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                </div>
                 {successMessage && (
                     <div className="alert alert-success" role="alert">
                         {successMessage}
+                    </div>
+                )}
+                {errorMessage && (
+                    <div className="alert alert-danger" role="alert">
+                        {errorMessage}
                     </div>
                 )}
 

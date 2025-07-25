@@ -51,9 +51,12 @@ const Sidebar = ({ userRole, setUserRole, usernameReal, setUsernameReal }) => {
     // };
     useEffect(() => {
         const token = localStorage.getItem("authToken");
+        const name = localStorage.getItem("name");
+        const role = localStorage.getItem("role");
 
         if (token) {
-            setUserRole("user");
+            setUsernameReal(name);
+            setUserRole(role);
         }
     }, []);
 
@@ -104,8 +107,10 @@ const Sidebar = ({ userRole, setUserRole, usernameReal, setUsernameReal }) => {
             const { role, token, name } = await response.json();
 
             localStorage.setItem("authToken", token);
+            localStorage.setItem("name", name);
+            localStorage.setItem("role", role);
             setUserRole(role);
-            setUsernameReal(username);
+            setUsernameReal(name);
         } catch (err) {
             console.log("Failed to log in. Please try again.", err);
             setError("Failed to log in. Please try again. " + err);
@@ -124,6 +129,7 @@ const Sidebar = ({ userRole, setUserRole, usernameReal, setUsernameReal }) => {
     const handleLogout = () => {
         localStorage.removeItem("authToken");
         localStorage.removeItem("name");
+        localStorage.removeItem("role");
         setUserRole(null);
         setUsername("");
         setUsernameReal("");
@@ -223,6 +229,13 @@ const Sidebar = ({ userRole, setUserRole, usernameReal, setUsernameReal }) => {
                             <li className="nav-item">
                                 <Link to="/about" className="nav-link text-white">About</Link>
                             </li>
+                            {userRole === "editor" && (
+                                <>
+                                    <li className="nav-item">
+                                        <Link to="/edit" className="nav-link text-white">Edit</Link>
+                                    </li>
+                                </>
+                            )}
                             {userRole === "admin" && (
                                 <>
                                     <li className="nav-item">
@@ -239,7 +252,7 @@ const Sidebar = ({ userRole, setUserRole, usernameReal, setUsernameReal }) => {
             </nav>
             {userRole ? (
                 <div className="mb-3 mt-auto text-center" >
-                    <p>{username}</p>
+                    <p>{usernameReal}</p>
                     <button
                         type="logout"
                         className="btn btn-sm btn-light"

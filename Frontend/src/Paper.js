@@ -1,7 +1,9 @@
 // src/pages/Paper.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import paperExample from "./Images/paperExample.jpg";
+import paperExample1 from "./Images/Paper/paperExample.jpg";
+import paperExample2 from "./Images/Paper/519004790_1317327057064188_3830876865498560943_n.jpg";
+import paperExample3 from "./Images/Paper/521322593_1324178999712327_5354878119511865949_n.jpg";
 import { useRef } from 'react';
 
 const Paper = ({ userRole }) => {
@@ -73,7 +75,7 @@ const Paper = ({ userRole }) => {
                         <div className="flex-grow-1 line-right" />
                     </div>
                     <div className="paper-wrapper" style={styles.wrapper}>
-                        <img src={paperExample} alt="Front Page" style={styles.image} />
+                        <img src={paperExample3} alt="Front Page" style={styles.image} />
                         <div style={styles.buttonGroup}>
                             <a
                                 className="btn mx-2"
@@ -100,7 +102,7 @@ const Paper = ({ userRole }) => {
                     </div>
                     <div className="paper-wrapper" style={styles.wrapper}>
                         <img
-                            src={paperExample}
+                            src={paperExample2}
                             alt="Previous Paper 1"
                             // style={{ width: '100%', borderRadius: '8px',  }}
                             style={styles.image}
@@ -115,7 +117,7 @@ const Paper = ({ userRole }) => {
 
                     <div className="paper-wrapper" style={styles.wrapper}>
                         <img
-                            src={paperExample}
+                            src={paperExample1}
                             alt="Previous Paper 1"
                             // style={{ width: '100%', borderRadius: '8px',  }}
                             style={styles.image}
@@ -147,7 +149,7 @@ const Paper = ({ userRole }) => {
                                 >
                                     <img
                                         ref={imageRef}
-                                        src={paperExample}
+                                        src={paperExample1}
                                         alt="Article"
                                         style={{
                                             width: isFullscreen ? '1500px' : '100%',

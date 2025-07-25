@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import banner from "./Images/daytonSign.jpg";
 import image from "./Images/logo.jpg";
+import jaguar from "./Images/Articles/1752715568671.png";
+import librarian from "./Images/Articles/liberalLibrarian.jpg";
 
 const Home = ({ username }) => {
     const [weather, setWeather] = useState(null);
@@ -31,14 +33,14 @@ const Home = ({ username }) => {
     const moreArticles = [
         {
             title: "Jaguar Article",
-            image: "/images/community.jpg",
+            image: '',
             content: "Here’s what’s happening around town this week plus some more informations so ican see where text starts wrapping and how good it looks with everything this some more and some more and some more and more filler",
             author: "Staff Writer",
             date: "2025-07-20T10:30:00",
         },
         {
             title: "Library Article",
-            image: "/images/events.jpg",
+            image: '',
             content: "Check out our roundup of local weekend events.",
             author: "Local Librarian",
             date: "2025-07-19T09:00:00",
@@ -113,7 +115,6 @@ const Home = ({ username }) => {
 
             setComments([...comments, newEntry]);
             setNewComment('');
-            setCommentName('');
         } catch (err) {
             console.error("Comment post error:", err);
         }
@@ -512,7 +513,7 @@ const Home = ({ username }) => {
                             <div
                                 className="article-image article-image-sm"
                                 style={{
-                                    backgroundImage: `url(${banner})`, // or: `url(https://daytonleader.onrender.com${moreArticles[0].image})`
+                                    backgroundImage: `url(${jaguar})`, // or: `url(https://daytonleader.onrender.com${moreArticles[0].image})`
                                 }}
                             ></div>
                             <div>
@@ -540,7 +541,7 @@ const Home = ({ username }) => {
                             <div
                                 className="article-image article-image-sm"
                                 style={{
-                                    backgroundImage: `url(${banner})`, // or: `url(https://daytonleader.onrender.com${moreArticles[1].image})`
+                                    backgroundImage: `url(${librarian})`, // or: `url(https://daytonleader.onrender.com${moreArticles[1].image})`
                                 }}
                             ></div>
                             <div>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Subscribe.css';
 import paper from "./Images/paperStack2.png";
 import online from "./Images/onlinePaper.png";
-import bundle from "./Images/bundle.png";
+import bundle from "./Images/collage.png";
 
 const Subscribe = () => {
 
@@ -64,6 +64,7 @@ const Subscribe = () => {
                                 maxWidth: '300px',
                                 minWidth: '100px',
                                 backgroundSize: 'cover',
+                                backgroundColor: '#570335',
                             }}
                         ></div>
                         <div className="plan-content col">
@@ -98,6 +99,7 @@ const Subscribe = () => {
                                 maxWidth: '300px',
                                 minWidth: '100px',
                                 backgroundSize: 'cover',
+                                backgroundColor: '#570335',
                             }}
                         ></div>
                         <div className="plan-content col">

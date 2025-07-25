@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./User.css";
 
-const UsersPage = () => {
+const UsersPage = ({ setUsername, setUserRole }) => {
     const [users, setUsers] = useState([]);
     const [generatedLink, setGeneratedLink] = useState('');
     const [overrideDelete, setOverrideDelete] = useState(false);
@@ -27,11 +27,45 @@ const UsersPage = () => {
         role: 'user',
     });
 
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+
+        if (token) {
+            // fetch("http://localhost:8081/protected", {
+            fetch("https://daytonleader.onrender.com/protected", {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Invalid token");
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(data.message);
+                    setUserRole(data.role);
+                    setUsername(data.name);
+                })
+                .catch(() => {
+                    localStorage.removeItem("authToken");
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("role");
+                    setUserRole(null);
+                    setUsername("");
+                });
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
     const fetchUsers = async () => {
         try {
+            const token = localStorage.getItem("authToken");
             setLoading(true);
-            // const res = await fetch("http://localhost:8081/users");
-            const res = await fetch("https://daytonleader.onrender.com/users");
+            // const res = await fetch("http://localhost:8081/users", {
+                const res = await fetch("https://daytonleader.onrender.com/users", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
             const data = await res.json();
             const roleOrder = { admin: 0, editor: 1, user: 2, expired: 3 };
             const sorted = Array.isArray(data)
@@ -55,18 +89,16 @@ const UsersPage = () => {
         }
     };
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
-
     const handleDelete = async (userId) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this user? This action cannot be undone.");
         if (!confirmDelete) return;
 
         try {
+            const token = localStorage.getItem("authToken");
             // const res = await fetch(`http://localhost:8081/users/${userId}`, {
-            const res = await fetch(`https://daytonleader.onrender.com/users/${userId}`, {
+                const res = await fetch(`https://daytonleader.onrender.com/users/${userId}`, {
                 method: 'DELETE',
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             if (!res.ok) {
@@ -106,10 +138,14 @@ const UsersPage = () => {
         };
 
         try {
+            const token = localStorage.getItem("authToken");
             // const res = await fetch("http://localhost:8081/users", {
-            const res = await fetch("https://daytonleader.onrender.com/users", {
+                const res = await fetch("https://daytonleader.onrender.com/users", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
                 body: JSON.stringify(userPayload),
             });
 
@@ -133,10 +169,14 @@ const UsersPage = () => {
 
     const handleGenerateLink = async () => {
         try {
+            const token = localStorage.getItem("authToken");
             // const res = await fetch('http://localhost:8081/generate-token', {
             const res = await fetch("https://daytonleader.onrender.com/generate-token", {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
                 body: JSON.stringify({
                     email: newUser.email,
                     role: newUser.role,
@@ -146,7 +186,7 @@ const UsersPage = () => {
 
             const data = await res.json();
             if (data.token) {
-                setGeneratedLink(`${window.location.origin}/#/create-account/${data.token}`);
+                setGeneratedLink(`${window.location.origin}/DaytonLeader/#/create-account/${data.token}`);
             } else {
                 throw new Error(data.message || 'Token generation failed');
             }
@@ -250,7 +290,8 @@ const UsersPage = () => {
                             placeholder="Username"
                             required
                             value={newUser.username}
-                            onChange={(e) => setNewUser({ ...newUser, username: e.target.value })}
+                            onChange={(e) => setNewUser({ ...newUser, username: e.target.value.trimStart() })}
+                            onKeyDown={(e) => {if (e.key === ' ') e.preventDefault();}}
                         />
                     </div>
                     <div className="col-md-3">
@@ -260,7 +301,8 @@ const UsersPage = () => {
                             placeholder="Password"
                             required
                             value={newUser.password}
-                            onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                            onChange={(e) => setNewUser({ ...newUser, password: e.target.value.trimStart() })}
+                            onKeyDown={(e) => {if (e.key === ' ') e.preventDefault();}}
                         />
                     </div>
                     <div className="col-md-2">
@@ -270,7 +312,8 @@ const UsersPage = () => {
                             placeholder="Email"
                             required
                             value={newUser.email}
-                            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                            onChange={(e) => setNewUser({ ...newUser, email: e.target.value.trimStart() })}
+                            onKeyDown={(e) => {if (e.key === ' ') e.preventDefault();}}
                         />
                     </div>
                     <div className="col-md-2">
@@ -321,7 +364,8 @@ const UsersPage = () => {
                             placeholder="Email"
                             required
                             value={newUser.email}
-                            onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                            onChange={(e) => setNewUser({ ...newUser, email: e.target.value.trimStart() })}
+                            onKeyDown={(e) => {if (e.key === ' ') e.preventDefault();}}
                         />
                     </div>
                     <div className="col-md-4">

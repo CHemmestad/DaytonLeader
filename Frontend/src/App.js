@@ -44,7 +44,7 @@ function App() {
 
   const constRoutes = [
     { path: "/", element: <Home username={username}/> },
-    { path: "/create-account/:token", element: <CreateAccount setUserRole={setUserRole} setUsername={setUsername}/> },
+    { path: "/create-account/:token", element: <CreateAccount setUserRole={setUserRole} setUsernameReal={setUsername}/> },
     { path: "/paper", element: <Paper userRole={userRole} /> },
     { path: "/subscribe", element: <Subscribe /> },
     { path: "/picture", element: <Picture /> },
@@ -68,17 +68,21 @@ function App() {
   ];
 
   const expiredRoutes = [
-    { path: "/setting", element: <Setting userRole={userRole} /> },
+    { path: "/setting", element: <Setting userRole={userRole} setUserRole={setUserRole} username={username} setUsername={setUsername} /> },
   ]
 
-  const adminOrUserRoutes = [
+  const loggedInRoutes = [
     { path: "/game", element: <Game /> },
-    { path: "/setting", element: <Setting userRole={userRole} /> },
+    { path: "/setting", element: <Setting userRole={userRole} setUserRole={setUserRole} username={username} setUsername={setUsername} /> },
   ]
 
   const adminRoutes = [
-    { path: "/user", element: <User /> },
-    { path: "/edit", element: <Edit /> },
+    { path: "/user", element: <User setUsername={setUsername} setUserRole={setUserRole} /> },
+    { path: "/edit", element: <Edit setUsername={setUsername} /> },
+  ]
+
+  const editorRoutes = [
+    { path: "/edit", element: <Edit setUsername={setUsername} /> },
   ]
 
   return (
@@ -104,8 +108,13 @@ function App() {
                     <Route key={index} path={route.path} element={route.element} />
                   ))
                 )}
-                {(userRole === "admin" || userRole === "user") && (
-                  adminOrUserRoutes.map((route, index) => (
+                {(userRole) && (
+                  loggedInRoutes.map((route, index) => (
+                    <Route key={index} path={route.path} element={route.element} />
+                  ))
+                )}
+                {userRole === "editor" && (
+                  editorRoutes.map((route, index) => (
                     <Route key={index} path={route.path} element={route.element} />
                   ))
                 )}
@@ -119,7 +128,7 @@ function App() {
             </div>
             <Footer />
           </div>
-          {(userRole !== "user" && userRole !== "admin") && <AdBar />}
+          {!(userRole !== null && userRole !== "expired") && <AdBar />}
         </div>
       </Router>
     </div>
