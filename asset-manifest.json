@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/DaytonLeader/static/css/main.ce536c83.css",
-    "main.js": "/DaytonLeader/static/js/main.3e11c7ce.js",
+    "main.js": "/DaytonLeader/static/js/main.24f2cbf2.js",
     "static/js/453.d855a71b.chunk.js": "/DaytonLeader/static/js/453.d855a71b.chunk.js",
     "static/media/paperStack2.png": "/DaytonLeader/static/media/paperStack2.d3d106782872e7f40c1c.png",
     "static/media/daytonSign.jpg": "/DaytonLeader/static/media/daytonSign.bab6b7cbf70b6576c86b.jpg",
@@ -58,11 +58,11 @@
     "static/media/Ryann1nb.png": "/DaytonLeader/static/media/Ryann1nb.461dbd0f4b469d0b7b54.png",
     "index.html": "/DaytonLeader/index.html",
     "main.ce536c83.css.map": "/DaytonLeader/static/css/main.ce536c83.css.map",
-    "main.3e11c7ce.js.map": "/DaytonLeader/static/js/main.3e11c7ce.js.map",
+    "main.24f2cbf2.js.map": "/DaytonLeader/static/js/main.24f2cbf2.js.map",
     "453.d855a71b.chunk.js.map": "/DaytonLeader/static/js/453.d855a71b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ce536c83.css",
-    "static/js/main.3e11c7ce.js"
+    "static/js/main.24f2cbf2.js"
   ]
 }
