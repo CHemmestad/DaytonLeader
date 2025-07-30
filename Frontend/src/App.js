@@ -78,11 +78,11 @@ function App() {
 
   const adminRoutes = [
     { path: "/user", element: <User setUsername={setUsername} setUserRole={setUserRole} /> },
-    { path: "/edit", element: <Edit setUsername={setUsername} /> },
+    { path: "/edit", element: <Edit setUsername={setUsername} setUserRole={setUserRole} /> },
   ]
 
   const editorRoutes = [
-    { path: "/edit", element: <Edit setUsername={setUsername} /> },
+    { path: "/edit", element: <Edit setUsername={setUsername} setUserRole={setUserRole} /> },
   ]
 
   return (

@@ -368,8 +368,9 @@ const Home = ({ username }) => {
                                 <div
                                     className="article-image article-image-lg"
                                     style={{
-                                        // backgroundImage: `url(https://daytonleader.onrender.com${articles[0].image})`,
-                                        backgroundImage: `url(${banner})`,
+                                        backgroundImage: `url(${articles[0].image})`,
+                                        // backgroundImage: `url(https://pub-4dfb799c07964a939ef48307ae691801.r2.dev/Lab%2004%20-%20Caleb%20Hemmestad.pdf)`,
+                                        // backgroundImage: `url(${banner})`,
                                     }}
                                 ></div>
                                 <div>
@@ -474,7 +475,7 @@ const Home = ({ username }) => {
                                         className="article-image article-image-sm"
                                         style={{
                                             // backgroundImage: `url(https://daytonleader.onrender.com${articles[i].image})`,
-                                            backgroundImage: `url(${banner})`,
+                                            backgroundImage: `url(${articles[i].image})`,
                                         }}
                                     ></div>
                                     <div>

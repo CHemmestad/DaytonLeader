@@ -92,7 +92,7 @@ const Settings = ({ userRole, setUserRole, username, setUsername }) => {
                     notifications: data.settings || {},
                 });
 
-                setSubscriptionEndDate(data.expirationDate ? new Date(data.expirationDate).toLocaleDateString('en-US') : '');
+                setSubscriptionEndDate(data.expirationDate ? formatDateToMMDDYYYY(data.expirationDate) : '');
             } catch (err) {
                 console.error("Error loading user data:", err);
             }
@@ -252,3 +252,9 @@ const Settings = ({ userRole, setUserRole, username, setUsername }) => {
 };
 
 export default Settings;
+
+function formatDateToMMDDYYYY(dateStr) {
+    if (!dateStr || typeof dateStr !== 'string') return '';
+    const [year, month, day] = dateStr.split('-');
+    return `${month}/${day}/${year}`;
+}

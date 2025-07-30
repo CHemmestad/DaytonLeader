@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const Edit = () => {
+const Edit = ({ setUsername, setUserRole }) => {
     const [page, setPage] = useState('Home');
-    const [homeSection, setHomeSection] = useState('About');
+    const [homeSection, setHomeSection] = useState('Article');
     const [selectedColumn, setSelectedColumn] = useState(0);
     const [formData, setFormData] = useState({});
     const [success, setSuccess] = useState(false);
@@ -18,6 +18,7 @@ const Edit = () => {
         { title: "Local Eats", content: "", label: "Local" },
         { title: "Pastor Kay", content: "", label: "Pastor" },
     ];
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         setFormData({
@@ -32,16 +33,85 @@ const Edit = () => {
         setSuccess(false);
     }, [page, homeSection]);
 
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+
+        if (token) {
+            // fetch("http://localhost:8081/protected", {
+            fetch("https://daytonleader.onrender.com/protected", {
+                headers: { Authorization: `Bearer ${token}` },
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Invalid token");
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(data.message);
+                    setUserRole(data.role);
+                    setUsername(data.name);
+                })
+                .catch(() => {
+                    localStorage.removeItem("authToken");
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("role");
+                    setUserRole(null);
+                    setUsername("");
+                });
+        }
+    }, []);
+
+    // const handleInputChange = (e) => {
+    //     const { name, value, files } = e.target;
+    //     setFormData((prev) => ({
+    //         ...prev,
+    //         [name]: files ? files[0] : value,
+    //     }));
+    // };
 
     const handleInputChange = (e) => {
         const { name, value, files } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: files ? files[0] : value,
-        }));
+
+        if (name === 'image') {
+            const file = files[0];
+            if (!file) return;
+
+            // Check file size (e.g., 2MB limit)
+            const maxSize = 2 * 1024 * 1024; // 2MB
+            if (file.size > maxSize) {
+                alert("File is too large. Maximum size is 2MB.");
+                setFormData((prev) => ({
+                    ...prev,
+                    [name]: '',
+                }));
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = null; // ✅ more reliable than ''
+                }
+                return;
+            }
+
+            // Check file type (only allow JPEG and PNG)
+            const allowedTypes = ['image/jpeg', 'image/png'];
+            if (!allowedTypes.includes(file.type)) {
+                alert("Invalid file type. Only JPEG and PNG are allowed.");
+                setFormData((prev) => ({
+                    ...prev,
+                    [name]: '',
+                }));
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = null; // ✅ more reliable than ''
+                }
+                return;
+            }
+
+            setFormData(prev => ({ ...prev, image: file }));
+        } else {
+            setFormData(prev => ({ ...prev, [name]: value }));
+        }
     };
 
     const handleSubmit = () => {
+        const token = localStorage.getItem("authToken");
+
         if (page === 'Columns') {
             const id = columns[selectedColumn].label;
 
@@ -50,6 +120,7 @@ const Edit = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
                     column: id,
@@ -65,23 +136,23 @@ const Edit = () => {
                 });
         }
 
-        if (page === 'Home' && homeSection === 'About') {
-            // fetch('http://0.0.0.0:8081/about', {
-            fetch("https://daytonleader.onrender.com/about", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    text: formData.about || '',
-                }),
-            })
-                .then(res => res.ok ? setSuccess(true) : alert('Failed to save About section'))
-                .catch(err => {
-                    console.error('Error saving about section:', err);
-                    alert('An error occurred while saving about section.');
-                });
-        }
+        // if (page === 'Home' && homeSection === 'About') {
+        //     // fetch('http://0.0.0.0:8081/about', {
+        //     fetch("https://daytonleader.onrender.com/about", {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({
+        //             text: formData.about || '',
+        //         }),
+        //     })
+        //         .then(res => res.ok ? setSuccess(true) : alert('Failed to save About section'))
+        //         .catch(err => {
+        //             console.error('Error saving about section:', err);
+        //             alert('An error occurred while saving about section.');
+        //         });
+        // }
 
         if (page === 'Home' && homeSection === 'Article') {
             const articleForm = new FormData();
@@ -94,9 +165,12 @@ const Edit = () => {
             }
 
             // fetch('http://0.0.0.0:8081/article', {
-            fetch("https://daytonleader.onrender.com/article", {
+                fetch("https://daytonleader.onrender.com/article", {
                 method: 'POST',
                 body: articleForm,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             })
                 .then(res => res.ok ? setSuccess(true) : alert('Failed to save article'))
                 .catch(err => {
@@ -125,8 +199,9 @@ const Edit = () => {
                 <div className="mb-3">
                     <label className="form-label">Edit Section:</label>
                     <select className="form-select" value={homeSection} onChange={(e) => setHomeSection(e.target.value)}>
-                        <option value="About">About Section</option>
+                        {/* <option value="About">About Section</option> */}
                         <option value="Article">Add Article</option>
+                        <option value="More">Edit More</option>
                     </select>
                 </div>
             )}
@@ -144,7 +219,7 @@ const Edit = () => {
 
             {/* Editable Fields */}
             <div className="mb-3">
-                {page === 'Home' && homeSection === 'About' && (
+                {/* {page === 'Home' && homeSection === 'About' && (
                     <textarea
                         className="form-control"
                         name="about"
@@ -152,14 +227,14 @@ const Edit = () => {
                         rows={5}
                         onChange={handleInputChange}
                     />
-                )}
+                )} */}
 
                 {page === 'Home' && homeSection === 'Article' && (
                     <>
                         <input className="form-control mb-2" name="title" placeholder="Article Title" onChange={handleInputChange} />
                         <input className="form-control mb-2" name="author" placeholder="Author" onChange={handleInputChange} />
                         <textarea className="form-control mb-2" name="content" placeholder="Article Content" rows={4} onChange={handleInputChange} />
-                        <input className="form-control" type="file" name="image" onChange={handleInputChange} />
+                        <input className="form-control" type="file" name="image" onChange={handleInputChange} ref={fileInputRef} />
                     </>
                 )}
 

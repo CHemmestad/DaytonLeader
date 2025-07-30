@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/DaytonLeader/static/css/main.ce536c83.css",
-    "main.js": "/DaytonLeader/static/js/main.45c933cb.js",
+    "main.js": "/DaytonLeader/static/js/main.9d1e086e.js",
     "static/js/453.d855a71b.chunk.js": "/DaytonLeader/static/js/453.d855a71b.chunk.js",
     "static/media/paperStack2.png": "/DaytonLeader/static/media/paperStack2.d3d106782872e7f40c1c.png",
     "static/media/daytonSign.jpg": "/DaytonLeader/static/media/daytonSign.bab6b7cbf70b6576c86b.jpg",
@@ -17,16 +17,18 @@
     "static/media/genericPictures.png": "/DaytonLeader/static/media/genericPictures.3ed27bd0996662535253.png",
     "static/media/ryannsReviews.png": "/DaytonLeader/static/media/ryannsReviews.723b99c6cbd4b5d5a55e.png",
     "static/media/localEats.png": "/DaytonLeader/static/media/localEats.bf35332c325fbfa4249d.png",
-    "static/media/bundle.png": "/DaytonLeader/static/media/bundle.36313e78f4a17af8ae89.png",
-    "static/media/onlinePaper.png": "/DaytonLeader/static/media/onlinePaper.07b3e6a7a9f8d75b6f7b.png",
     "static/media/liberalLibrarian.jpg": "/DaytonLeader/static/media/liberalLibrarian.f33b9cc3a3dca5571200.jpg",
+    "static/media/collage.png": "/DaytonLeader/static/media/collage.f36a02dfaf9a314513e2.png",
     "static/media/justine.png": "/DaytonLeader/static/media/justine.22e64db6657e0d1f6e56.png",
     "static/media/Kendra1nb.png": "/DaytonLeader/static/media/Kendra1nb.e16cea83bfbcb9734fee.png",
     "static/media/Justine1.png": "/DaytonLeader/static/media/Justine1.8e984005b2df4594ac73.png",
+    "static/media/onlinePaper.png": "/DaytonLeader/static/media/onlinePaper.f61da39642c5d10788cc.png",
     "static/media/Courtney1nb.png": "/DaytonLeader/static/media/Courtney1nb.5633f37ab220451ef4c2.png",
     "static/media/Shawn1.png": "/DaytonLeader/static/media/Shawn1.f1408d6912f02d01c296.png",
     "static/media/Karen1nb.png": "/DaytonLeader/static/media/Karen1nb.69be01b94c23907bcb23.png",
     "static/media/paperExample.jpg": "/DaytonLeader/static/media/paperExample.f512a8584000df82aecf.jpg",
+    "static/media/519004790___n.jpg": "/DaytonLeader/static/media/519004790_1317327057064188_3830876865498560943_n.34bf3c10ef1df1f6f6a0.jpg",
+    "static/media/521322593___n.jpg": "/DaytonLeader/static/media/521322593_1324178999712327_5354878119511865949_n.fdcde0d32dd28492f3a4.jpg",
     "static/media/liberalLibrarian.png": "/DaytonLeader/static/media/liberalLibrarian.751ad1d210f96c7c22d1.png",
     "static/media/2x3 Savings State Bank.jpg": "/DaytonLeader/static/media/2x3 Savings State Bank.ae898bbbc9b7a10c3c5b.jpg",
     "static/media/Justine1nb.png": "/DaytonLeader/static/media/Justine1nb.483c51e466e2a210ec7e.png",
@@ -41,6 +43,7 @@
     "static/media/bootstrap-icons.woff2?": "/DaytonLeader/static/media/bootstrap-icons.92ea18a81d737146ff04.woff2",
     "static/media/3x3_Classifieds.png": "/DaytonLeader/static/media/3x3_Classifieds.7be984d045f6f01a3ab2.png",
     "static/media/COLOR 3x2 tfn CHC_Dayton3x2_Aug23.png": "/DaytonLeader/static/media/COLOR 3x2 tfn CHC_Dayton3x2_Aug23.5fbfdad135297ab0a7ba.png",
+    "static/media/1752715568671.png": "/DaytonLeader/static/media/1752715568671.7cd95e37ac03a3adbf22.png",
     "static/media/3x3.5_Front Banner House Ad.png": "/DaytonLeader/static/media/3x3.5_Front Banner House Ad.810a8e57ccdc14f4961e.png",
     "static/media/2x3 Carson-Stapp (1).jpg": "/DaytonLeader/static/media/2x3 Carson-Stapp (1).8417419a80a467f2fb63.jpg",
     "static/media/meredith ad real estate.jpg": "/DaytonLeader/static/media/meredith ad real estate.78ac0c6f8b97f40b7bcc.jpg",
@@ -55,11 +58,11 @@
     "static/media/Ryann1nb.png": "/DaytonLeader/static/media/Ryann1nb.461dbd0f4b469d0b7b54.png",
     "index.html": "/DaytonLeader/index.html",
     "main.ce536c83.css.map": "/DaytonLeader/static/css/main.ce536c83.css.map",
-    "main.45c933cb.js.map": "/DaytonLeader/static/js/main.45c933cb.js.map",
+    "main.9d1e086e.js.map": "/DaytonLeader/static/js/main.9d1e086e.js.map",
     "453.d855a71b.chunk.js.map": "/DaytonLeader/static/js/453.d855a71b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ce536c83.css",
-    "static/js/main.45c933cb.js"
+    "static/js/main.9d1e086e.js"
   ]
 }
